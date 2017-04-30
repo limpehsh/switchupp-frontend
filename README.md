@@ -22,6 +22,25 @@ RUN THE PROJECT WITH THE
 quasar dev
 COMMAND FOR TESTING as opposed to npm start!!!
 
+Some packages to install on Atom to make handling vue files
+and our project easier:
+
+linter packages:
+linter-eslint
+linter-javac
+linter-sass-lint
+lint-sass-vue
+(these 2 will have to be installed anyway if you try installing any of the above so
+just install the top 4)
+linter
+linter-ui-default
+
+vue-related packages:
+language-vue
+language-vue-component
+vue2-autocomplete
+vue-format
+
 Have a read of Vue.js here: https://vuejs.org/v2/guide/
 and the framework we're using: http://quasar-framework.org/guide/
 
@@ -68,3 +87,20 @@ export default {
 }
 </script>
 ```
+
+3) For colors, if you want to have some animation when clicking a button, you have to stick
+to primary colors from what I have seen so far. So if you specify the button as:
+```js
+<button class="bg-red">Sign Up</button>
+```
+it is fine. But if you use something like
+```js
+<button class="bg-red-13">Sign Up</button>
+```
+it will not be fine since it's using the shade of red...? Not too sure about this so for
+buttons, lets stick to primary colors for now.
+
+4) We currently are using the default theme app.mat.style in the src/themes folder. It is
+great for the most part, however, when clicking the menu icon, it turns blue since it is
+following the default theme. We probably need to change that but lets worry about this
+later on.
