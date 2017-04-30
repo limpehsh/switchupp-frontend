@@ -1,7 +1,15 @@
 <template>
   <div>
     <div class="layout-padding">
-      <q-dialog-select type="radio" v-model="select" :options="selectOptions" ok-label="Pick" cancel-label="Neah" title="Radios"></q-dialog-select>
+      <button class="blue round" @click="throttledMethod()">Click me as fast as you can!</button>
+      <input type="text" v-model="postBody" @change="postPost()"/>
+      <ul v-if="errors && errors.length">
+        <li v-for="error of errors">
+          {{error.message}}
+        </li>
+      </ul>
+
+
       <div class="Header">
         <h1>Sign Up</h1>
       </div>
@@ -36,34 +44,37 @@
 </template>
 
 <script>
+import axios from 'axios'
+import _ from 'lodash'
 export default {
-  data () {
-    return {
-      select: 'fb',
-      multipleSelect: ['goog', 'twtr'],
-      selectOptions: [
-        {
-          label: 'Google',
-          value: 'goog'
-        },
-        {
-          label: 'Facebook',
-          value: 'fb'
-        },
-        {
-          label: 'Twitter',
-          value: 'twtr'
-        },
-        {
-          label: 'Apple Inc.',
-          value: 'appl'
-        },
-        {
-          label: 'Oracle',
-          value: 'ora'
-        }
-      ]
-    }
+  data: () => ({
+    postBody: '',
+    errors: []
+  }),
+  methods: {
+    throttledMethod: _.debounce(() => {
+      console.log('I only get fired once every two seconds, max!')
+    }, 2000)
+  },
+  // Pushes posts to the server when called.
+  postPost () {
+    axios.post(`http://localhost:3001/user/`, {
+      body: this.postBody
+    })
+    .then(response => {})
+    .catch(e => {
+      this.errors.push(e)
+    })
+
+    // async / await version (postPost() becomes async postPost())
+    //
+    // try {
+    //   await axios.post(`http://jsonplaceholder.typicode.com/posts`, {
+    //     body: this.postBody
+    //   })
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
   }
 }
 </script>

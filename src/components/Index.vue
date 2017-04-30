@@ -2,7 +2,7 @@
   <q-layout class="bg-grey-1">
 
     <!-- Top Toolbar / Navigation bar, not really navbar -->
-    <div slot="header" class="toolbar bg-deep-orange-13">
+    <div slot="header" class="toolbar bg-blue-10">
       <button
         class="hide-on-drawer-visible"
         @click="$refs.mobiledrawer.open()"
@@ -13,7 +13,7 @@
         <!-- Quasar Framework v{{$q.version}} -->
         <router-link to ="/">
           <div class="text-white">
-            <img class="avatar" src="../assets/switchup-logo.png"> SwitchUp
+            <img class="avatar" src="../assets/switchup-logo-new.png"> SwitchUp
           </div>
         </router-link>
       </q-toolbar-title>
@@ -21,7 +21,7 @@
 
     <!-- Defailt Drawer/Sidebar -->
     <q-drawer ref="drawer">
-      <div class="toolbar bg-deep-orange-12">
+      <div class="toolbar bg-blue-9">
         <q-toolbar-title :padding="1">
             Sidebar
         </q-toolbar-title>
