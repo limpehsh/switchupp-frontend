@@ -51,8 +51,9 @@ E.g.
 ``` html
 <template>
   <div>
-    <img :src="IMGPATH">
-    <!-- or <img v-bind:src"IMGPATH"> for the full binding-->
+    <img :src="IMGPATH"> <!-- or -->
+    <img v-bind:src"IMGPATH"> <!-- for the binding -->
+    <!-- : is the shorter form for v-bind in this case -->
   <div>
 </template>
 
