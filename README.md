@@ -48,6 +48,7 @@ the assets directory, there is no way for me to bind them...only option is to wr
 Current way I found out is to place the images in /src/statics. That will work for local images.
 E.g.
 
+``` html
 <template>
   <div>
     <img :src="IMGPATH">
@@ -65,3 +66,4 @@ export default {
   }
 }
 </script>
+```
