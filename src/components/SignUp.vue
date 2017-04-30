@@ -2,7 +2,7 @@
   <div>
     <div class="layout-padding">
       <button class="blue round" @click="throttledMethod()">Click me as fast as you can!</button>
-      <input type="text" v-model="postBody" @change="postPost()"/>
+      <input type="text" v-model="postBody" @change="createUser()"/>
       <ul v-if="errors && errors.length">
         <li v-for="error of errors">
           {{error.message}}
@@ -44,12 +44,26 @@
 </template>
 
 <script>
+
+/* For Axios */
+import Vue from 'vue'
 import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
+/* For throttling/debounce */
 import _ from 'lodash'
+
 export default {
   data: () => ({
     postBody: '',
-    errors: []
+    errors: [],
+    user: '',
+    pass: '',
+    email: '',
+    errorMail: '',
+    errorUser: '',
+    errorPass: ''
   }),
   methods: {
     throttledMethod: _.debounce(() => {
@@ -57,8 +71,8 @@ export default {
     }, 2000)
   },
   // Pushes posts to the server when called.
-  postPost () {
-    axios.post(`http://localhost:3001/user/`, {
+  createUser () {
+    Vue.axios.post(`http://localhost:3001/user/`, {
       body: this.postBody
     })
     .then(response => {})
