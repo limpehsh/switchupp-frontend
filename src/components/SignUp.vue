@@ -1,13 +1,13 @@
 <template>
   <div>
     <div class="layout-padding">
-      <button class="blue round" @click="throttledMethod()">Click me as fast as you can!</button>
+      <!--<button class="blue round" @click="throttledMethod()">Click me as fast as you can!</button>
       <input type="text" v-model="postBody" @change="createUser()"/>
       <ul v-if="errors && errors.length">
         <li v-for="error of errors">
           {{error.message}}
         </li>
-      </ul>
+      </ul>-->
 
 
       <div class="Header">
@@ -15,21 +15,24 @@
       </div>
 
         <div class="foamContainer">
-          <form method="post">
+          <form method="post" action="http://localhost:3001/user/" @submit.prevent="createUser">
             <div class="card bg-grey-2">
               <!-- Username -->
               <div class="floating-label">
-                <input v-model.trim="username" required class="full-width">
+                <input v-model.trim="user" required class="full-width"
+                 type="text">
                 <label>Username</label>
               </div>
               <!-- Password -->
               <div class="floating-label">
-                <input v-model.trim="password" required class="full-width">
+                <input v-model.trim="pass" required class="full-width"
+                 type="text">
                 <label>Password</label>
               </div>
               <!-- Email -->
               <div class="floating-label">
-                <input v-model.trim="email" required class="full-width">
+                <input v-model.trim="email" required class="full-width"
+                 type="text">
                 <label>Email</label>
               </div>
             </div>
@@ -53,11 +56,18 @@ Vue.use(VueAxios, axios)
 
 /* For throttling/debounce */
 import _ from 'lodash'
-
+import { required, minLength, between } from 'vuelidate/lib/validators'
+/*var instance = axios.create({
+  baseURL: 'http://localhost:3001/user/',
+  timeout: 1000,
+  headers: {'X-Requested-With': 'XMLHttpRequest'}
+});
+*/
 export default {
+  name: 'sign-up',
   data: () => ({
-    postBody: '',
-    errors: [],
+    // postBody: '',
+    // errors: [],
     user: '',
     pass: '',
     email: '',
@@ -66,20 +76,20 @@ export default {
     errorPass: ''
   }),
   methods: {
-    throttledMethod: _.debounce(() => {
+    createUser () {
+      console.log("ROFL");
+      axios.post('http://localhost:3001/user/', {
+        email: this.email,
+        password: this.pass,
+        admin: "false",
+        reputation: "1",
+        type: 1
+      });
+    }
+    /*throttledMethod: _.debounce(() => {
       console.log('I only get fired once every two seconds, max!')
-    }, 2000)
-  },
-  // Pushes posts to the server when called.
-  createUser () {
-    Vue.axios.post(`http://localhost:3001/user/`, {
-      body: this.postBody
-    })
-    .then(response => {})
-    .catch(e => {
-      this.errors.push(e)
-    })
-
+    }, 2000)*/
+  }
     // async / await version (postPost() becomes async postPost())
     //
     // try {
@@ -89,7 +99,6 @@ export default {
     // } catch (e) {
     //   this.errors.push(e)
     // }
-  }
 }
 </script>
 

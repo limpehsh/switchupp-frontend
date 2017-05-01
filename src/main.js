@@ -11,9 +11,11 @@ import Quasar from 'quasar'
 import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
+import Vuelidate from 'vuelidate'
 
 Vue.use(Quasar) // Install Quasar Framework
 Vue.use(VueAxios, axios)
+Vue.use(Vuelidate)
 
 Quasar.start(() => {
   /* eslint-disable no-new */
