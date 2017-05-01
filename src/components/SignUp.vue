@@ -53,7 +53,8 @@ import Vue from 'vue'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
-
+/* For routing */
+import router from '../router'
 /* For throttling/debounce */
 import _ from 'lodash'
 import { required, minLength, between } from 'vuelidate/lib/validators'
@@ -77,14 +78,14 @@ export default {
   }),
   methods: {
     createUser () {
-      console.log("ROFL");
       axios.post('http://localhost:3001/user/', {
         email: this.email,
         password: this.pass,
         admin: "false",
         reputation: "1",
         type: 1
-      });
+      })
+      router.push('about-us');
     }
     /*throttledMethod: _.debounce(() => {
       console.log('I only get fired once every two seconds, max!')
