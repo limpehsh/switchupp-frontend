@@ -62,7 +62,7 @@ some standards/quirks of this particular project:
 to be 2 spaces to follow Javascript's standard. This could be changed in
 the .eslintrc.js file but I decided against it since it's a standard and
 it'll be good to follow for future projects we might undertake requiring
-Javascript
+Javascript. More importantly, there isn't a Atom package that supports linting for Vue components so there might be some lint issues when testing. Fixes are easy to remedy so it isn't too bad. One thing that you could do is copy and paste the code under <script></script> into a js file in Atom and fix the lint errors from there if needed. That should be done when we're really done with all our shit, whenever that is.
 
 2) Local image binding in Vue.js is weird. If I place my images under
 the assets directory, there is no way for me to bind them...only option is to write out the full image path.
