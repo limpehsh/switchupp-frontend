@@ -1,5 +1,6 @@
 <template>
   <q-layout class="bg-grey-1">
+
     <!-- Top Toolbar / Navigation bar, not really navbar so far -->
     <div slot="header" class="toolbar bg-blue-10">
       <button
