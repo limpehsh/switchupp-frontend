@@ -162,7 +162,8 @@ export default {
 }
 </script>
 
-<style lang="styl">
-.tabcolors
-  color #000
+<style lang="scss">
+.tabcolors {
+  color: #000;
+}
 </style>

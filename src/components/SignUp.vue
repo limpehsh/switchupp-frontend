@@ -56,9 +56,10 @@ Vue.use(VueAxios, axios)
 /* For routing */
 import router from '../router'
 /* For throttling/debounce */
-import _ from 'lodash'
-import { required, minLength, between } from 'vuelidate/lib/validators'
-/*var instance = axios.create({
+// import _ from 'lodash'
+/* For the form */
+// import { required, minLength, between } from 'vuelidate/lib/validators'
+/* var instance = axios.create({
   baseURL: 'http://localhost:3001/user/',
   timeout: 1000,
   headers: {'X-Requested-With': 'XMLHttpRequest'}
@@ -79,17 +80,18 @@ export default {
   methods: {
     createUser () {
       axios.post('http://localhost:3001/user/', {
-        email: this.email,
+        username: this.user,
         password: this.pass,
-        admin: "false",
-        reputation: "1",
+        email: this.email,
+        admin: 'false',
+        reputation: '1',
         type: 1
       })
-      router.push('about-us');
+      router.push('about-us')
     }
-    /*throttledMethod: _.debounce(() => {
+    /* throttledMethod: _.debounce(() => {
       console.log('I only get fired once every two seconds, max!')
-    }, 2000)*/
+    }, 2000) */
   }
     // async / await version (postPost() becomes async postPost())
     //

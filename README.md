@@ -41,17 +41,19 @@ language-vue-component
 vue2-autocomplete
 vue-format
 
-Have a read of Vue.js here: https://vuejs.org/v2/guide/
-and the framework we're using: http://quasar-framework.org/guide/
+Have a read of Vue.js here: <https://vuejs.org/v2/guide/>
+and the framework we're using: <http://quasar-framework.org/guide/>
 
 Before starting out in Vue.js, I suggest reading the basics from their
 easy-to-follow documentation for a while or try these posts on Medium
 to get a feel of setting up a Vue.js project since they do teach you
 how to structure a Vue.js project:
-https://medium.com/codingthesmartway-com-blog/vue-js-2-quickstart-tutorial-2017-246195cfbdd2
-https://medium.com/@bradfmd/vue-js-project-setup-2b39fcc8867d
+<https://medium.com/codingthesmartway-com-blog/vue-js-2-quickstart-tutorial-2017-246195cfbdd2>
+<https://medium.com/@bradfmd/vue-js-project-setup-2b39fcc8867d>
 (For 2nd link, the way he set up the directories will differ to what we will be
 using so just take note of that)
+
+Main Page currently defaults to the About Me but it should be the Feed since people who vist the site should want to view the incidents immediately, just like how people want to see bargains on OzBargain immediately.
 
 After looking those up, come back to read the rest below to find out
 some standards/quirks of this particular project:
