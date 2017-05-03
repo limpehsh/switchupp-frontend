@@ -1,9 +1,19 @@
 <template>
   <div>
     <div class="layout-padding">
-      <!-- content for component -->
-      <h1 v-if="isLoggedIn">Logged In</h1>
-      <h1 v-else>Failed</h1>
+      <p><strong>{{posts.email}}</strong></p>
+      <ul v-if="posts && posts.length">
+        <li v-for="post of posts">
+          <p><strong>{{post.title}}</strong></p>
+          <p>{{post.body}}</p>
+        </li>
+      </ul>
+
+      <ul v-if="errors && errors.length">
+        <li v-for="error of errors">
+          {{error.message}}
+        </li>
+      </ul>
     </div>
   </div>
 </template>
@@ -14,22 +24,31 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 export default {
-  name: 'report',
-  data () {
-    return {
-      isLoggedIn: false
-    }
-  },
-  methods: {
-    findUser () {
-      Vue.axios.get('http://localhost:3001/user/')
-        .then((response) => {
-          console.log(response.data)
-      })
-    }
-    /* throttledMethod: _.debounce(() => {
-      console.log('I only get fired once every two seconds, max!')
-    }, 2000) */
+  data: () => ({
+    posts: [],
+    errors: []
+  }),
+
+  // Fetches posts when the component is created.
+  created() {
+    // http://jsonplaceholder.typicode.com/posts
+    axios.get('http://localhost:3001/user/mail/lol@lol.com')
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.posts = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+
+    // async / await version (created() becomes async created())
+    //
+    // try {
+    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    //   this.posts = response.data
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
   }
 }
 </script>
