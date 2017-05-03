@@ -24,31 +24,8 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 Vue.use(VueAxios, axios)
 export default {
-  data: () => ({
-    posts: [],
-    errors: []
-  }),
-
-  // Fetches posts when the component is created.
-  created() {
-    // http://jsonplaceholder.typicode.com/posts
-    axios.get('http://localhost:3001/user/mail/lol@lol.com')
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.posts = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
-
-    // async / await version (created() becomes async created())
-    //
-    // try {
-    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-    //   this.posts = response.data
-    // } catch (e) {
-    //   this.errors.push(e)
-    // }
+    /* throttledMethod: _.debounce(() => {
+  name: 'report',
   }
 }
 </script>

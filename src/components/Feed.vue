@@ -7,16 +7,35 @@
           <h6>Someone</h6>
         </div>
       </div>
-
+      <PostBox
+        :usrAvatar="avtr"
+        :userName="usrnm"
+        :postContent="ctn"
+        :imgHere="flag"/>
       </Layout>
     </div>
   </div>
 </template>
 
 <script>
+import PostBox from './PostBox'
+var avtr = '../statics/snorlax.png'
+var usrnm = 'asdf'
+var ctn = `check check this out check this out`
+var flag = false
+
 export default {
+  components:
+  {
+    PostBox
+  },
   data () {
-    return {}
+    return {
+      avtr: avtr,
+      usrnm: usrnm,
+      ctn: ctn,
+      flag: flag
+    }
   }
 }
 </script>
