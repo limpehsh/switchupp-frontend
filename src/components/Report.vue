@@ -25,7 +25,7 @@ export default {
       Vue.axios.get('http://localhost:3001/user/')
         .then((response) => {
           console.log(response.data)
-      })
+        })
     }
     /* throttledMethod: _.debounce(() => {
       console.log('I only get fired once every two seconds, max!')
