@@ -24,7 +24,7 @@
         </div>
         <!-- image container -->
         <div v-if = "imgHere === true" class="imgContainer">
-          <img :src="postImg"> </img>
+          <img class="imgContent" :src="postImg"> </img>
         </div>
       </div>
     </div>

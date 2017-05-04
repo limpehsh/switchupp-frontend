@@ -11,8 +11,8 @@
         :usrAvatar="avtr"
         :userName="usrnm"
         :postContent="ctn"
-        :imgHere="flag"/>
-      </Layout>
+        :imgHere="flag"
+        :postImg="imgs"/>
     </div>
   </div>
 </template>
@@ -22,7 +22,7 @@ import PostBox from './PostBox'
 var avtr = '../statics/snorlax.png'
 var usrnm = 'asdf'
 var ctn = `check check this out check this out`
-var flag = false
+var flag = true
 
 export default {
   components:
@@ -34,7 +34,8 @@ export default {
       avtr: avtr,
       usrnm: usrnm,
       ctn: ctn,
-      flag: flag
+      flag: flag,
+      imgs: avtr
     }
   }
 }
