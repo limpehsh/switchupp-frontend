@@ -71,6 +71,11 @@
         </div>
       </router-link>
 
+      <!-- for account form-->
+      <div class="item item-link" @click="showForm">
+        <i class="item-primary">person_pin</i>
+        <div class="item-content">Account</div>
+      </div>
       <!-- Testing Dialogs -->
       <div
         class="item item-link"
@@ -91,6 +96,12 @@
 import { Dialog, Toast } from 'quasar'
 export default {
   name: 'maindrawer',
+  methods: {
+    showForm: function () {
+      document.getElementById('accountForm').style.display = 'flex'
+      document.getElementById('accountForm').style.opacity = '1'
+    }
+  },
   data () {
     return {
       form: [
@@ -219,4 +230,8 @@ export default {
 </script>
 
 <style>
+.qDrawerMimic
+{
+
+}
 </style>

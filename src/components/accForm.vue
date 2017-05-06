@@ -4,7 +4,9 @@ TODO:
 - need to add it into the index, add directly into its child to make it show
 -->
 <template>
-  <div class="overlay" v-show="show" @click="show=false">
+
+  <div class="overlayForm">
+    <div class="overlayForm-click" @click="hideForm"></div>
     <div class="formBox">
       <!-- Login -->
       <transition name="fade" mode="out-in">
@@ -52,6 +54,7 @@ TODO:
       </transition>
     </div>
   </div>
+
 </template>
 
 
@@ -62,18 +65,27 @@ TODO:
 */
 export default{
   name: 'accForm',
+  methods:
+  {
+    hideForm: function () {
+      this.login = true
+      document.getElementById('accountForm').style.opacity = '0'
+      document.getElementById('accountForm').style.display = 'none'
+    }
+  },
   data: function () {
     return {
-      login: true,
-      show: true
+      login: true
     }
   }
 }
 </script>
 
 
-<style scoped>
-.overlay
+<style>
+
+
+.overlayForm
 {
   background-color: rgba(12,23,40,0.7);
   position: fixed;
@@ -83,10 +95,31 @@ export default{
   bottom:0;
   z-index:40;
 
-  display: flex;
+  display: none;
   align-items:     center;
   justify-content: center;
 
+  opacity: 0;
+
+  transition: opacity 1 ease;
+}
+
+.formShow
+{
+  display:flex;
+  opacity: 1;
+  transition: opacity 2s ease;
+}
+
+.overlayForm-click
+{
+  position: fixed;
+  top:    0;
+  left:   0;
+  right:  0;
+  bottom: 0;
+
+  z-index: 50;
 }
 
 /* for transition effect, vue thing */
