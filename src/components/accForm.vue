@@ -5,8 +5,8 @@ TODO:
 -->
 <template>
 
-  <div class="overlayForm">
-    <div class="overlayForm-click" @click="hideForm"></div>
+  <div class="overlayForm" v-bind:class="{formActive: formShow}">
+    <div class="overlayForm-click" @click="toggleForm"></div>
     <div class="formBox">
       <!-- Login -->
       <transition name="fade" mode="out-in">
@@ -46,13 +46,14 @@ TODO:
             <label>Email</label>
           </div>
           <div class="form-btn-container">
-            <button class="form-btn primary raised">Sign Up</button>
+            <button class="form-btn primary raised" @click="foo">Sign Up</button>
             <span class="formSwitch">Already have an account? <a @click="login=true">Log in</a></span>
           </div>
         </div>
 
       </transition>
     </div>
+
   </div>
 
 </template>
@@ -67,15 +68,20 @@ export default{
   name: 'accForm',
   methods:
   {
-    hideForm: function () {
-      this.login = true
-      document.getElementById('accountForm').style.opacity = '0'
-      document.getElementById('accountForm').style.display = 'none'
+    toggleForm: function () {
+      this.login = true// true
+      // document.getElementById('accountForm').style.opacity = '0'
+      // document.getElementById('accountForm').style.display = 'none'
+      this.formShow = !this.formShow
+    },
+    foo: function () {
+      console.log('clicked')
     }
   },
   data: function () {
     return {
-      login: true
+      login: true,
+      formShow: false
     }
   }
 }
@@ -95,21 +101,24 @@ export default{
   bottom:0;
   z-index:40;
 
-  display: none;
+  display: flex;
   align-items:     center;
   justify-content: center;
 
   opacity: 0;
+  visibility: hidden;
 
-  transition: opacity 1 ease;
+
 }
 
-.formShow
+.formActive
 {
-  display:flex;
+
+  visibility: visible;
   opacity: 1;
-  transition: opacity 2s ease;
+  transition: visibility 0s, opacity .3s ease;
 }
+
 
 .overlayForm-click
 {

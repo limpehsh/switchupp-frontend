@@ -40,7 +40,7 @@
 
     <!-- Default/Main Drawer -->
     <maindrawer></maindrawer>
-    <accForm id="accountForm"/>
+    <accForm id="accountForm" ref="accountF"/>
     <router-view class="layout-view"></router-view>
 
     <!-- FOOTER NOT READY YET -->

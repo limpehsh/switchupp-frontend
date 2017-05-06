@@ -98,8 +98,10 @@ export default {
   name: 'maindrawer',
   methods: {
     showForm: function () {
-      document.getElementById('accountForm').style.display = 'flex'
-      document.getElementById('accountForm').style.opacity = '1'
+      // document.getElementById('accountForm').style.display = 'flex'
+      // document.getElementById('accountForm').style.opacity = '1'
+      // $refs.accountF.toggleForm()
+      this.$parent.$parent.$refs.accountF.toggleForm()
     }
   },
   data () {
