@@ -16,15 +16,15 @@
       <div class="contentHeader">
         <div class="postTitle">{{title}}</div>
         <div class="postLocn"><a>{{locn}}</a></div>
-        <div class="postUsr">{{usrnm}}</div>
+        <div class="postUsr"><a>{{usrnm}}</a></div>
       </div>
 
       <div class="contentDetail">
 
-        <input type="checkbox" class="stretcher" id="s1"/>
-        <div class="content-wrapper">{{content}}</div>
 
-        <label for="s1" class="stretcher-trigger"></label>
+        <div class="content-wrapper" v-bind:class="{collapsed: isCollapse}">{{content}}</div>
+        <button class="stretcher light clear" @click="handleCollapse">MORE</button>
+
       </div>
     </div>
   </div>
@@ -45,6 +45,7 @@ won't it be cool if we have a show more/less function for our post
 this is a long content, for testing purpose. hopefully the
 stretcher for the post work quite well so that later it can look real cool.
 won't it be cool if we have a show more/less function for our post`
+
 export default
 {
   name: 'PostBox',
@@ -55,10 +56,19 @@ export default
       title: title,
       locn: locn,
       usrnm: usrnm,
-      content: content
+      content: content,
+      /* for collapsible */
+      isCollapse: false
     }
   },
-
+  methods:
+  {
+    handleCollapse: function (e) {
+      // isCollapse =! isCollapse
+      this.isCollapse = !this.isCollapse
+      e.target.textContent = this.isCollapse ? 'LESS' : 'MORE'
+    }
+  },
   props:
   {
   }
@@ -73,7 +83,7 @@ export default
   display: flex;
   flex-direction: row;
 
-  padding: 25px 25px 25px 25px;
+  padding: 25px 25px 15px 25px;
 }
 
 
@@ -83,11 +93,13 @@ export default
   flex-direction: column;
 
   align-items: center;
+  padding-top: 15px;
 }
 
 .voteCount
 {
-
+  margin-top:10px;
+  margin-bottom: 10px;
 }
 
 /* post content */
@@ -138,46 +150,37 @@ export default
   max-height: 75px;
   overflow-y: hidden;
 
-  transition: max-height .5s ease-out;
-  -webkit-transition: max-height .5s ease-out;
-  -moz-transition: max-height .5s ease-out;
+  transition: max-height 1s ease;
+  -webkit-transition: max-height 1s ease;
+  -moz-transition: max-height 1s ease;
 
   text-align: justify;
+  background:linear-gradient(transparent 150px, white);
 }
 
-/* where the transition magic happens */
+
 .stretcher
 {
-  display:none;
-}
-
-.stretcher:checked ~ .content-wrapper
-{
-  max-height: 700px;
-  overflow-y: auto;
-
-}
-
-.stretcher ~ .stretcher-trigger:before
-{
-  content: 'MORE'
-}
-
-.stretcher:checked ~ .stretcher-trigger:before
-{
-  content:'LESS'
-}
-
-.stretcher-trigger{
-  cursor:pointer;
-  font-size: 13px;
-  font-weight: bold;
-
-  display: inline-block;
+  position:relative;
   width: 100%;
+
+  font-size: 12px;
+  font-weight: bold;
+  color: #747474;
+
+  margin-top: 10px;
   text-align: center;
 
-  margin-top: 20px;
 
+  z-index: 50;
 }
+
+
+/* where the transition magic happens */
+.collapsed
+{
+  max-height: 750px;
+  overflow-y: hidden;
+}
+
 </style>
