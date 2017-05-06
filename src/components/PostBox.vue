@@ -1,31 +1,30 @@
+<!--
+  PostBox component,
+  used for containing information about a post
+-->
 <template>
-  <div class="postBox-container">
-    <!-- button section here -->
-    <div class="buttonSection">
-      <button @click = "voteCount++"><i>keyboard_arrow_up</i></button>
-      <div class="count" v-text="voteCount"></div>
-      <button @click = "voteCount--"><i>keyboard_arrow_down</i></button>
+  <div class="card postbox">
+    <!-- side button section -->
+    <div class="side-btn-section">
+      <button class="small circular light clear"><i>arrow_upward</i></button>
+      <span class="voteCount">{{count}}</span>
+      <button class="small circular light clear"><i>arrow_downward</i></button>
     </div>
-
-    <div class="contentSection">
-      <div class="postHeader">
-        <div class="avatarContainer">
-          <img class="avatar" :src="usrAvatar"></img>
-        </div>
-        <div class="username">
-          <span>{{userName}}</span>
-        </div>
+    <!-- post content section -->
+    <div class="postContent">
+      <!-- header section-->
+      <div class="contentHeader">
+        <div class="postTitle">{{title}}</div>
+        <div class="postLocn"><a>{{locn}}</a></div>
+        <div class="postUsr">{{usrnm}}</div>
       </div>
 
-      <div class="postContent">
-        <!-- text container-->
-        <div>
-          <span>{{postContent}}</span>
-        </div>
-        <!-- image container -->
-        <div v-if = "imgHere === true" class="imgContainer">
-          <img class="imgContent" :src="postImg"> </img>
-        </div>
+      <div class="contentDetail">
+
+        <input type="checkbox" class="stretcher" id="s1"/>
+        <div class="content-wrapper">{{content}}</div>
+
+        <label for="s1" class="stretcher-trigger"></label>
       </div>
     </div>
   </div>
@@ -33,118 +32,152 @@
 
 
 <script>
+// for placeholder
+var title = 'a post title'
+var locn = 'somewhere over the rainbow'
+var usrnm = 'username'
+var content = `this is a long content, for testing purpose. hopefully the
+stretcher for the post work quite well so that later it can look real cool.
+won't it be cool if we have a show more/less function for our post
+this is a long content, for testing purpose. hopefully the
+stretcher for the post work quite well so that later it can look real cool.
+won't it be cool if we have a show more/less function for our post
+this is a long content, for testing purpose. hopefully the
+stretcher for the post work quite well so that later it can look real cool.
+won't it be cool if we have a show more/less function for our post`
 export default
 {
   name: 'PostBox',
 
   data: function () {
     return {
-      voteCount: 0
+      count: 0,
+      title: title,
+      locn: locn,
+      usrnm: usrnm,
+      content: content
     }
   },
 
   props:
   {
-    usrAvatar: {
-      type: String,
-      required: true
-    },
-    userName: {
-      type: String,
-      required: true
-    },
-    postContent: {
-      type: String,
-      required: true
-    },
-    imgHere: {
-      type: Boolean,
-      required: true
-    },
-    postImg: String
   }
 }
 </script>
 
 
 <style scoped>
-.postBox-container
+/* check this one https://codepen.io/Idered/pen/AeBgF?editors=1100 */
+.postbox
 {
-  /* box shadow effect */
-  -webkit-box-shadow: 1px 2px 7px 2px rgba(230,230,230,1);
-  -moz-box-shadow: 1px 2px 7px 2px rgba(230,230,230,1);
-  box-shadow: 1px 2px 7px 2px rgba(230,230,230,1);
-
-
   display: flex;
   flex-direction: row;
 
-  min-width: 350px;
-  width: 60vw;
-  max-width: 500px;
-
-
-  /* padding and margin
-     reminder : top right bottom left */
-
-  margin: 10px auto 10px auto;
-
+  padding: 25px 25px 25px 25px;
 }
 
-.buttonSection
+
+.side-btn-section
 {
   display: flex;
   flex-direction: column;
+
   align-items: center;
-
-  padding: 10px 5px 10px 15px
-
-}
-.count{
-  padding: 5px 5px 5px 5px;
 }
 
-.contentSection
+.voteCount
 {
-  padding-left: 15px;
-  padding-right: 20px;
-}
-
-.postHeader
-{
-  font-weight: bold;
-  padding: 20px 5px 10px 5px;
-  border-bottom: 1px solid #D8D8D8;
 
 }
 
-.avatarContainer
-{
-  margin-left:  0px;
-  margin-right: 10px;
-  padding-bottom: 5px
-}
-
-.avatar
-{
-  border-radius: 100%;
-  max-height: 40px;
-  max-width:  40px;
-}
-
-.username
-{
-  padding: 5px 10px 5px 10px;
-}
-
+/* post content */
 .postContent
 {
-  padding: 20px 10px 20px 0px;
+  width: 100%;
+  padding: 5px 10px 5px 10px;
+  margin-left: 10px;
 }
 
-.imgContainer
+/* post header */
+.contentHeader
 {
-  max-width: 100%;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #CCCCCC;
 }
 
+.postTitle
+{
+  display: block;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom:8px;
+}
+
+.postLocn
+{
+  display: block;
+  font-size: 12px;
+}
+
+.postUsr
+{
+  display: block;
+  margin-top: 3px;
+  font-size: 12px;
+
+}
+
+/* content detail */
+.contentDetail
+{
+  padding-top: 15px;
+}
+
+.content-wrapper
+{
+  max-height: 75px;
+  overflow-y: hidden;
+
+  transition: max-height .5s ease-out;
+  -webkit-transition: max-height .5s ease-out;
+  -moz-transition: max-height .5s ease-out;
+
+  text-align: justify;
+}
+
+/* where the transition magic happens */
+.stretcher
+{
+  display:none;
+}
+
+.stretcher:checked ~ .content-wrapper
+{
+  max-height: 700px;
+  overflow-y: auto;
+
+}
+
+.stretcher ~ .stretcher-trigger:before
+{
+  content: 'MORE'
+}
+
+.stretcher:checked ~ .stretcher-trigger:before
+{
+  content:'LESS'
+}
+
+.stretcher-trigger{
+  cursor:pointer;
+  font-size: 13px;
+  font-weight: bold;
+
+  display: inline-block;
+  width: 100%;
+  text-align: center;
+
+  margin-top: 20px;
+
+}
 </style>

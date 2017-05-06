@@ -1,4 +1,8 @@
-<!-- form -->
+<!-- form
+TODO:
+- need to connect with the drawer
+- need to add it into the index, add directly into its child to make it show
+-->
 <template>
   <div class="overlay" v-show="show" @click="show=false">
     <div class="formBox">
@@ -78,7 +82,6 @@ export default{
   right: 0;
   bottom:0;
   z-index:40;
-
 
   display: flex;
   align-items:     center;

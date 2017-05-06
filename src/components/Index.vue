@@ -49,12 +49,14 @@
 </template>
 
 <script>
+import accForm from './accForm'
 import Maindrawer from './MainDrawer'
 import Mobiledrawer from './MobileDrawer'
 export default {
   components: {
     Maindrawer,
-    Mobiledrawer
+    Mobiledrawer,
+    accForm
   },
   data () {
     return {}
