@@ -101,6 +101,7 @@ export default {
       // document.getElementById('accountForm').style.display = 'flex'
       // document.getElementById('accountForm').style.opacity = '1'
       // $refs.accountF.toggleForm()
+      console.log(this.$parent.$parent)
       this.$parent.$parent.$refs.accountF.toggleForm()
     }
   },

@@ -67,13 +67,20 @@
         </div>
       </router-link>
 
+
+      <!-- for account form-->
+      <div class="item item-link" @click="showForm">
+        <i class="item-primary">person_pin</i>
+        <div class="item-content">Account</div>
+      </div>
+
       <router-link to="/">
         <div class="tabcolors">
           <!-- Log Out parens placeholder -->
           <q-drawer-link icon="exit_to_app" to="/log-out">Log Out</q-drawer-link>
         </div>
       </router-link>
-      
+
     </div>
   </div>
 </template>
@@ -82,6 +89,13 @@
 export default {
   data () {
     return {}
+  },
+  methods: {
+    showForm: function () {
+      // console.log(this.$parent.$parent.$parent.$refs)
+      // away to acces accForm method, there might be a better way to do this
+      this.$parent.$parent.$parent.$refs.accountF.toggleForm()
+    }
   }
 }
 </script>
