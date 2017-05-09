@@ -12,12 +12,6 @@
 
     <!-- List of fields -->
     <div class="list platform-delimiter">
-      <!-- header title not needed now I think -->
-      <!--
-      <div class="list-header">
-        Header
-      </div>
-      -->
 
       <router-link to="/about-us">
         <div class="tabcolors">
@@ -85,15 +79,17 @@
   </div>
 </template>
 
+
 <script>
 export default {
   data () {
     return {}
   },
   methods: {
+    // show the form for logging in/sign up
     showForm: function () {
       // console.log(this.$parent.$parent.$parent.$refs)
-      // away to acces accForm method, there might be a better way to do this
+      // a way to acces accForm method, there might be a better way to do this
       this.$parent.$parent.$parent.$refs.accountF.toggleForm()
     }
   }
@@ -102,4 +98,3 @@ export default {
 
 <style>
 </style>
-s

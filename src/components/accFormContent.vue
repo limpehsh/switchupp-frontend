@@ -1,54 +1,104 @@
+<!--
+accFormContent
+Component containing the form fields for sign up and log in form
+
+TODO:
+- implement the form post action for log in and sign up
+
+NOTE:
+- currently the methods are still a stub/placeholder for the actual
+  function
+-->
+
 <template >
   <transition name="fade" mode="out-in" >
+    <!-- log in form -->
     <div v-if="login === true" key="login" class="formContent">
-      <h4 class="formHeader">Log in</h4>
-      <!-- form fields -->
-      <div class="floating-label">
-        <input required class="full-width">
-        <label>Username</label>
-      </div>
-      <div class="floating-label">
-        <input required class="full-width">
-        <label>Password</label>
-      </div>
-      <div class="form-btn-container">
-        <button class="form-btn primary raised">Log In</button>
-        <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
-      </div>
+      <form>
+        <h4 class="formHeader">Log in</h4>
+        <div class="floating-label" >
+          <input required
+                 class = "full-width"
+                 name  = "username"
+                 maxlength = "30">
+          <label>Username</label>
+        </div>
+        <div class="floating-label">
+          <input required
+                 class = "full-width"
+                 type  = "password"
+                 name  = "password"
+                 maxlength = "30">
+          <label>Password</label>
+        </div>
+        <div class="form-btn-container">
+          <button class="form-btn primary raised" @click="submitLI">Log In</button>
+          <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
+        </div>
+      </form>
     </div>
 
+    <!-- sign up form -->
     <div v-else key="signup" class="formContent" >
-      <h4 class="formHeader">Sign Up</h4>
-      <!-- form fields -->
-      <div class="floating-label">
-        <input required class="full-width">
-        <label>Username</label>
-      </div>
-      <div class="floating-label">
-        <input required class="full-width">
-        <label>Password</label>
-      </div>
-      <div class="floating-label">
-        <input required class="full-width">
-        <label>Email</label>
-      </div>
-      <div class="form-btn-container">
-        <button class="form-btn primary raised">Sign Up</button>
-        <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
-      </div>
+      <form>
+        <h4 class="formHeader">Sign Up</h4>
+        <div class="floating-label">
+          <input required
+                 class = "full-width"
+                 name  = "username"
+                 maxlength = "30">
+          <label>Username</label>
+        </div>
+        <div class="floating-label">
+          <input required
+                 class = "full-width"
+                 name  = "email" >
+          <label>Email</label>
+        </div>
+        <div class="floating-label">
+          <input required
+                 class = "full-width"
+                 type  = "password"
+                 name  = "password"
+                 maxlength = "30" >
+          <label>Password</label>
+        </div>
+        <div class="form-btn-container">
+          <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
+          <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
+        </div>
+        </form>
     </div>
   </transition>
 </template>
 
 
 <script>
+// necessary import for post/get
+import Vue from 'vue'
+import axios from 'axios'
+import VAxios from 'vue-axios'
+// currently commented out to silence linter
+// import router from '../router'
+
+Vue.use(VAxios, axios)
+
 export default {
   name: 'accFormContent',
 
   methods:
   {
+    // toggling between the log in and sign up form
     toggleType: function () {
       this.login = !this.login
+    },
+    // placeholder for sign up button press
+    submitSU: function () {
+      console.log('Sign Up Clicked')
+    },
+    // placeholder for log in button press
+    submitLI: function () {
+      console.log('Log In Clicked')
     }
   },
 

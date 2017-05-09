@@ -12,7 +12,7 @@ NOTE:
     <div v-if="formShow === true" class="overlayForm" >
 
       <div class="overlayForm-click" @click="toggleForm"></div>
-      <div class="formBox">
+      <div class="formBox card">
         <accFormContent  />
       </div>
 
@@ -86,7 +86,7 @@ export default{
   z-index: 50;
 }
 
-
+/* for transition effect */
 .fade-enter-active, .fade-leave-active {
   transition: opacity .2s
 }
@@ -97,9 +97,6 @@ export default{
 .formBox
 {
   background-color: #F9F9F9;
-  border-radius: 5px;
-  -moz-border-radius: 5px;
-  -webkit-border-radius: 5px;
 
   position: fixed;
   z-index: 99;
