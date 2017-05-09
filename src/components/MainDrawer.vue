@@ -95,40 +95,40 @@ export default {
     return {
       form: [
         {
-          label: 'Sign Up Test',
-          icon: 'help',
+          label: 'Sign Up (Dialog)',
+          icon: 'play_for_work',
           handler () {
             Dialog.create({
               title: 'Sign Up',
-              message: 'Sign Up Page!',
+              message: 'Create an account to track and post incidents relating to Melbournes infrastructure.',
               form: {
-                name: {
+                email: {
                   type: 'textbox',
-                  label: 'Textbox',
+                  label: 'E-mail',
+                  required: 'true',
                   model: ''
                 },
-                age: {
-                  type: 'numeric',
-                  label: 'Numeric',
-                  model: 13,
-                  min: 13,
-                  max: 90
+                password: {
+                  type: 'password',
+                  label: 'Password',
+                  model: ''
                 },
-                tags: {
-                  type: 'chips',
-                  label: 'Chips',
-                  model: ['Joe', 'John']
-                },
-                comments: {
-                  type: 'textarea',
-                  label: 'Textarea',
+                repeatPassword: {
+                  type: 'password',
+                  label: 'Repeat Password',
                   model: ''
                 }
               },
               buttons: [
-                'Cancel',
                 {
-                  label: 'Ok',
+                  label: 'Cancel',
+                  classes: 'primary clear',
+                  style: 'text-decoration: underline'
+                },
+                {
+                  label: 'Sign Up',
+                  type: 'submit',
+                  classes: 'pink',
                   handler (data) {
                     Toast.create('Returned ' + JSON.stringify(data))
                   }

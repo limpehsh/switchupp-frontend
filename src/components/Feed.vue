@@ -4,7 +4,6 @@
       <div class="content">
         <h1>Incident Feed</h1>
         <div class="card bg-light">
-          <h6>Someone</h6>
         </div>
       </div>
       <PostBox
