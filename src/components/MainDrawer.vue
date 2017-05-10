@@ -80,7 +80,6 @@
 </template>
 
 <script>
-import { Dialog, Toast } from 'quasar'
 export default {
   name: 'maindrawer',
   data () {
