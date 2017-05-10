@@ -110,9 +110,10 @@ export default {
         username: this.user,
         email: this.email,
         password: this.pass,
-        admin: 'false',
-        reputation: '1',
-        type: 1
+        admin: false,
+        reputation: 1,
+        type: 1,
+        logged: true
       })
       router.push('about-us')
     }

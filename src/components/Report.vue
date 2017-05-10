@@ -150,9 +150,13 @@ export default {
       axios.post('http://localhost:3001/report/', {
         title: this.title,
         locname: this.location,
+        // location: [-37.7970795, 144.961302339626],
         desc: this.desc,
-        user: 'admin',
-        image: this.image
+        author: 'testing-phase',
+        image: this.image,
+        votescore: 0,
+        createdAt: Date(),
+        visible: true
       })
       router.push('feed')
     }

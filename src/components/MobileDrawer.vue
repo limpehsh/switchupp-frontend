@@ -31,11 +31,11 @@
         </div>
       </router-link>
 
-      <router-link to="/profile">
+      <!-- <router-link to="/profile">
         <div class="tabcolors">
           <q-drawer-link icon="account_circle" to="/profile">Profile</q-drawer-link>
         </div>
-      </router-link>
+      </router-link> -->
 
       <router-link to="/report">
         <div class="tabcolors">
@@ -43,11 +43,11 @@
         </div>
       </router-link>
 
-      <router-link to="/settings">
+      <!-- <router-link to="/settings">
         <div class="tabcolors">
           <q-drawer-link icon="settings" to="/settings">Settings</q-drawer-link>
         </div>
-      </router-link>
+      </router-link> -->
 
       <router-link to="/sign-up">
         <div class="tabcolors">

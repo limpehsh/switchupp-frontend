@@ -28,11 +28,11 @@
         </div>
       </router-link>
 
-      <router-link to="/profile">
+      <!-- <router-link to="/profile">
         <div class="tabcolors">
           <q-drawer-link icon="account_circle" to="/profile">Profile</q-drawer-link>
         </div>
-      </router-link>
+      </router-link> -->
 
       <router-link to="/report">
         <div class="tabcolors">
@@ -40,11 +40,11 @@
         </div>
       </router-link>
 
-      <router-link to="/settings">
+      <!-- <router-link to="/settings">
         <div class="tabcolors">
           <q-drawer-link icon="settings" to="/settings">Settings</q-drawer-link>
         </div>
-      </router-link>
+      </router-link> -->
 
       <router-link to="/sign-up">
         <div class="tabcolors">
@@ -70,21 +70,9 @@
         <i class="item-primary">person_pin</i>
         <div class="item-content">Account</div>
       </div>
-
       <div class="item item-link" @click="openReport">
         <i class="item-primary">person_pin</i>
         <div class="item-content">Report</div>
-      </div>
-      <!-- Testing Dialogs -->
-      <div
-        class="item item-link"
-        v-for="dialog in form"
-        @click="dialog.handler()"
-      >
-        <i class="item-primary">{{dialog.icon}}</i>
-        <div class="item-content has-secondary">
-          <div>{{dialog.label}}</div>
-        </div>
       </div>
 
     </div>
@@ -95,138 +83,18 @@
 import { Dialog, Toast } from 'quasar'
 export default {
   name: 'maindrawer',
+  data () {
+    return {}
+  },
   methods: {
     // show the form for logging in/sign up
     openAcc: function () {
       // a way to acces accForm method, there might be a better way to do this
-      this.$parent.$parent.$parent.$refs.accountForm.open()
+      this.$parent.$parent.$refs.accountForm.open()
     },
+    // shw the form for reporting
     openReport: function () {
-      this.$parent.$parent.$parent.$refs.reportForm.open()
-    }
-  },
-  data () {
-    return {
-      form: [
-        {
-          label: 'Sign Up (Dialog)',
-          icon: 'play_for_work',
-          handler () {
-            Dialog.create({
-              title: 'Sign Up',
-              message: 'Create an account to track and post incidents relating to Melbournes infrastructure.',
-              form: {
-                email: {
-                  type: 'textbox',
-                  label: 'E-mail',
-                  required: 'true',
-                  model: ''
-                },
-                password: {
-                  type: 'password',
-                  label: 'Password',
-                  model: ''
-                },
-                repeatPassword: {
-                  type: 'password',
-                  label: 'Repeat Password',
-                  model: ''
-                }
-              },
-              buttons: [
-                {
-                  label: 'Cancel',
-                  classes: 'primary clear',
-                  style: 'text-decoration: underline'
-                },
-                {
-                  label: 'Sign Up',
-                  type: 'submit',
-                  classes: 'pink',
-                  handler (data) {
-                    Toast.create('Returned ' + JSON.stringify(data))
-                  }
-                }
-              ]
-            })
-          }
-        },
-        {
-          label: 'Single Selection',
-          icon: 'radio_button_checked',
-          handler () {
-            Dialog.create({
-              title: 'Radios',
-              message: 'Message can be used for all types of Dialogs.',
-              form: {
-                option: {
-                  type: 'radio',
-                  model: 'opt1',
-                  items: [
-                    {label: 'Option 1', value: 'opt1'},
-                    {label: 'Option 2', value: 'opt2'},
-                    {label: 'Option 3', value: 'opt3'}
-                  ]
-                }
-              },
-              buttons: [
-                'Cancel',
-                {
-                  label: 'Ok',
-                  handler (data) {
-                    Toast.create('Returned ' + JSON.stringify(data))
-                  }
-                }
-              ]
-            })
-          }
-        },
-        {
-          label: 'Multiple Selection',
-          icon: 'check_box',
-          handler () {
-            Dialog.create({
-              title: 'Checkbox & Toggle',
-              message: 'Message can be used for all types of Dialogs.',
-              form: {
-                header1: {
-                  type: 'heading',
-                  label: 'Checkboxes'
-                },
-                group1: {
-                  type: 'checkbox',
-                  items: [
-                    {label: 'Option 1', value: 'opt1', model: true},
-                    {label: 'Option 2', value: 'opt2', model: false},
-                    {label: 'Option 3', value: 'opt3', model: false}
-                  ]
-                },
-                header2: {
-                  type: 'heading',
-                  label: 'Toggles'
-                },
-                group2: {
-                  type: 'toggle',
-                  items: [
-                    {label: 'Option 1', value: 'opt1', model: true},
-                    {label: 'Option 2', value: 'opt2', model: false},
-                    {label: 'Option 3', value: 'opt3', model: false}
-                  ]
-                }
-              },
-              buttons: [
-                'Cancel',
-                {
-                  label: 'Ok',
-                  handler (data) {
-                    Toast.create('Returned ' + JSON.stringify(data))
-                  }
-                }
-              ]
-            })
-          }
-        }
-      ]
+      this.$parent.$parent.$refs.reportForm.open()
     }
   }
 }
