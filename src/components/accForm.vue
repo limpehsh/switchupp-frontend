@@ -12,10 +12,13 @@ NOTE:
 
 <template >
   <transition name="fade" mode="out-in" >
-    <form>
+
       <!-- log in form -->
       <div v-if="this.typeLogIn === true" key="login" class="formContent">
-          <h4 class="formHeader">Log in</h4>
+        <h4 class="formHeader">Log in</h4>
+        <form>
+
+          <!-- Username -->
           <div class="floating-label" >
             <input required
                    class = "full-width"
@@ -23,6 +26,8 @@ NOTE:
                    maxlength = "30">
             <label>Username</label>
           </div>
+
+          <!-- Password -->
           <div class="floating-label">
             <input required
                    class = "full-width"
@@ -31,42 +36,77 @@ NOTE:
                    maxlength = "30">
             <label>Password</label>
           </div>
+
           <div class="form-btn-container">
             <button class="form-btn primary raised" @click="submitLI">Log In</button>
             <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
           </div>
+
+        </form>
       </div>
 
       <!-- sign up form -->
       <div v-else key="signup" class="formContent" >
-          <h4 class="formHeader">Sign Up</h4>
+        <h4 class="formHeader">Sign Up</h4>
+        <form method="post" action="http://localhost:3001/user/" @submit.prevent="createUser">
+
+          <!-- Username -->
           <div class="floating-label">
             <input required
                    class = "full-width"
                    name  = "username"
-                   maxlength = "30">
+                   maxlength = "30"
+                   v-model.trim="user"
+                   @input="$v.user.$touch()">
             <label>Username</label>
+            <!-- <p class="text-red" v-if="!$v.user.minLength">Too short a username</p> -->
           </div>
+
+          <!-- E-mail -->
           <div class="floating-label">
             <input required
                    class = "full-width"
-                   name  = "email" >
+                   name  = "email"
+                   v-model.trim="email"
+                   @input="$v.email.$touch()" >
             <label>Email</label>
+            <!-- <p class="text-red" v-if="!$v.email.email">The input must be a proper email!</p> -->
           </div>
+
+          <!-- Password -->
           <div class="floating-label">
             <input required
                    class = "full-width"
                    type  = "password"
                    name  = "password"
-                   maxlength = "30" >
+                   maxlength = "30"
+                   v-model.trim="pass"
+                   @input="$v.pass.$touch()" >
             <label>Password</label>
+            <!-- <p class="text-red" v-if="!$v.pass.minLength">Password too short</p> -->
           </div>
+
+          <!-- REPEAT Password -->
+          <!-- <div class="floating-label">
+            <input required
+                   class = "full-width"
+                   type  = "password"
+                   name  = "repeatPassword"
+                   maxlength = "30"
+                   v-model.trim="repeatPass"
+                   @input="$v.repeatPass.$touch()" >
+            <label>Repeat Password</label>
+            <p class="text-red" v-if="!$v.repeatPass.sameAsPassword">Passwords must be identical.</p>
+          </div> -->
+
           <div class="form-btn-container">
             <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
             <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
           </div>
+
+        </form>
       </div>
-    </form>
+
   </transition>
 </template>
 
@@ -76,6 +116,10 @@ NOTE:
 import Vue from 'vue'
 import axios from 'axios'
 import VAxios from 'vue-axios'
+
+// To display the form errors
+import { required, minLength, sameAs, email } from 'vuelidate/lib/validators'
+
 // currently commented out to silence linter
 // import router from '../router'
 
@@ -86,7 +130,28 @@ export default {
 
   data: function () {
     return {
+      user: '',
+      email: '',
+      pass: '',
+      repeatPass: '',
       typeLogIn: this.login
+    }
+  },
+  validations: {
+    user: {
+      required,
+      minLength: minLength(4)
+    },
+    email: {
+      required,
+      email
+    },
+    pass: {
+      required,
+      minLength: minLength(6)
+    },
+    repeatPass: {
+      sameAsPassword: sameAs('pass')
     }
   },
 
@@ -106,6 +171,18 @@ export default {
     // placeholder for log in button press
     submitLI: function () {
       console.log('Log In Clicked')
+    },
+    createUser () {
+      axios.post('http://localhost:3001/user/', {
+        username: this.user,
+        email: this.email,
+        password: this.pass,
+        admin: false,
+        reputation: 1,
+        type: 1,
+        logged: true
+      })
+      // router.push('/')
     }
   },
 

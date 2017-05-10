@@ -46,7 +46,7 @@
         </div>
       </router-link> -->
 
-      <router-link to="/sign-up">
+      <!-- USELESS NOW <router-link to="/sign-up">
         <div class="tabcolors">
           <q-drawer-link icon="play_for_work" to="/sign-up">Sign Up</q-drawer-link>
         </div>
@@ -56,24 +56,23 @@
         <div class="tabcolors">
           <q-drawer-link icon="input" to="/sign-in">Sign In</q-drawer-link>
         </div>
-      </router-link>
-
-      <router-link to="/">
-        <div class="tabcolors">
-          <!-- Log Out parens placeholder -->
-          <q-drawer-link icon="exit_to_app" to="/log-out">Log Out</q-drawer-link>
-        </div>
-      </router-link>
+      </router-link> -->
 
       <!-- for account form-->
       <div class="item item-link" @click="openAcc">
         <i class="item-primary">person_pin</i>
-        <div class="item-content">Account</div>
+        <div class="item-content">Log In/Sign Up</div>
       </div>
       <div class="item item-link" @click="openReport">
-        <i class="item-primary">person_pin</i>
-        <div class="item-content">Report</div>
+        <i class="item-primary">report_problem</i>
+        <div class="item-content">Report Form (WIP)</div>
       </div>
+
+      <!-- <router-link to="/">
+        <div class="tabcolors">
+          <q-drawer-link icon="exit_to_app" to="/log-out">Log Out</q-drawer-link>
+        </div>
+      </router-link> -->
 
     </div>
   </q-drawer>
