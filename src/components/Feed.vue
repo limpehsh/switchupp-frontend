@@ -1,85 +1,89 @@
 <template>
   <div>
     <div class="layout-padding">
-      <div class="content">
-        <h1 class="">Incident Feed</h1>
+      <div class="feedContent">
+        <h2 class="feedHeader">Incident Feed</h2>
+
+        <div class="feedStream">
+          <PostBox v-for="post in postPool" :key="post.id"/>
+        </div>
       </div>
-      <PostBox
-        :usrAvatar="avtr"
-        :userName="usrnm"
-        :postContent="ctn"
-        :imgHere="flag"
-        :postImg="imgs"/>
 
-      <PostBox
-        :usrAvatar="avtr"
-        :userName="usrnm"
-        :postContent="ctn"
-        :imgHere="flag"
-        :postImg="imgs"/>
-      <PostBox
-        :usrAvatar="avtr"
-        :userName="usrnm"
-        :postContent="ctn"
-        :imgHere="flag"
-        :postImg="imgs"/>
-      <PostBox
-        :usrAvatar="avtr"
-        :userName="usrnm"
-        :postContent="ctn"
-        :imgHere="flag"
-        :postImg="imgs"/>
-      <PostBox
-        :usrAvatar="avtr"
-        :userName="usrnm"
-        :postContent="ctn"
-        :imgHere="flag"
-        :postImg="imgs"/>
-
+      <!-- button for back to top -->
       <button v-back-to-top.animate="{offset: 500, duration: 200}"
               class="primary circular fixed-bottom-right animate-pop"
               style="margin: 0 15px 15px 0" >
          <i>keyboard_arrow_up</i>
       </button>
 
-      <a v-back-to-top.animate="1000"
+      <!-- <a v-back-to-top.animate="1000"
          class="animate-pop play-backtotop non-selectable">
          Back to top
-      </a>
+      </a> -->
     </div>
   </div>
 </template>
 
 <script>
 import PostBox from './PostBox'
-var avtr = '../statics/snorlax.png'
-var usrnm = 'asdf'
-var ctn = `check check this out check this out`
-var flag = true
+
+// placeholder, replace later with continuous post extraction from the db
+var postPool = {
+  a: {
+    id: '123'
+  },
+  b: {
+    id: '124'
+  },
+  c: {
+    id: '125'
+  },
+  d: {
+    id: '126'
+  },
+  e: {
+    id: '127'
+  },
+  f: {
+    id: '128'
+  },
+  g: {
+    id: '129'
+  }
+}
 
 export default {
   components:
   {
     PostBox
   },
+
   data () {
     return {
-      avtr: avtr,
-      usrnm: usrnm,
-      ctn: ctn,
-      flag: flag,
-      imgs: avtr
+      postPool
     }
   }
 }
 </script>
 
 <style>
-.content
+.feedContent
 {
   display:flex;
   flex-direction: column;
-  align-items: center;
+  align-content: center;
+}
+
+.feedHeader
+{
+  text-align: center;
+  font-weight:400;
+
+}
+
+.feedStream
+{
+
 }
 
 

@@ -12,63 +12,61 @@ NOTE:
 
 <template >
   <transition name="fade" mode="out-in" >
-    <!-- log in form -->
-    <div v-if="this.typeLogIn === true" key="login" class="formContent">
-      <form>
-        <h4 class="formHeader">Log in</h4>
-        <div class="floating-label" >
-          <input required
-                 class = "full-width"
-                 name  = "username"
-                 maxlength = "30">
-          <label>Username</label>
-        </div>
-        <div class="floating-label">
-          <input required
-                 class = "full-width"
-                 type  = "password"
-                 name  = "password"
-                 maxlength = "30">
-          <label>Password</label>
-        </div>
-        <div class="form-btn-container">
-          <button class="form-btn primary raised" @click="submitLI">Log In</button>
-          <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
-        </div>
-      </form>
-    </div>
+    <form>
+      <!-- log in form -->
+      <div v-if="this.typeLogIn === true" key="login" class="formContent">
+          <h4 class="formHeader">Log in</h4>
+          <div class="floating-label" >
+            <input required
+                   class = "full-width"
+                   name  = "username"
+                   maxlength = "30">
+            <label>Username</label>
+          </div>
+          <div class="floating-label">
+            <input required
+                   class = "full-width"
+                   type  = "password"
+                   name  = "password"
+                   maxlength = "30">
+            <label>Password</label>
+          </div>
+          <div class="form-btn-container">
+            <button class="form-btn primary raised" @click="submitLI">Log In</button>
+            <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
+          </div>
+      </div>
 
-    <!-- sign up form -->
-    <div v-else key="signup" class="formContent" >
-      <form>
-        <h4 class="formHeader">Sign Up</h4>
-        <div class="floating-label">
-          <input required
-                 class = "full-width"
-                 name  = "username"
-                 maxlength = "30">
-          <label>Username</label>
-        </div>
-        <div class="floating-label">
-          <input required
-                 class = "full-width"
-                 name  = "email" >
-          <label>Email</label>
-        </div>
-        <div class="floating-label">
-          <input required
-                 class = "full-width"
-                 type  = "password"
-                 name  = "password"
-                 maxlength = "30" >
-          <label>Password</label>
-        </div>
-        <div class="form-btn-container">
-          <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
-          <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
-        </div>
-        </form>
-    </div>
+      <!-- sign up form -->
+      <div v-else key="signup" class="formContent" >
+          <h4 class="formHeader">Sign Up</h4>
+          <div class="floating-label">
+            <input required
+                   class = "full-width"
+                   name  = "username"
+                   maxlength = "30">
+            <label>Username</label>
+          </div>
+          <div class="floating-label">
+            <input required
+                   class = "full-width"
+                   name  = "email" >
+            <label>Email</label>
+          </div>
+          <div class="floating-label">
+            <input required
+                   class = "full-width"
+                   type  = "password"
+                   name  = "password"
+                   maxlength = "30" >
+            <label>Password</label>
+          </div>
+          <div class="form-btn-container">
+            <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
+            <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
+          </div>
+      </div>
+    </form>
   </transition>
 </template>
 

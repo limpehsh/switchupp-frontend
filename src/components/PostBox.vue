@@ -3,7 +3,7 @@
   used for containing information about a post
 -->
 <template>
-  <div class="card postbox">
+  <div class="card">
     <!-- side button section -->
     <div class="side-btn-section">
       <button class="small circular light clear"><i>arrow_upward</i></button>
@@ -15,17 +15,25 @@
       <!-- header section-->
       <div class="contentHeader">
         <div class="postTitle">{{title}}</div>
-        <div class="postLocn"><a>{{locn}}</a></div>
-        <div class="postUsr"><a>{{usrnm}}</a></div>
+        <div class="postLinkDetail"><a>{{locn}}</a></div>
+        <div class="postLinkDetail"><a>{{usrnm}}</a></div>
       </div>
+      <button class="full-width primary clear" @click="toggleVisible()">{{labelName}}</button>
+      <q-transition name="slide">
+        <div v-show="visible">
+          <div>
+            {{content}}
+          </div>
+        </div>
+      </q-transition>
 
-      <div class="contentDetail">
+      <!-- <div class="contentDetail">
 
 
         <div class="content-wrapper" v-bind:class="{collapsed: isCollapse}">{{content}}</div>
         <button class="stretcher light clear" @click="handleCollapse">MORE</button>
 
-      </div>
+      </div> -->
     </div>
   </div>
 </template>
@@ -52,25 +60,48 @@ export default
 
   data: function () {
     return {
-      count: 0,
-      title: title,
-      locn: locn,
-      usrnm: usrnm,
-      content: content,
+      count: this.postData.voteCount,
+      title: this.postData.postTitle,
+      locn: this.postData.incidentLocn,
+      usrnm: this.postData.postedBy,
+      content: this.postData.content,
       /* for collapsible */
-      isCollapse: false
+      labelName: 'More',
+      visible: false
     }
   },
+
   methods:
   {
-    handleCollapse: function (e) {
-      // isCollapse =! isCollapse
-      this.isCollapse = !this.isCollapse
-      e.target.textContent = this.isCollapse ? 'LESS' : 'MORE'
+    toggleVisible: function () {
+      this.visible = !this.visible
+      this.labelName = this.visible ? 'Less' : 'More'
     }
   },
+
   props:
   {
+    postData: {
+      type: Object,
+      default: function () {
+        return {
+          voteCount: 0,
+          postTitle: title,
+          incidentLocn: locn,
+          postedBy: usrnm,
+          content: content
+        }
+      },
+      validator: function (postData) {
+        var cVoteCount = typeof postData.voteCount === 'number'
+        var cPostTitle = typeof postData.postTitle === 'string'
+        var cIncidentLocn = typeof postData.incidentLocn === 'string'
+        var cPostedBy = typeof postData.postedBy === 'string'
+        var cContent = typeof postData.content === 'string'
+
+        return cVoteCount && cPostTitle && cIncidentLocn && cPostedBy && cContent
+      }
+    }
   }
 }
 </script>
@@ -78,13 +109,17 @@ export default
 
 <style scoped>
 /* check this one https://codepen.io/Idered/pen/AeBgF?editors=1100 */
-.postbox
-{
-  display: flex;
-  flex-direction: row;
+.card {
+  /* cards need a max-width specified */
+  max-width: 950px;
 
   padding: 25px 25px 15px 25px;
+
+  display: flex;
+  flex-direction:row;
+
 }
+
 
 
 .side-btn-section
@@ -93,7 +128,7 @@ export default
   flex-direction: column;
 
   align-items: center;
-  padding-top: 15px;
+
 }
 
 .voteCount
@@ -125,18 +160,10 @@ export default
   margin-bottom:8px;
 }
 
-.postLocn
+.postLinkDetail
 {
   display: block;
-  font-size: 12px;
-}
-
-.postUsr
-{
-  display: block;
-  margin-top: 3px;
-  font-size: 12px;
-
+  font-size:12px;
 }
 
 /* content detail */
@@ -145,42 +172,7 @@ export default
   padding-top: 15px;
 }
 
-.content-wrapper
-{
-  max-height: 75px;
-  overflow-y: hidden;
-
-  transition: max-height 1s ease;
-  -webkit-transition: max-height 1s ease;
-  -moz-transition: max-height 1s ease;
-
-  text-align: justify;
-  background:linear-gradient(transparent 150px, white);
-}
 
 
-.stretcher
-{
-  position:relative;
-  width: 100%;
-
-  font-size: 12px;
-  font-weight: bold;
-  color: #747474;
-
-  margin-top: 10px;
-  text-align: center;
-
-
-  z-index: 50;
-}
-
-
-/* where the transition magic happens */
-.collapsed
-{
-  max-height: 750px;
-  overflow-y: hidden;
-}
 
 </style>
