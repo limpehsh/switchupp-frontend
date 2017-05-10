@@ -18,7 +18,7 @@
         <div class="postLinkDetail"><a>{{locn}}</a></div>
         <div class="postLinkDetail"><a>{{usrnm}}</a></div>
       </div>
-      <button class="full-width primary clear" @click="toggleVisible()">{{labelName}}</button>
+      <button class="full-width clear" @click="toggleVisible()">{{labelName}}</button>
       <q-transition name="slide">
         <div v-show="visible">
           <div>
