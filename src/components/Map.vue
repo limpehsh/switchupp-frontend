@@ -58,7 +58,7 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 
 .leaflet-fake-icon-image-2x {
   background-image: url(../../node_modules/leaflet/dist/images/marker-icon-2x.png);
