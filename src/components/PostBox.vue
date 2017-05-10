@@ -18,15 +18,15 @@
         <div class="postLinkDetail"><a>{{locn}}</a></div>
         <div class="postLinkDetail"><a>{{usrnm}}</a></div>
       </div>
-      <button class="full-width clear" @click="toggleVisible()">{{labelName}}</button>
+
       <q-transition name="slide">
-        <div v-show="visible">
-          <div>
+        <div class="content-wrapper" v-show="visible">
+          <div class="text-content">
             {{content}}
           </div>
         </div>
       </q-transition>
-
+      <button class="full-width clear text-grey-7" @click="toggleVisible()">{{labelName}}</button>
       <!-- <div class="contentDetail">
 
 
@@ -120,8 +120,6 @@ export default
 
 }
 
-
-
 .side-btn-section
 {
   display: flex;
@@ -163,7 +161,7 @@ export default
 .postLinkDetail
 {
   display: block;
-  font-size:12px;
+  font-size: 12px;
 }
 
 /* content detail */
@@ -171,6 +169,18 @@ export default
 {
   padding-top: 15px;
 }
+
+.content-wrapper
+{
+  padding-top: 20px;
+}
+
+.text-content
+{
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 
 
 
