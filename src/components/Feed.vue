@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 <template>
   <div>
     <div class="layout-padding">
@@ -89,4 +87,3 @@ export default {
 }
 
 </style>
->>>>>>> newComponent
