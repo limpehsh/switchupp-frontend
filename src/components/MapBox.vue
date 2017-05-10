@@ -4,7 +4,7 @@
 -->
 <template>
   <div id="app">
-    <v-map :zoom="zoom" :center="center">
+    <v-map class ="mapasdf" :zoom="zoom" :center="center">
       <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
       <v-marker :lat-lng="marker"></v-marker>
     </v-map>
@@ -81,9 +81,15 @@ export default
 <style scoped>
 @import "../../node_modules/leaflet/dist/leaflet.css";
 #app {
-  height: 150px;
-  width: 300px;
+  height: 100%;
+  width: 100%;
 }
+
+.mapasdf
+{
+  z-index: 0;
+}
+
 .leaflet-fake-icon-image-2x {
   background-image: url(../../node_modules/leaflet/dist/images/marker-icon-2x.png);
 }

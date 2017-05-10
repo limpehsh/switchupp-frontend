@@ -4,45 +4,53 @@
 -->
 <template>
   <div class="card">
-    <!-- side button section -->
-    <div class="side-btn-section">
-      <button class="small circular light clear"><i>arrow_upward</i></button>
-      <span class="voteCount">{{count}}</span>
-      <button class="small circular light clear"><i>arrow_downward</i></button>
-    </div>
-    <!-- post content section -->
-    <div class="postContent">
-      <!-- header section-->
-      <div class="contentHeader">
-        <div>
-          <div class="postTitle">{{title}}</div>
-          <div class="postLinkDetail"><a>{{locn}}</a></div>
-          <div class="postLinkDetail"><a>{{usrnm}}</a></div>
+    <transition name="fade" mode="out-in" >
+      <div class="rowForm" v-if="!showMap" key="noMap">
+        <!-- side button section -->
+        <div class="side-btn-section">
+          <button class="small circular light clear"><i>arrow_upward</i></button>
+          <span class="voteCount">{{count}}</span>
+          <button class="small circular light clear"><i>arrow_downward</i></button>
         </div>
+        <!-- post content section -->
+        <div class="postContent">
+          <!-- header section-->
+          <div class="contentHeader">
+            <div>
+              <div class="postTitle">{{title}}</div>
+              <div class="postLinkDetail"><a @click="toggleMap">{{locn}}</a></div>
+              <div class="postLinkDetail"><a>{{usrnm}}</a></div>
+            </div>
 
-        <div class="mapContainer">
-          <MapBox />
+            <!-- <div class="mapContainer">
+              <MapBox />
+            </div> -->
+          </div>
+
+          <q-transition name="slide">
+            <div class="content-wrapper" v-show="visible">
+              <div class="text-content">
+                {{content}}
+              </div>
+            </div>
+          </q-transition>
+          <button class="full-width clear text-grey-7" @click="toggleVisible()">{{labelName}}</button>
+
         </div>
       </div>
 
-
-      <q-transition name="slide">
-        <div class="content-wrapper" v-show="visible">
-          <div class="text-content">
-            {{content}}
-          </div>
-
+      <div v-else class="rowForm" key="Map">
+        <div class="side-btn-section middleButton">
+          <button class="small circular light clear" @click="toggleMap"><i>arrow_back</i></button>
         </div>
-      </q-transition>
-      <button class="full-width clear text-grey-7" @click="toggleVisible()">{{labelName}}</button>
-      <!-- <div class="contentDetail">
-
-
-        <div class="content-wrapper" v-bind:class="{collapsed: isCollapse}">{{content}}</div>
-        <button class="stretcher light clear" @click="handleCollapse">MORE</button>
-
-      </div> -->
-    </div>
+        <div class="postContent">
+          <div class="postTitle">{{title}}</div>
+          <div class="mapContainer full-width">
+            <MapBox />
+          </div>
+        </div>
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -83,14 +91,14 @@ export default
       /* for collapsible */
       labelName: 'More',
       visible: false,
-      renderMap: false
+      showMap: false
     }
   },
 
   methods:
   {
-    openMap: function () {
-      this.$refs.positionModal.open()
+    toggleMap: function () {
+      this.showMap = !this.showMap
     },
     toggleVisible: function () {
       this.visible = !this.visible
@@ -127,16 +135,27 @@ export default
 
 
 <style scoped>
-/* check this one https://codepen.io/Idered/pen/AeBgF?editors=1100 */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .3s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
+  opacity: 0
+}
+
 .card {
   /* cards need a max-width specified */
   max-width: 950px;
   min-width:400px;
+
+
+}
+
+.rowForm
+{
   padding: 25px 25px 15px 25px;
 
   display: flex;
   flex-direction:row;
-
 }
 
 .side-btn-section
@@ -146,6 +165,11 @@ export default
 
   align-items: center;
 
+}
+
+.middleButton
+{
+  justify-content: center;
 }
 
 .voteCount
@@ -177,8 +201,8 @@ export default
 .mapContainer
 {
 
-  min-width:300px;
-  min-height:150px;
+  /*width:450px;*/
+  height:150px
 }
 
 
