@@ -9,12 +9,6 @@
     </div>
     <!-- List of fields -->
     <div class="list platform-delimiter">
-      <!-- header title not needed now I think -->
-      <!--
-      <div class="list-header">
-        Header
-      </div>
-      -->
 
       <router-link to="/about-us">
         <div class="tabcolors">
@@ -71,6 +65,16 @@
         </div>
       </router-link>
 
+      <!-- for account form-->
+      <div class="item item-link" @click="openAcc">
+        <i class="item-primary">person_pin</i>
+        <div class="item-content">Account</div>
+      </div>
+
+      <div class="item item-link" @click="openReport">
+        <i class="item-primary">person_pin</i>
+        <div class="item-content">Report</div>
+      </div>
       <!-- Testing Dialogs -->
       <div
         class="item item-link"
@@ -91,6 +95,16 @@
 import { Dialog, Toast } from 'quasar'
 export default {
   name: 'maindrawer',
+  methods: {
+    // show the form for logging in/sign up
+    openAcc: function () {
+      // a way to acces accForm method, there might be a better way to do this
+      this.$parent.$parent.$parent.$refs.accountForm.open()
+    },
+    openReport: function () {
+      this.$parent.$parent.$parent.$refs.reportForm.open()
+    }
+  },
   data () {
     return {
       form: [
@@ -219,4 +233,8 @@ export default {
 </script>
 
 <style>
+.qDrawerMimic
+{
+
+}
 </style>

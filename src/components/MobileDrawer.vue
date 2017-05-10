@@ -12,12 +12,6 @@
 
     <!-- List of fields -->
     <div class="list platform-delimiter">
-      <!-- header title not needed now I think -->
-      <!--
-      <div class="list-header">
-        Header
-      </div>
-      -->
 
       <router-link to="/about-us">
         <div class="tabcolors">
@@ -67,25 +61,47 @@
         </div>
       </router-link>
 
+
+      <!-- for account form-->
+      <div class="item item-link" @click="openAcc">
+        <i class="item-primary">person_pin</i>
+        <div class="item-content">Account</div>
+      </div>
+      <div class="item item-link" @click="openReport">
+        <i class="item-primary">person_pin</i>
+        <div class="item-content">Report</div>
+      </div>
+
       <router-link to="/">
         <div class="tabcolors">
           <!-- Log Out parens placeholder -->
           <q-drawer-link icon="exit_to_app" to="/log-out">Log Out</q-drawer-link>
         </div>
       </router-link>
-      
+
     </div>
   </div>
 </template>
+
 
 <script>
 export default {
   data () {
     return {}
+  },
+  methods: {
+    // show the form for logging in/sign up
+    openAcc: function () {
+      // a way to acces accForm method, there might be a better way to do this
+      this.$parent.$parent.$parent.$refs.accountForm.open()
+    },
+    // shw the form for reporting
+    openReport: function () {
+      this.$parent.$parent.$parent.$refs.reportForm.open()
+    }
   }
 }
 </script>
 
 <style>
 </style>
-s

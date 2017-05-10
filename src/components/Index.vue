@@ -20,28 +20,24 @@
 
     <!-- Mobile Drawer -->
     <q-drawer ref="mobiledrawer" class="hide-on-drawer-visible">
-      <!-- For the close button, screw that
-      <div class="toolbar bg-blue-10">
-        <button
-          class="hide-on-drawer-visible"
-          @click="$refs.mobiledrawer.close()"
-        >
-          <i>menu</i>
-        </button>
-        <q-toolbar-title :padding="0">
-          <router-link to ="/">
-            <div class="text-white">SwitchUp</div>
-          </router-link>
-        </q-toolbar-title>
-      </div>
-      -->
       <mobiledrawer></mobiledrawer>
     </q-drawer>
 
     <!-- Default/Main Drawer -->
     <maindrawer></maindrawer>
+    <!-- form sections -->
+
+    <!-- for forms -->
+    <q-modal ref="accountForm"
+             @close="resetForm">
+      <accForm ref='accountType' :login='true' />
+    </q-modal>
+    <q-modal ref="reportForm">
+      <reportForm />
+    </q-modal>
 
     <router-view class="layout-view"></router-view>
+
 
     <!-- FOOTER NOT READY YET -->
 
@@ -49,15 +45,29 @@
 </template>
 
 <script>
+// other components imports
+import accForm from './accForm'
 import Maindrawer from './MainDrawer'
 import Mobiledrawer from './MobileDrawer'
+import reportForm from './reportForm'
+
 export default {
   components: {
     Maindrawer,
-    Mobiledrawer
+    Mobiledrawer,
+    accForm,
+    reportForm
   },
+
   data () {
     return {}
+  },
+  methods:
+  {
+    // resets the form type
+    resetForm: function () {
+      this.$refs.accountType.resetType()
+    }
   }
 }
 </script>
