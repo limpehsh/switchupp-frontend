@@ -14,16 +14,24 @@
     <div class="postContent">
       <!-- header section-->
       <div class="contentHeader">
-        <div class="postTitle">{{title}}</div>
-        <div class="postLinkDetail"><a>{{locn}}</a></div>
-        <div class="postLinkDetail"><a>{{usrnm}}</a></div>
+        <div>
+          <div class="postTitle">{{title}}</div>
+          <div class="postLinkDetail"><a>{{locn}}</a></div>
+          <div class="postLinkDetail"><a>{{usrnm}}</a></div>
+        </div>
+
+        <div class="mapContainer">
+          <MapBox />
+        </div>
       </div>
+
 
       <q-transition name="slide">
         <div class="content-wrapper" v-show="visible">
           <div class="text-content">
             {{content}}
           </div>
+
         </div>
       </q-transition>
       <button class="full-width clear text-grey-7" @click="toggleVisible()">{{labelName}}</button>
@@ -40,6 +48,8 @@
 
 
 <script>
+import MapBox from './MapBox'
+
 // for placeholder
 var title = 'a post title'
 var locn = 'somewhere over the rainbow'
@@ -58,6 +68,11 @@ export default
 {
   name: 'PostBox',
 
+  components:
+  {
+    MapBox
+  },
+
   data: function () {
     return {
       count: this.postData.voteCount,
@@ -67,12 +82,16 @@ export default
       content: this.postData.content,
       /* for collapsible */
       labelName: 'More',
-      visible: false
+      visible: false,
+      renderMap: false
     }
   },
 
   methods:
   {
+    openMap: function () {
+      this.$refs.positionModal.open()
+    },
     toggleVisible: function () {
       this.visible = !this.visible
       this.labelName = this.visible ? 'Less' : 'More'
@@ -112,7 +131,7 @@ export default
 .card {
   /* cards need a max-width specified */
   max-width: 950px;
-
+  min-width:400px;
   padding: 25px 25px 15px 25px;
 
   display: flex;
@@ -148,7 +167,21 @@ export default
 {
   padding-bottom: 10px;
   border-bottom: 1px solid #CCCCCC;
+
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 }
+
+.mapContainer
+{
+
+  min-width:300px;
+  min-height:150px;
+}
+
+
 
 .postTitle
 {
