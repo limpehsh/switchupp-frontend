@@ -1,7 +1,6 @@
 <template>
   <div>
     <div class="layout-padding">
-      <!-- content for component -->
       <h1 class="Title">Map Display</h1>
     </div>
     <div id="app">
@@ -14,36 +13,50 @@
 </template>
 
 <script>
-import * as Nominatim from "nominatim-browser";
-Vue.component('v-map', Vue2Leaflet.Map);
-Vue.component('v-tilelayer', Vue2Leaflet.TileLayer);
-Vue.component('v-marker', Vue2Leaflet.Marker);
-/*
-export default {
-  data () {
-    return {}
-  }
-}
-*/
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+// import * as Nominatim from "nominatim-browser";
+import L from 'leaflet'
+import Vue2Leaflet from 'vue2-leaflet'
 
-new Vue({
-  el: '#app',
-  data() {
+delete L.Icon.Default.prototype._getIconUrl
+L.Icon.Default.mergeOptions({
+  iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+  iconUrl: require('leaflet/dist/images/marker-icon.png'),
+  shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+})
+export default {
+  components: {
+    'v-map': Vue2Leaflet.Map,
+    'v-tilelayer': Vue2Leaflet.TileLayer,
+    'v-marker': Vue2Leaflet.Marker
+  },
+  data () {
     return {
       zoom: 13,
-      center: [47.413220, -1.219482],
+      center: [-37.7970795, 144.961302339626],
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: L.latLng(47.413220, -1.219482),
+      marker: L.latLng(-37.7970795, 144.961302339626)
     }
   }
-});
-
+}//
 </script>
 
 <style>
-@import "~leaflet/dist/leaflet.css";
+
+.leaflet-fake-icon-image-2x {
+  background-image: url(../../node_modules/leaflet/dist/images/marker-icon-2x.png);
+}
+.leaflet-fake-icon-shadow {
+  background-image: url(../../node_modules/leaflet/dist/images/marker-shadow.png);
+}
+
+@import "../../node_modules/leaflet/dist/leaflet.css";
 #app {
   height: 300px;
+  width: 800px;
 }
 </style>
