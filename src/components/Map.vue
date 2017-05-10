@@ -2,12 +2,12 @@
   <div>
     <div class="layout-padding">
       <h1 class="Title">Map Display</h1>
-    </div>
-    <div id="app">
-      <v-map :zoom="zoom" :center="center">
-        <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
-        <v-marker :lat-lng="marker"></v-marker>
-      </v-map>
+      <div id="app">
+        <v-map :zoom="zoom" :center="center">
+          <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
+          <v-marker :lat-lng="marker"></v-marker>
+        </v-map>
+      </div>
     </div>
   </div>
 </template>

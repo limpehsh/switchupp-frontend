@@ -53,7 +53,7 @@ export default {
   },
   data () {
     return {
-      posts:[],
+      posts: [],
       avtr: avtr,
       usrnm: usrnm,
       ctn: ctn,
