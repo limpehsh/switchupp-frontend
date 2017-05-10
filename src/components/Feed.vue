@@ -1,6 +1,22 @@
 <template>
   <div>
     <div class="layout-padding">
+      <!--<p><strong>{{posts.title}}</strong></p>
+      <p><strong>{{posts.locname}}</strong></p>
+      <p><strong>{{posts.desc}}</strong></p>
+      <p><strong>{{posts.user}}</strong></p>
+      <p><strong>{{posts.image}}</strong></p>-->
+      <img :src="posts.image" />
+      <!-- Uploaded Image of Incident-->
+      <div v-if="!image">
+        <input type="file" accept="image/*" @change="onFileChange">
+      </div>
+      <div v-else>
+        <img :src="image" />
+        <br/>
+        <button class="negative" @click="removeImage">Remove image</button>
+        <br/><br/><br/>
+      </div>
       <div class="content">
         <h1>Incident Feed</h1>
         <div class="card bg-light">
@@ -17,6 +33,13 @@
 </template>
 
 <script>
+
+/* For Axios */
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
+
 import PostBox from './PostBox'
 var avtr = '../statics/snorlax.png'
 var usrnm = 'asdf'
@@ -34,8 +57,49 @@ export default {
       usrnm: usrnm,
       ctn: ctn,
       flag: flag,
-      imgs: avtr
+      imgs: avtr,
+      image: ''
     }
+  },
+  onFileChange (e) {
+    var files = e.target.files || e.dataTransfer.files
+    if (!files.length) {
+      return
+    }
+    this.createImage(files[0])
+  },
+  createImage (file) {
+    var image = posts.image
+    var reader = new FileReader()
+    var vm = this
+
+    reader.onload = (e) => {
+      vm.image = e.target.result
+    }
+    reader.readAsDataURL(file)
+  },
+  removeImage: function (e) {
+    this.image = ''
+  },
+  created () {
+    // http://jsonplaceholder.typicode.com/posts
+    axios.get('http://localhost:3001/report/5912b1739f222808f0b7b114')
+    .then(response => {
+      // JSON responses are automatically parsed.
+      this.posts = response.data
+    })
+    .catch(e => {
+      this.errors.push(e)
+    })
+
+    // async / await version (created() becomes async created())
+    //
+    // try {
+    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
+    //   this.posts = response.data
+    // } catch (e) {
+    //   this.errors.push(e)
+    // }
   }
 }
 </script>

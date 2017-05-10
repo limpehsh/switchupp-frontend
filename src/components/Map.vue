@@ -5,7 +5,7 @@
       <div id="app">
         <v-map :zoom="zoom" :center="center">
           <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
-          <v-marker :lat-lng="marker"></v-marker>
+          <!-- <v-marker :lat-lng="marker"></v-marker> -->
         </v-map>
       </div>
     </div>
@@ -14,7 +14,6 @@
 
 <script>
 
-import * as Nominatim from "nominatim-browser"
 import Vue from 'vue'
 import Vue2Leaflet from 'vue2-leaflet'
 Vue.component('v-map', Vue2Leaflet.Map)
@@ -28,8 +27,8 @@ export default {
       zoom: 30,
       center: [-37.801993, 144.959087],
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
-      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: L.latLng(-37.801993, 144.959087)
+      attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+      // marker: L.latLng(-37.801993, 144.959087)
     }
   }
 }
@@ -37,7 +36,7 @@ export default {
 </script>
 
 <style>
-@import "~leaflet/dist/leaflet.css";
+@import '../../node_modules/leaflet/dist/leaflet.css';
 #app {
 height: 500px;
 }
