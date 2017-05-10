@@ -1,3 +1,7 @@
+<!--
+  Map component,
+  used to place map information anywhere
+-->
 <template>
   <div id="app">
     <v-map :zoom="zoom" :center="center">
@@ -31,7 +35,7 @@ export default
     'v-map': Vue2Leaflet.Map,
     'v-tilelayer': Vue2Leaflet.TileLayer,
     'v-marker': Vue2Leaflet.Marker
-  }
+  },
 
   data: function () {
     return {
@@ -54,9 +58,12 @@ export default
       type: Object,
       default: function () {
         return {
-          zoom: defaultZoom,
-          center: centerLoc,
-          mrklatlng: markerLatLng
+          // zoom: defaultZoom,
+          // center: centerLoc,
+          // mrklatlng: markerLatLng
+          zoom: 16,
+          center: [-37.7970795, 144.961302339626],
+          mrklatlng: L.latLng(-37.7970795, 144.961302339626)
         }
       },
       validator: function (mapData) {
@@ -72,5 +79,15 @@ export default
 </script>
 
 <style scoped>
-@import "../../node_modules/leaflet/dist/leaflet.css"
+@import "../../node_modules/leaflet/dist/leaflet.css";
+#app {
+  height: 100%;
+  width: 75%;
+}
+.leaflet-fake-icon-image-2x {
+  background-image: url(../../node_modules/leaflet/dist/images/marker-icon-2x.png);
+}
+.leaflet-fake-icon-shadow {
+  background-image: url(../../node_modules/leaflet/dist/images/marker-shadow.png);
+}
 </style>

@@ -18,11 +18,20 @@
         <div class="postLinkDetail"><a>{{locn}}</a></div>
         <div class="postLinkDetail"><a>{{usrnm}}</a></div>
       </div>
+      <br/>
+      <!-- <div class="map">
+        <MapBox/>
+      </div> -->
+
       <button class="full-width clear" @click="toggleVisible()">{{labelName}}</button>
       <q-transition name="slide">
         <div v-show="visible">
           <div>
             {{content}}
+          </div>
+          <!-- Map Here Doesn't Work-->
+          <div v-cloak class="map">
+            <MapBox />
           </div>
         </div>
       </q-transition>
@@ -40,6 +49,7 @@
 
 
 <script>
+import MapBox from './MapBox'
 // for placeholder
 var title = 'a post title'
 var locn = 'somewhere over the rainbow'
@@ -57,6 +67,11 @@ won't it be cool if we have a show more/less function for our post`
 export default
 {
   name: 'PostBox',
+
+  components:
+  {
+    MapBox
+  },
 
   data: function () {
     return {
@@ -119,7 +134,22 @@ export default
   flex-direction:row;
 
 }
+[v-cloak] {
+  display:none
+}
+.mapHolder
+{
+  position: relative;
+  min-height:300px;
+}
 
+.map {
+  display:grid;
+  position: absolute;
+  left: 100px;
+  height: 300px;
+  width: 100%;
+}
 
 
 .side-btn-section
