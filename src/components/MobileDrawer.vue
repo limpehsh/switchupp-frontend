@@ -63,9 +63,13 @@
 
 
       <!-- for account form-->
-      <div class="item item-link" @click="showForm">
+      <div class="item item-link" @click="openAcc">
         <i class="item-primary">person_pin</i>
         <div class="item-content">Account</div>
+      </div>
+      <div class="item item-link" @click="openReport">
+        <i class="item-primary">person_pin</i>
+        <div class="item-content">Report</div>
       </div>
 
       <router-link to="/">
@@ -87,10 +91,13 @@ export default {
   },
   methods: {
     // show the form for logging in/sign up
-    showForm: function () {
-      // console.log(this.$parent.$parent.$parent.$refs)
+    openAcc: function () {
       // a way to acces accForm method, there might be a better way to do this
-      this.$parent.$parent.$parent.$refs.accountF.toggleForm()
+      this.$parent.$parent.$parent.$refs.accountForm.open()
+    },
+    // shw the form for reporting
+    openReport: function () {
+      this.$parent.$parent.$parent.$refs.reportForm.open()
     }
   }
 }

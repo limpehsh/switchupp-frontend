@@ -10,6 +10,42 @@
         :postContent="ctn"
         :imgHere="flag"
         :postImg="imgs"/>
+
+      <PostBox
+        :usrAvatar="avtr"
+        :userName="usrnm"
+        :postContent="ctn"
+        :imgHere="flag"
+        :postImg="imgs"/>
+      <PostBox
+        :usrAvatar="avtr"
+        :userName="usrnm"
+        :postContent="ctn"
+        :imgHere="flag"
+        :postImg="imgs"/>
+      <PostBox
+        :usrAvatar="avtr"
+        :userName="usrnm"
+        :postContent="ctn"
+        :imgHere="flag"
+        :postImg="imgs"/>
+      <PostBox
+        :usrAvatar="avtr"
+        :userName="usrnm"
+        :postContent="ctn"
+        :imgHere="flag"
+        :postImg="imgs"/>
+
+      <button v-back-to-top.animate="{offset: 500, duration: 200}"
+              class="primary circular fixed-bottom-right animate-pop"
+              style="margin: 0 15px 15px 0" >
+         <i>keyboard_arrow_up</i>
+      </button>
+
+      <a v-back-to-top.animate="1000"
+         class="animate-pop play-backtotop non-selectable">
+         Back to top
+      </a>
     </div>
   </div>
 </template>
