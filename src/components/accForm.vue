@@ -15,15 +15,15 @@ NOTE:
 
       <!-- log in form -->
       <div v-if="this.typeLogIn === true" key="login" class="formContent">
-        <h4 class="formHeader">Log in</h4>
+        <h4 class="formHeader">Log In</h4>
         <form>
 
           <!-- Username -->
           <div class="floating-label" >
             <input required
                    class = "full-width"
-                   name  = "username"
-                   maxlength = "30">
+                   maxlength = "30"
+                   v-model.trim="logInUser">
             <label>Username</label>
           </div>
 
@@ -32,13 +32,13 @@ NOTE:
             <input required
                    class = "full-width"
                    type  = "password"
-                   name  = "password"
-                   maxlength = "30">
+                   maxlength = "30"
+                   v-model.trim="logInPass">
             <label>Password</label>
           </div>
 
           <div class="form-btn-container">
-            <button class="form-btn primary raised" @click="submitLI">Log In</button>
+            <button class="form-btn primary raised" @click="userCredentialCheck">Log In</button>
             <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
           </div>
 
@@ -120,9 +120,8 @@ import VAxios from 'vue-axios'
 // To display the form errors
 import { required, minLength, sameAs, email } from 'vuelidate/lib/validators'
 
-// currently commented out to silence linter
-// import router from '../router'
-
+// Routing
+import router from '../router'
 Vue.use(VAxios, axios)
 
 export default {
@@ -134,6 +133,9 @@ export default {
       email: '',
       pass: '',
       repeatPass: '',
+      logInUser: '',
+      logInPass: '',
+      logInGets: [],
       typeLogIn: this.login
     }
   },
@@ -190,7 +192,21 @@ export default {
         type: 1,
         logged: true
       })
-      // router.push('/')
+      console.log('new user created')
+      router.push('/')
+    },
+    userCredentialCheck () {
+      axios.get('http://localhost:3001/user/username/' + this.logInUser)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.logInGets = response.data
+        console.log(this.logInGets.password)
+      })
+      .catch(e => {
+        this.errors.push(e)
+        console.log(this.logInGets)
+      })
+      router.push('/')
     }
   },
 
