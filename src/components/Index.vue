@@ -16,9 +16,13 @@
           </div>
         </router-link>
       </q-toolbar-title>
-      <button class="btn-border" @click="openAcc">
+      <button class="btn-border" @click="clickLogIn">
         <i>person_pin</i>
-        Log In/Sign Up
+        Log In
+      </button>
+      <button class="btn-border" @click="clickSignUp">
+        <i>person_pin</i>
+        Sign Up
       </button>
     </div>
 
@@ -32,9 +36,9 @@
     <!-- form sections -->
 
     <!-- for forms -->
-    <q-modal ref="accountForm"
-             @close="resetForm">
-      <accForm ref='accountType' :login='true' />
+    <q-modal ref="accountForm">
+             <!--@close="resetForm">-->
+      <accForm ref='accountType' :login='true'/>
     </q-modal>
     <q-modal ref="reportForm">
       <reportForm />
@@ -73,8 +77,12 @@ export default {
       this.$refs.accountType.resetType()
     },
     // show the form for logging in/sign up
-    openAcc: function () {
-      // a way to acces accForm method, there might be a better way to do this
+    clickSignUp: function () {
+      this.$refs.accountType.falseType()
+      this.$refs.accountForm.open()
+    },
+    clickLogIn: function () {
+      this.$refs.accountType.trueType()
       this.$refs.accountForm.open()
     }
   }

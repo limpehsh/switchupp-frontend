@@ -172,6 +172,14 @@ export default {
     submitLI: function () {
       console.log('Log In Clicked')
     },
+    // set false
+    falseType: function () {
+      this.typeLogIn = false
+    },
+    // set true
+    trueType: function () {
+      this.typeLogIn = true
+    },
     createUser () {
       axios.post('http://localhost:3001/user/', {
         username: this.user,
