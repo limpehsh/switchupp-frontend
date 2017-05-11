@@ -34,11 +34,11 @@
         </div>
       </router-link> -->
 
-      <router-link to="/report">
+      <!-- <router-link to="/report">
         <div class="tabcolors">
           <q-drawer-link icon="report_problem" to="/report">Report</q-drawer-link>
         </div>
-      </router-link>
+      </router-link> -->
 
       <!-- <router-link to="/settings">
         <div class="tabcolors">
@@ -65,7 +65,7 @@
       </div>
       <div class="item item-link" @click="openReport">
         <i class="item-primary">report_problem</i>
-        <div class="item-content">Report Form (WIP)</div>
+        <div class="item-content">Report Form</div>
       </div>
 
       <!-- <router-link to="/">
