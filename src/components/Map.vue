@@ -60,12 +60,15 @@ export default {
 
 <style scoped>
 @import "../../node_modules/leaflet/dist/leaflet.css";
+
 #app {
   height: 300px;
   width: 800px;
 }
+
 .mapasdf
 {
   z-index: 0;
 }
+
 </style>

@@ -16,6 +16,10 @@
           </div>
         </router-link>
       </q-toolbar-title>
+      <button class="btn-border" @click="openAcc">
+        <i>person_pin</i>
+        Log In/Sign Up
+      </button>
     </div>
 
     <!-- Mobile Drawer -->
@@ -67,13 +71,24 @@ export default {
     // resets the form type
     resetForm: function () {
       this.$refs.accountType.resetType()
+    },
+    // show the form for logging in/sign up
+    openAcc: function () {
+      // a way to acces accForm method, there might be a better way to do this
+      this.$refs.accountForm.open()
     }
   }
 }
 </script>
 
 <style lang="scss">
+
 .tabcolors {
   color: #000;
+}
+
+.btn-border {
+  border-style: solid;
+  border-width: 1px;
 }
 </style>
