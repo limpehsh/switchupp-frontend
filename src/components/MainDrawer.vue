@@ -10,12 +10,6 @@
     <!-- List of fields -->
     <div class="list platform-delimiter">
 
-      <router-link to="/about-us">
-        <div class="tabcolors">
-          <q-drawer-link icon="sentiment_very_satisfied" to="/about-us">About Us</q-drawer-link>
-        </div>
-      </router-link>
-
       <router-link to="/feed">
         <div class="tabcolors">
           <q-drawer-link icon="timeline" to="/feed">Feed</q-drawer-link>
@@ -68,6 +62,11 @@
         <div class="item-content">Report Form</div>
       </div>
 
+      <router-link to="/about-us">
+        <div class="tabcolors">
+          <q-drawer-link icon="sentiment_very_satisfied" to="/about-us">About Us</q-drawer-link>
+        </div>
+      </router-link>
       <!-- <router-link to="/">
         <div class="tabcolors">
           <q-drawer-link icon="exit_to_app" to="/log-out">Log Out</q-drawer-link>

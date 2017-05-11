@@ -3,7 +3,7 @@
     <div class="layout-padding">
       <h1 class="Title">Map Display</h1>
       <div id="app">
-        <v-map :zoom="zoom" :center="center">
+        <v-map class="mapasdf" :zoom="zoom" :center="center">
           <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
           <v-marker :lat-lng="marker"></v-marker>
         </v-map>
@@ -63,5 +63,9 @@ export default {
 #app {
   height: 300px;
   width: 800px;
+}
+.mapasdf
+{
+  z-index: 0;
 }
 </style>
