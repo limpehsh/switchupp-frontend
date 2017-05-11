@@ -144,10 +144,10 @@ export default
 
 .card {
   /* cards need a max-width specified */
-  /* max-width: 950px; this is it for now, can change */
-  max-width: auto;
-  min-width: 400px;
-
+  max-width: 950px;
+  min-width: 300px;
+  margin: auto;
+  margin-bottom: 30px;
 
 }
 
