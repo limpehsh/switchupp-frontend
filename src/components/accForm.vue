@@ -192,6 +192,7 @@ export default {
         type: 1,
         logged: true
       })
+      this.$parent.$parent.$parent.$refs.accountForm.close()
       console.log('new user created')
       router.push('/')
     },
@@ -200,6 +201,7 @@ export default {
       .then(response => {
         // JSON responses are automatically parsed.
         this.logInGets = response.data
+        this.$parent.$parent.$parent.$refs.accountForm.close()
         console.log(this.logInGets.password)
       })
       .catch(e => {
