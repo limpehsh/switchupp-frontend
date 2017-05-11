@@ -53,10 +53,10 @@
       </router-link> -->
 
       <!-- for account form-->
-      <div class="item item-link" @click="openAcc">
+      <!--<div class="item item-link" @click="openAcc">
         <i class="item-primary">person_pin</i>
         <div class="item-content">Log In/Sign Up</div>
-      </div>
+      </div>-->
       <div class="item item-link" @click="openReport">
         <i class="item-primary">report_problem</i>
         <div class="item-content">Report Form</div>
@@ -85,10 +85,10 @@ export default {
   },
   methods: {
     // show the form for logging in/sign up
-    openAcc: function () {
+    // openAcc: function () {
       // a way to acces accForm method, there might be a better way to do this
-      this.$parent.$parent.$refs.accountForm.open()
-    },
+      // this.$parent.$parent.$refs.accountForm.open()
+    // },
     // shw the form for reporting
     openReport: function () {
       this.$parent.$parent.$refs.reportForm.open()

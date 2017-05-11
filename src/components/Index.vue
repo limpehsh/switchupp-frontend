@@ -17,11 +17,11 @@
         </router-link>
       </q-toolbar-title>
       <button class="btn-border" @click="clickLogIn">
-        <i>person_pin</i>
+        <i>input</i>
         Log In
       </button>
       <button class="btn-border" @click="clickSignUp">
-        <i>person_pin</i>
+        <i>play_for_work</i>
         Sign Up
       </button>
     </div>
