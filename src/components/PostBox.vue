@@ -3,7 +3,7 @@
   used for containing information about a post
 -->
 <template>
-  <div class="card">
+  <div class="card bg-blue-grey-1">
     <transition name="fade" mode="out-in" >
       <div class="rowForm" v-if="!showMap" key="noMap">
         <!-- side button section -->
@@ -144,8 +144,9 @@ export default
 
 .card {
   /* cards need a max-width specified */
-  max-width: 950px;
-  min-width:400px;
+  /* max-width: 950px; this is it for now, can change */
+  max-width: auto;
+  min-width: 400px;
 
 
 }

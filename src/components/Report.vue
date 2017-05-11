@@ -36,6 +36,7 @@
           <div class="floating-label">
             <input v-model.trim="desc" required class="full-width"
              @input="$v.desc.$touch()" type="text">
+             <textarea required class="textField full-width"></textarea>
             <label>Description</label>
             <br/><br/>
           </div>
@@ -52,7 +53,7 @@
           </div>
         </div>
         <br>
-      <!-- Sign Up Button -->
+      <!-- Submit Button -->
       <div class="content">
         <button type="submit" class="pink round items-center">Submit</button>
       </div>
