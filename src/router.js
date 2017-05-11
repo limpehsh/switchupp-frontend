@@ -14,7 +14,7 @@ const routes = [
     path: '/',                // Used to initialise default layout
     component: load('Index'), // Header, Left Sidebar, Footer
     children: [
-      { path: '/', component: load('AboutUs') },
+      { path: '/', component: load('Feed') },
       { path: '/about-us', component: load('AboutUs') },
       { path: '/feed', component: load('Feed') },
       { path: '/map', component: load('Map') },

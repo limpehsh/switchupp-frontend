@@ -147,7 +147,7 @@ export default
   max-width: 950px;
   min-width: 300px;
   margin: auto;
-  margin-bottom: 30px;
+  margin-bottom: 15px;
 
 }
 

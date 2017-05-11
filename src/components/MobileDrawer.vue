@@ -95,7 +95,7 @@ export default {
     // },
     // shw the form for reporting
     openReport: function () {
-      this.$parent.$parent.$refs.reportForm.open()
+      this.$parent.$parent.$parent.$refs.reportForm.open()
     }
   }
 }
