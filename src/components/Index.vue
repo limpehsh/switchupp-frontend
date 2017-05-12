@@ -58,6 +58,10 @@ import accForm from './accForm'
 import Maindrawer from './MainDrawer'
 import Mobiledrawer from './MobileDrawer'
 import reportForm from './reportForm'
+import { Cookies } from 'quasar'
+Cookies.set('session_user', 'cookie_value', {
+  path: '/'
+})
 
 export default {
   components: {

@@ -16,7 +16,7 @@ NOTE:
       <!-- log in form -->
       <div v-if="this.typeLogIn === true" key="login" class="formContent">
         <h4 class="formHeader">Log In</h4>
-        <form>
+        <form method="get" action="http://localhost:3001/user/username" @submit.prevent="userLogin">
 
           <!-- Username -->
           <div class="floating-label" >
@@ -38,7 +38,7 @@ NOTE:
           </div>
 
           <div class="form-btn-container">
-            <button class="form-btn primary raised" @click="userCredentialCheck">Log In</button>
+            <button class="form-btn primary raised" @click="submitLI">Log In</button>
             <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
           </div>
 
@@ -116,14 +116,13 @@ NOTE:
 import Vue from 'vue'
 import axios from 'axios'
 import VAxios from 'vue-axios'
-
+import { Cookies } from 'quasar'
 // To display the form errors
 import { required, minLength, sameAs, email } from 'vuelidate/lib/validators'
 
 // Routing
 import router from '../router'
 Vue.use(VAxios, axios)
-
 export default {
   name: 'accForm',
 
@@ -133,11 +132,13 @@ export default {
       email: '',
       pass: '',
       repeatPass: '',
-      existUser: [],
-      existEmail: [],
+      checkUser: [],
+      checkEmail: [],
+      signUpSucces: false,
       logInUser: '',
       logInPass: '',
       logInGets: [],
+      logInSuccess: false,
       typeLogIn: this.login
     }
   },
@@ -185,35 +186,42 @@ export default {
       this.typeLogIn = true
     },
     createUser () {
-
       // check if username on db
-      axios.get('http://localhost:3001/user/username/' + this.user)
+      axios({
+        method: 'get',
+        url: 'http://localhost:3001/user/username/' + this.user,
+        timeout: 1000
+      })
       .then(response => {
         // JSON responses are automatically parsed.
-        this.existUser = response.data
+        this.checkUser = response.data
+        if (this.checkUser.username) {
+          console.log('username has been taken, please specify another one')
+        }
       })
       .catch(e => {
         this.errors.push(e)
       })
-      if (this.existUser) {
-        console.log('username has been taken, please specify another one')
-      }
 
       // check if email on db
-      axios.get('http://localhost:3001/user/email/' + this.email)
+      axios({
+        method: 'get',
+        url: 'http://localhost:3001/user/email/' + this.email,
+        timeout: 1000
+      })
       .then(response => {
         // JSON responses are automatically parsed.
-        this.existEmail = response.data
+        this.checkEmail = response.data
+        if (this.checkEmail.email) {
+          console.log('email is used, please specify another one')
+        }
       })
       .catch(e => {
         this.errors.push(e)
       })
-      if (this.existEmail) {
-        console.log('email is used, please specify another one')
-      }
 
       // create user only if both email and username do not exist yet
-      if (!this.existUser && !this.existEmail) {
+      if (!this.checkUser.username && !this.checkEmail.email) {
         axios.post('http://localhost:3001/user/', {
           username: this.user,
           email: this.email,
@@ -223,13 +231,21 @@ export default {
           type: 1,
           logged: true
         })
+        this.user = ''
+        this.email = ''
+        this.pass = ''
+        this.signUpSucces = true
         this.$parent.$parent.$parent.$refs.accountForm.close()
         console.log('new user created')
         router.push('/')
       }
     },
-    userCredentialCheck () {
-      axios.get('http://localhost:3001/user/username/' + this.logInUser)
+    userLogin () {
+      axios({
+        method: 'get',
+        url: 'http://localhost:3001/user/username/' + this.logInUser,
+        timeout: 1000
+      })
       .then(response => {
         // JSON responses are automatically parsed.
         this.logInGets = response.data
@@ -238,16 +254,21 @@ export default {
         this.errors.push(e)
         console.log(this.logInGets)
       })
-      if (this.logInGets.password) {
+      if ((this.logInGets.password === this.logInPass) && this.logInGets.username) {
         this.$parent.$parent.$parent.$refs.accountForm.close()
         console.log(this.logInGets.password)
+        this.logInSuccess = true
+        router.push('/')
+        Cookies.set('session_user', this.logInUser, {
+          path: '/'
+        })
+        console.log(Cookies.has('session_user'))
         this.logInUser = ''
         this.logInPass = ''
-        router.push('/')
       }
       else {
         console.log(this.logInUser.username)
-        console.log("login failed, please make sure user credentials are valid")
+        console.log('login failed, please make sure user credentials are valid')
       }
     }
   },
