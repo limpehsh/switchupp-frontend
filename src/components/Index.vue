@@ -12,24 +12,20 @@
       <q-toolbar-title :padding="0">
         <router-link to ="/">
           <div class="text-white">
-            <img class="avatar" src="../assets/switchup-logo-new.png">  SwitchUp
+            <img class="avatar" src="../assets/switchup-logo-new.png"> SwitchUp
           </div>
         </router-link>
       </q-toolbar-title>
-      <div v-if="!this.logged_in">
-        <button class="btn-border" @click="clickLogIn">
-          Log In
-        </button>
-        <button class="btn-border" @click="clickSignUp">
-          Sign Up
-        </button>
-      </div>
-      <div v-else>
-        <button class="btn-border">
-          <i>exit_to_app</i>
-          Log Out
-        </button>
-      </div>
+      <button v-if="!this.logged_in" class="btn-border" @click="clickLogIn">
+        Log In
+      </button>
+      <button v-if="!this.logged_in" class="btn-border" @click="clickSignUp">
+        Sign Up
+      </button>
+      <button v-if="this.logged_in" class="btn-border">
+        <i>exit_to_app</i>
+        Log Out
+      </button>
     </div>
 
     <!-- Mobile Drawer -->
