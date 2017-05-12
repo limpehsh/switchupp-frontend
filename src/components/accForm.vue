@@ -133,6 +133,8 @@ export default {
       email: '',
       pass: '',
       repeatPass: '',
+      existUser: [],
+      existEmail: [],
       logInUser: '',
       logInPass: '',
       logInGets: [],
@@ -183,32 +185,70 @@ export default {
       this.typeLogIn = true
     },
     createUser () {
-      axios.post('http://localhost:3001/user/', {
-        username: this.user,
-        email: this.email,
-        password: this.pass,
-        admin: false,
-        reputation: 1,
-        type: 1,
-        logged: true
+
+      // check if username on db
+      axios.get('http://localhost:3001/user/username/' + this.user)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.existUser = response.data
       })
-      this.$parent.$parent.$parent.$refs.accountForm.close()
-      console.log('new user created')
-      router.push('/')
+      .catch(e => {
+        this.errors.push(e)
+      })
+      if (this.existUser) {
+        console.log('username has been taken, please specify another one')
+      }
+
+      // check if email on db
+      axios.get('http://localhost:3001/user/email/' + this.email)
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.existEmail = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+      if (this.existEmail) {
+        console.log('email is used, please specify another one')
+      }
+
+      // create user only if both email and username do not exist yet
+      if (!this.existUser && !this.existEmail) {
+        axios.post('http://localhost:3001/user/', {
+          username: this.user,
+          email: this.email,
+          password: this.pass,
+          admin: false,
+          reputation: 1,
+          type: 1,
+          logged: true
+        })
+        this.$parent.$parent.$parent.$refs.accountForm.close()
+        console.log('new user created')
+        router.push('/')
+      }
     },
     userCredentialCheck () {
       axios.get('http://localhost:3001/user/username/' + this.logInUser)
       .then(response => {
         // JSON responses are automatically parsed.
         this.logInGets = response.data
-        this.$parent.$parent.$parent.$refs.accountForm.close()
-        console.log(this.logInGets.password)
       })
       .catch(e => {
         this.errors.push(e)
         console.log(this.logInGets)
       })
-      router.push('/')
+      if (this.logInGets.password) {
+        this.$parent.$parent.$parent.$refs.accountForm.close()
+        console.log(this.logInGets.password)
+        this.logInUser = ''
+        this.logInPass = ''
+        router.push('/')
+      }
+      else {
+        console.log(this.logInUser.username)
+        console.log("login failed, please make sure user credentials are valid")
+      }
     }
   },
 
