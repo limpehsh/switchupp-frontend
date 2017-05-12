@@ -60,7 +60,7 @@ import Maindrawer from './MainDrawer'
 import Mobiledrawer from './MobileDrawer'
 import reportForm from './reportForm'
 import { Cookies } from 'quasar'
-Cookies.set('session_user', 'no_login', {
+Cookies.set('not_logged_in', 'no_login', {
   path: '/'
 })
 
@@ -93,14 +93,12 @@ export default {
       this.$refs.accountForm.open()
     },
     clicklogOut () {
-      Cookies.set('session_user', 'no_login', {
-        path: '/'
-      })
+      Cookies.remove('session_loggedin')
       this.setLoginStatus()
     },
     // check if user is logged in or not
     setLoginStatus: function () {
-      if (Cookies.get('session_user') === 'no_login') {
+      if (!Cookies.has('session_loggedin')) {
         this.logged_in = false
       }
       else {

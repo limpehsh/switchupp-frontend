@@ -262,10 +262,9 @@ export default {
         console.log(this.logInGets.password)
         this.logInSuccess = true
         router.push('/')
-        Cookies.set('session_user', this.logInUser, {
+        Cookies.set('session_loggedin', this.logInUser, {
           path: '/'
         })
-        console.log(Cookies.has('session_user'))
         this.logInUser = ''
         this.logInPass = ''
       }
