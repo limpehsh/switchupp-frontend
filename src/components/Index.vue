@@ -1,5 +1,5 @@
 <template>
-  <q-layout class="bg-grey-1">
+  <q-layout class="bg-grey-1" ref="Index">
 
     <!-- Top Toolbar / Navigation bar, not really navbar so far -->
     <div slot="header" class="toolbar bg-blue-10">
@@ -16,18 +16,17 @@
           </div>
         </router-link>
       </q-toolbar-title>
-      <button v-if="!this.logged_in" class="btn-border" @click="clickLogIn">
+      <button v-if="!setLoginStatus()" class="btn-border" @click="clickLogIn">
         Log In
       </button>
-      <button v-if="!this.logged_in" class="btn-border" @click="clickSignUp">
+      <button v-if="!setLoginStatus()" class="btn-border" @click="clickSignUp">
         Sign Up
       </button>
-      <button v-if="this.logged_in" class="btn-border">
+      <button v-if="setLoginStatus()" class="btn-border" @click="clicklogOut">
         <i>exit_to_app</i>
         Log Out
       </button>
     </div>
-
     <!-- Mobile Drawer -->
     <q-drawer ref="mobiledrawer" class="hide-on-drawer-visible">
       <mobiledrawer></mobiledrawer>
@@ -43,7 +42,7 @@
       <accForm ref='accountType' :login='true'/>
     </q-modal>
     <q-modal ref="reportForm">
-      <reportForm />
+        <reportForm />
     </q-modal>
 
     <router-view class="layout-view"></router-view>
@@ -93,9 +92,21 @@ export default {
       this.$refs.accountType.trueType()
       this.$refs.accountForm.open()
     },
+    clicklogOut () {
+      Cookies.set('session_user', 'no_login', {
+        path: '/'
+      })
+      this.setLoginStatus()
+    },
     // check if user is logged in or not
     setLoginStatus: function () {
-      this.logged_in = !this.logged_in
+      if (Cookies.get('session_user') === 'no_login') {
+        this.logged_in = false
+      }
+      else {
+        this.logged_in = true
+      }
+      return this.logged_in
     }
   }
 }

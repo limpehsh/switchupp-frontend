@@ -244,33 +244,31 @@ export default {
       axios({
         method: 'get',
         url: 'http://localhost:3001/user/username/' + this.logInUser,
-        timeout: 3000
+        timeout: 1000
       })
       .then(response => {
         // JSON responses are automatically parsed.
         this.logInGets = response.data
-        if ((this.logInGets.password === this.logInPass) && this.logInGets.username) {
-          this.$parent.$parent.$parent.$refs.accountForm.close()
-          console.log(this.logInGets.password)
-          this.logInSuccess = true
-          router.push('/')
-          Cookies.set('session_user', this.logInUser, {
-            path: '/'
-          })
-          console.log(Cookies.has('session_user'))
-          this.logInUser = ''
-          this.logInPass = ''
-          this.setLoginStatus()
-        }
-        else {
-          console.log(this.logInUser.username)
-          console.log('login failed, please make sure user credentials are valid')
-        }
+        this.executeLogin()
       })
       .catch(e => {
         this.errors.push(e)
-        console.log('error with login')
+        // console.log('error with login')
       })
+    },
+    executeLogin () {
+      if ((this.logInGets.password === this.logInPass) && this.logInGets.username) {
+        this.$parent.$parent.$parent.$refs.accountForm.close()
+        console.log(this.logInGets.password)
+        this.logInSuccess = true
+        router.push('/')
+        Cookies.set('session_user', this.logInUser, {
+          path: '/'
+        })
+        console.log(Cookies.has('session_user'))
+        this.logInUser = ''
+        this.logInPass = ''
+      }
     }
   },
 
