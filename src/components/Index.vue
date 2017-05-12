@@ -12,18 +12,24 @@
       <q-toolbar-title :padding="0">
         <router-link to ="/">
           <div class="text-white">
-            <img class="avatar" src="../assets/switchup-logo-new.png"> SwitchUp
+            <img class="avatar" src="../assets/switchup-logo-new.png">  SwitchUp
           </div>
         </router-link>
       </q-toolbar-title>
-      <button class="btn-border" @click="clickLogIn">
-        <i>input</i>
-        Log In
-      </button>
-      <button class="btn-border" @click="clickSignUp">
-        <i>play_for_work</i>
-        Sign Up
-      </button>
+      <div v-if="!this.logged_in">
+        <button class="btn-border" @click="clickLogIn">
+          Log In
+        </button>
+        <button class="btn-border" @click="clickSignUp">
+          Sign Up
+        </button>
+      </div>
+      <div v-else>
+        <button class="btn-border">
+          <i>exit_to_app</i>
+          Log Out
+        </button>
+      </div>
     </div>
 
     <!-- Mobile Drawer -->
@@ -59,7 +65,7 @@ import Maindrawer from './MainDrawer'
 import Mobiledrawer from './MobileDrawer'
 import reportForm from './reportForm'
 import { Cookies } from 'quasar'
-Cookies.set('session_user', 'cookie_value', {
+Cookies.set('session_user', 'no_login', {
   path: '/'
 })
 
@@ -72,7 +78,9 @@ export default {
   },
 
   data () {
-    return {}
+    return {
+      logged_in: false
+    }
   },
   methods:
   {
@@ -88,6 +96,10 @@ export default {
     clickLogIn: function () {
       this.$refs.accountType.trueType()
       this.$refs.accountForm.open()
+    },
+    // check if user is logged in or not
+    setLoginStatus: function () {
+      this.logged_in = !this.logged_in
     }
   }
 }

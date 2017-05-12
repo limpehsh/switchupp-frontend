@@ -73,6 +73,7 @@ import VAxios from 'vue-axios'
 import router from '../router'
 // For the form, not really used since errors display on default...
 import { required } from 'vuelidate/lib/validators'
+import { Cookies } from 'quasar'
 
 Vue.use(VAxios, axios)
 export default {
@@ -128,7 +129,7 @@ export default {
         locname: this.location,
         // location: [-37.7970795, 144.961302339626],
         desc: this.desc,
-        author: 'testing-phase',
+        author: Cookies.get('session_user'),
         image: this.image,
         votescore: 0,
         createdAt: Date(),
