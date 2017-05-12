@@ -8,7 +8,7 @@ NOTE:
 -->
 
 <template>
-  <form method="post" action="http://localhost:3001/report/" @submit.prevent="createPost">
+  <form method="post" @submit.prevent="createPost">
     <div class="formContent">
         <h4 class="formHeader"> Reporting </h4>
 
@@ -129,12 +129,17 @@ export default {
         locname: this.location,
         // location: [-37.7970795, 144.961302339626],
         desc: this.desc,
-        author: Cookies.get('session_user'),
+        author: Cookies.get('session_loggedin'),
         image: this.image,
         votescore: 0,
         createdAt: Date(),
         visible: true
       })
+      this.title = ''
+      this.location = ''
+      this.desc = ''
+      this.image = ''
+      this.$parent.$parent.$parent.$refs.reportForm.close()
       router.push('feed')
     }
   }
