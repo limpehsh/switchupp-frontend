@@ -78,6 +78,7 @@
 </template>
 
 <script>
+import { Cookies, Dialog } from 'quasar'
 export default {
   name: 'maindrawer',
   data () {
@@ -91,7 +92,18 @@ export default {
     // },
     // shw the form for reporting
     openReport: function () {
-      this.$parent.$parent.$refs.reportForm.open()
+      if (Cookies.has('session_loggedin')) {
+        this.$parent.$parent.$refs.reportForm.open()
+      }
+      else {
+        this.reportAlert()
+      }
+    },
+    reportAlert () {
+      Dialog.create({
+        title: 'Alert',
+        message: 'You cannot file a report if you are not signed in, brah.'
+      })
     }
   }
 }
