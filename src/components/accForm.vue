@@ -46,7 +46,7 @@ NOTE:
       </div>
 
       <!-- sign up form -->
-      <div v-else key="signup" class="formContent" >
+      <div v-else key="signup" class="formContSignUp" >
         <h4 class="formHeader">Sign Up</h4>
         <form method="post" action="http://localhost:3001/user/" @submit.prevent="createUser">
 
@@ -56,10 +56,10 @@ NOTE:
                    class = "full-width"
                    name  = "username"
                    maxlength = "30"
-                   v-model.trim="user"
-                   @input="$v.user.$touch()">
+                   v-model.trim="user">
             <label>Username</label>
-            <!-- <p class="text-red" v-if="!$v.user.minLength">Too short a username</p> -->
+            <div v-if="this.user === ''"></div>
+            <p class="text-red" v-else-if="!minLength4User(this.user)">Username needs 4 characters</p>
           </div>
 
           <!-- E-mail -->
@@ -67,10 +67,10 @@ NOTE:
             <input required
                    class = "full-width"
                    name  = "email"
-                   v-model.trim="email"
-                   @input="$v.email.$touch()" >
+                   v-model.trim="email">
             <label>Email</label>
-            <!-- <p class="text-red" v-if="!$v.email.email">The input must be a proper email!</p> -->
+            <div v-if="this.email === ''"></div>
+            <p class="text-red" v-else-if="!emailRegex(this.email)">The input must be a proper email!</p>
           </div>
 
           <!-- Password -->
@@ -80,31 +80,30 @@ NOTE:
                    type  = "password"
                    name  = "password"
                    maxlength = "30"
-                   v-model.trim="pass"
-                   @input="$v.pass.$touch()" >
+                   v-model.trim="pass">
             <label>Password</label>
-            <!-- <p class="text-red" v-if="!$v.pass.minLength">Password too short</p> -->
+            <div v-if="this.pass === ''"></div>
+            <p class="text-red" v-else-if="!passwrdRegex(this.pass)">Need 6 characters, consisting of one number, one lowercase and one uppercase letter</p>
           </div>
 
           <!-- REPEAT Password -->
-          <!-- <div class="floating-label">
+          <div class="floating-label">
             <input required
                    class = "full-width"
                    type  = "password"
                    name  = "repeatPassword"
                    maxlength = "30"
-                   v-model.trim="repeatPass"
-                   @input="$v.repeatPass.$touch()" >
+                   v-model.trim="repeatPass">
             <label>Repeat Password</label>
-            <p class="text-red" v-if="!$v.repeatPass.sameAsPassword">Passwords must be identical.</p>
-          </div> -->
+            <p class="text-red" v-if="!this.repeatPasswrdFunc()">Passwords must be identical.</p>
+          </div>
           <br />
           <vue-recaptcha class="form-btn-container"
             @verify="onVerify"
             :sitekey="sitekey">
           </vue-recaptcha>
           <div class="form-btn-container">
-            <div v-if="!recaptchaSuccess()">
+            <div v-if="!signUpBtnEnabler()">
               <button class="primary raised  form-btn disabled">Sign Up</button>
             </div>
             <div v-else>
@@ -127,8 +126,6 @@ import axios from 'axios'
 import VAxios from 'vue-axios'
 import { Cookies } from 'quasar'
 import VueRecaptcha from 'vue-recaptcha'
-// To display the form errors
-import { required, minLength, sameAs, email } from 'vuelidate/lib/validators'
 
 // Routing
 import router from '../router'
@@ -156,24 +153,6 @@ export default {
       typeLogIn: this.login
     }
   },
-  validations: {
-    user: {
-      required,
-      minLength: minLength(4)
-    },
-    email: {
-      required,
-      email
-    },
-    pass: {
-      required,
-      minLength: minLength(6)
-    },
-    repeatPass: {
-      sameAsPassword: sameAs('pass')
-    }
-  },
-
   methods:
   {
     // toggling between the log in and sign up form
@@ -254,12 +233,41 @@ export default {
         router.push('/')
       }
     },
+    minLength4User (str) {
+      var minNum = 4
+      var bool = true
+      if (str.length < minNum) {
+        bool = false
+      }
+      else {
+        bool = true
+      }
+      return bool
+    },
+    passwrdRegex (str) {
+      var re = /(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,}/
+      return re.test(str)
+    },
+    repeatPasswrdFunc () {
+      if (this.repeatPass === this.pass) {
+        return true
+      }
+      else {
+        return false
+      }
+    },
+    emailRegex (str) {
+      var re = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i
+      return re.test(str)
+    },
     onVerify (response) {
       this.verifyRecaptcha = response
     },
-    recaptchaSuccess () {
+    signUpBtnEnabler () {
       var temp = false
-      if (this.verifyRecaptcha === '') {
+      if (this.verifyRecaptcha === '' || !this.passwrdRegex(this.pass) ||
+          !this.minLength4User(this.user) || !this.emailRegex(this.email) ||
+          !this.repeatPasswrdFunc()) {
         temp = false
       }
       else {
@@ -320,6 +328,18 @@ export default {
 
   width  : 400px;
   height : 420px;
+
+  padding: 15px 35px 15px 35px
+}
+
+.formContSignUp
+{
+  display         : flex;
+  flex-direction  : column;
+  justify-content : space-around;
+
+  width  : 400px;
+  height : 644px;
 
   padding: 15px 35px 15px 35px
 }
