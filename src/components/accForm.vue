@@ -99,7 +99,7 @@ NOTE:
             <p class="text-red" v-if="!$v.repeatPass.sameAsPassword">Passwords must be identical.</p>
           </div> -->
           <br />
-          <vue-recaptcha
+          <vue-recaptcha class="form-btn-container"
             @verify="onVerify"
             :sitekey="sitekey">
           </vue-recaptcha>
@@ -312,7 +312,6 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0
 }
-
 .formContent
 {
   display         : flex;
@@ -337,8 +336,8 @@ export default {
 
 .form-btn-container
 {
-  margin-top: 5px;
-  padding: 5px 5px 7px 5px;
+  margin-top: 0px;
+  padding: 5px 0px 0px 0px;
   text-align: center;
 
   display: flex;
