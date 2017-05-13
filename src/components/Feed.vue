@@ -1,11 +1,14 @@
 <template>
   <div>
     <div class="layout-padding">
+      <button v-if="this.newestShown" class="primary raised" @click='getMostVoted()'>View Most Voted</button>
+      <button v-else class="negative raised" @click='getNewest()'>View Most Recent</button>
       <div class="feedContent">
         <h2 class="feedHeader">Incident Feed</h2>
-        <!-- START PLACEHOLDER-->
+        <!-- START -->
         <div class="feedStream">
-          <PostBox v-for="post of posts" :key="post._id"/>
+          <!-- commented out temporarily -->
+          <!-- <PostBox v-for="post of posts" :key="post._id"/> -->
           <ul v-if="posts && posts.length">
             <li v-for="post of posts">
               <p><strong>{{post.title}}</strong></p>
@@ -17,7 +20,7 @@
             </li>
           </ul>
         </div>
-        <!-- END PLACEHOLDER-->
+        <!-- END -->
       </div>
 
       <!-- button for back to top -->
@@ -54,28 +57,47 @@ export default {
   data () {
     return {
       posts: [],
-      errors: []
+      errors: [],
+      newestShown: false
     }
   },
-
+  // Start with fetching newest reports when loading feed
   created () {
-    axios.get('http://localhost:8081/report/newest/')
-    .then(response => {
-      // JSON responses are automatically parsed.
-      this.posts = response.data
-    })
-    .catch(e => {
-      this.errors.push(e)
-    })
+    this.getNewest()
+  },
+  methods: {
+    getNewest () {
+      axios.get('http://localhost:8081/report/newest/')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.posts = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+      this.newestShown = true
 
-    // async / await version (created() becomes async created())
-    //
-    /* try {
-       const response = await axios.get(`http://localhost:8081/report/newest/`)
-       this.posts = response.data
-     } catch (e) {
-       this.errors.push(e)
-     } */
+      // async / await version (created() becomes async created())
+      //
+      /* try {
+         const response = await axios.get(`http://localhost:8081/report/newest/`)
+         this.posts = response.data
+       } catch (e) {
+         this.errors.push(e)
+       } */
+    },
+    // this will prob be implemented as a button to switch up report look
+    getMostVoted () {
+      axios.get('http://localhost:8081/report/most-voted/')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.posts = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+      this.newestShown = false
+    }
   }
 }
 </script>
