@@ -18,8 +18,7 @@ NOTE:
                  class = "full-width"
                  name  = "title"
                  maxlength = "100"
-                 v-model.trim="title"
-                 @input="$v.title.$touch()">
+                 v-model.trim="title">
           <label>Title</label>
         </div>
 
@@ -28,8 +27,7 @@ NOTE:
           <input required
                  class = "full-width"
                  name  = "location"
-                 v-model.trim="location"
-                 @input="$v.location.$touch()">
+                 v-model.trim="location">
           <label>Location</label>
         </div>
 
@@ -37,8 +35,7 @@ NOTE:
         <div class="floating-label form-field">
           <textarea required
                     class="textField full-width"
-                    v-model.trim="desc"
-                    @input="$v.desc.$touch()">
+                    v-model.trim="desc">
           </textarea>
           <label>Description</label>
         </div>
@@ -71,8 +68,6 @@ import axios from 'axios'
 import VAxios from 'vue-axios'
 // for routing, pushing feed page after successful post
 import router from '../router'
-// For the form, not really used since errors display on default...
-import { required } from 'vuelidate/lib/validators'
 import { Cookies } from 'quasar'
 
 Vue.use(VAxios, axios)
@@ -85,20 +80,6 @@ export default {
       location: '',
       desc: '',
       image: ''
-    }
-  },
-  validations: {
-    title: {
-      required
-    },
-    location: {
-      required
-    },
-    desc: {
-      required
-    },
-    image: {
-      required
     }
   },
 
