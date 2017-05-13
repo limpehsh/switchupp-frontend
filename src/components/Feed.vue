@@ -5,22 +5,19 @@
         <h2 class="feedHeader">Incident Feed</h2>
         <!-- START PLACEHOLDER-->
         <div class="feedStream">
-          <PostBox v-for="post of posts"/>
+          <PostBox v-for="post of posts" :key="post._id"/>
           <ul v-if="posts && posts.length">
             <li v-for="post of posts">
-              <p><strong>Title: {{post.title}}</strong></p>
-              <p>Location: {{post.locname}}</p>
+              <p><strong>{{post.title}}</strong></p>
+              <p><strong>Location:</strong> {{post.locname}}</p>
               <img :src='post.image' />
-              <p>Description: {{post.desc}}</p>
-              <p>Vote Score:{{post.votescore}}</p>
-              <p>Created by {{post.author}} at {{post.createdAt}}</p>
+              <p><strong>Description:</strong> {{post.desc}}</p>
+              <p><strong>Vote Score:</strong> {{post.votescore}}</p>
+              <p><strong>Created by</strong> {{post.author}} at {{post.createdAt}}</p>
             </li>
           </ul>
         </div>
         <!-- END PLACEHOLDER-->
-        <div class="feedStream">
-          <!--<PostBox v-for="post in postPool" :key="post.id"/>-->
-        </div>
       </div>
 
       <!-- button for back to top -->
@@ -45,31 +42,9 @@ import axios from 'axios'
 import VAxios from 'vue-axios'
 // posts
 import PostBox from './PostBox'
+
 Vue.use(VAxios, axios)
-// placeholder, replace later with continuous post extraction from the db
-/* var postPool = {
-  a: {
-    id: '123'
-  },
-  b: {
-    id: '124'
-  },
-  c: {
-    id: '125'
-  },
-  d: {
-    id: '126'
-  },
-  e: {
-    id: '127'
-  },
-  f: {
-    id: '128'
-  },
-  g: {
-    id: '129'
-  }
-} */
+
 export default {
   components:
   {
@@ -80,12 +55,11 @@ export default {
     return {
       posts: [],
       errors: []
-      // postPool
     }
   },
 
   created () {
-    axios.get('http://localhost:8081/report/all/')
+    axios.get('http://localhost:8081/report/newest/')
     .then(response => {
       // JSON responses are automatically parsed.
       this.posts = response.data
@@ -96,12 +70,12 @@ export default {
 
     // async / await version (created() becomes async created())
     //
-    // try {
-    //   const response = await axios.get(`http://jsonplaceholder.typicode.com/posts`)
-    //   this.posts = response.data
-    // } catch (e) {
-    //   this.errors.push(e)
-    // }
+    /* try {
+       const response = await axios.get(`http://localhost:8081/report/newest/`)
+       this.posts = response.data
+     } catch (e) {
+       this.errors.push(e)
+     } */
   }
 }
 </script>
