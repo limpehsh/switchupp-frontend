@@ -124,7 +124,9 @@ NOTE:
 import Vue from 'vue'
 import axios from 'axios'
 import VAxios from 'vue-axios'
+// for cookies
 import { Cookies } from 'quasar'
+// for recaptcha
 import VueRecaptcha from 'vue-recaptcha'
 
 // Routing
