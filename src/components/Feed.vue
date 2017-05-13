@@ -8,10 +8,10 @@
           <PostBox v-for="post of posts"/>
           <ul v-if="posts && posts.length">
             <li v-for="post of posts">
-              <p><strong>{{post.title}}</strong></p>
-              <p>{{post.locname}}</p>
+              <p><strong>Title: {{post.title}}</strong></p>
+              <p>Location: {{post.locname}}</p>
               <img :src='post.image' />
-              <p>{{post.desc}}</p>
+              <p>Description: {{post.desc}}</p>
               <p>Vote Score:{{post.votescore}}</p>
               <p>Created by {{post.author}} at {{post.createdAt}}</p>
             </li>
