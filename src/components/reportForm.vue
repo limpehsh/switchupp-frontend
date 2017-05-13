@@ -105,7 +105,7 @@ export default {
       this.image = ''
     },
     createPost () {
-      axios.post('http://localhost:3001/report/', {
+      axios.post('http://localhost:8081/report/', {
         title: this.title,
         locname: this.location,
         // location: [-37.7970795, 144.961302339626],
