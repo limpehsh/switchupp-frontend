@@ -99,10 +99,17 @@ NOTE:
             <p class="text-red" v-if="!$v.repeatPass.sameAsPassword">Passwords must be identical.</p>
           </div> -->
           <br />
-          <vue-recaptcha :sitekey="sitekey">
+          <vue-recaptcha
+            @verify="onVerify"
+            :sitekey="sitekey">
           </vue-recaptcha>
           <div class="form-btn-container">
-            <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
+            <div v-if="!recaptchaSuccess()">
+              <button class="primary raised  form-btn disabled">Sign Up</button>
+            </div>
+            <div v-else>
+              <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
+            </div>
             <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
           </div>
 
@@ -140,6 +147,7 @@ export default {
       repeatPass: '',
       checkUser: [],
       checkEmail: [],
+      verifyRecaptcha: '',
       signUpSucces: false,
       logInUser: '',
       logInPass: '',
@@ -245,6 +253,19 @@ export default {
         console.log('new user created')
         router.push('/')
       }
+    },
+    onVerify (response) {
+      this.verifyRecaptcha = response
+    },
+    recaptchaSuccess () {
+      var temp = false
+      if (this.verifyRecaptcha === '') {
+        temp = false
+      }
+      else {
+        temp = true
+      }
+      return temp
     },
     userLogin () {
       axios({
