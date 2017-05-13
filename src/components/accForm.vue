@@ -145,11 +145,9 @@ export default {
       checkUser: [],
       checkEmail: [],
       verifyRecaptcha: '',
-      signUpSucces: false,
       logInUser: '',
       logInPass: '',
       logInGets: [],
-      logInSuccess: false,
       typeLogIn: this.login
     }
   },
@@ -227,7 +225,6 @@ export default {
         this.user = ''
         this.email = ''
         this.pass = ''
-        this.signUpSucces = true
         this.$parent.$parent.$parent.$refs.accountForm.close()
         console.log('new user created')
         router.push('/')
@@ -295,7 +292,6 @@ export default {
       if ((this.logInGets.password === this.logInPass) && this.logInGets.username) {
         this.$parent.$parent.$parent.$refs.accountForm.close()
         console.log(this.logInGets.password)
-        this.logInSuccess = true
         router.push('/')
         Cookies.set('session_loggedin', this.logInUser, {
           path: '/'
