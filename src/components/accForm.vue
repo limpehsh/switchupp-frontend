@@ -98,7 +98,9 @@ NOTE:
             <label>Repeat Password</label>
             <p class="text-red" v-if="!$v.repeatPass.sameAsPassword">Passwords must be identical.</p>
           </div> -->
-
+          <br />
+          <vue-recaptcha :sitekey="sitekey">
+          </vue-recaptcha>
           <div class="form-btn-container">
             <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
             <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
@@ -117,6 +119,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import VAxios from 'vue-axios'
 import { Cookies } from 'quasar'
+import VueRecaptcha from 'vue-recaptcha'
 // To display the form errors
 import { required, minLength, sameAs, email } from 'vuelidate/lib/validators'
 
@@ -125,9 +128,12 @@ import router from '../router'
 Vue.use(VAxios, axios)
 export default {
   name: 'accForm',
-
-  data: function () {
+  components: {
+    VueRecaptcha
+  },
+  data () {
     return {
+      sitekey: '6LdxOCEUAAAAAKwxJsyogMFmDzDWzjkB1yo71x1C',
       user: '',
       email: '',
       pass: '',
@@ -310,8 +316,8 @@ export default {
 
 .form-btn-container
 {
-  margin-top: 20px;
-  padding: 20px 5px 7px 5px;
+  margin-top: 5px;
+  padding: 5px 5px 7px 5px;
   text-align: center;
 
   display: flex;
