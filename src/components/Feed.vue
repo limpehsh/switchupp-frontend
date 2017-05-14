@@ -9,34 +9,32 @@
         <div class="feedStream">
           <!-- commented out temporarily -->
           <!-- <PostBox v-for="post of posts" :key="post._id"/> -->
-          <ul v-if="posts && posts.length">
-            <div v-for="post of posts">
-              <div class="card bg-blue-grey-1">
-                <div class="item one-line">
-                  <img class="item-primary" :src="post.image">
-                  <div class="item-content">
-                    <div>{{post.author}}</div>
-                  </div>
+          <div v-for="post of posts">
+            <div class="card bg-blue-grey-1">
+              <div class="item one-line">
+                <img class="item-primary" :src="post.image">
+                <div class="item-content">
+                  <div>{{post.author}}</div>
                 </div>
-                <img class="bg-white" :src='post.image'>
-                <div class="card-content">
-                  {{post.desc}}
+              </div>
+              <img class="bg-white" :src='post.image'>
+              <div class="card-content">
+                {{post.desc}}
+              </div>
+              <div class="card-actions">
+                <div class="text-primary">
+                  <i>arrow_upward</i> {{post.votescore}} votes
                 </div>
-                <div class="card-actions">
-                  <div class="text-primary">
-                    <i>arrow_upward</i> {{post.votescore}} votes
-                  </div>
-                  <!--<div class="text-primary">
-                    <i>mode_comment</i> 8 comments
-                  </div>-->
-                  <div class="auto"></div>
-                  <div class="text-grey-6">
-                    {{post.createdAt}}
-                  </div>
+                <!--<div class="text-primary">
+                  <i>mode_comment</i> 8 comments
+                </div>-->
+                <div class="auto"></div>
+                <div class="text-grey-6">
+                  {{post.createdAt}}
                 </div>
               </div>
             </div>
-          </ul>
+          </div>
         </div>
         <!-- END -->
       </div>
@@ -141,6 +139,17 @@ img
 
 .feedStream
 {
+
+}
+
+.card {
+  /* cards need a max-width specified */
+  max-width: 500px;
+  min-width: 300px;
+  max-height: 800px;
+  min-height: 400px;
+  margin: auto;
+  margin-bottom: 15px;
 
 }
 
