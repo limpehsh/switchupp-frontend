@@ -311,6 +311,10 @@ export default {
 </script>
 
 <style scoped>
+/* NOTE: styling problem with Quasar modals, maximum height is around 600px,
+   overflow will not be hidden, max-height cannot be overriden
+*/
+
 /* for transition effect, vue thing */
 .fade-enter-active, .fade-leave-active {
   transition: opacity .3s
@@ -318,13 +322,14 @@ export default {
 .fade-enter, .fade-leave-to /* .fade-leave-active in <2.1.8 */ {
   opacity: 0
 }
+
 .formContent
 {
   display         : flex;
   flex-direction  : column;
   justify-content : space-around;
 
-  width  : 400px;
+  width  : 500px;
   height : 420px;
 
   padding: 15px 35px 15px 35px
@@ -336,10 +341,12 @@ export default {
   flex-direction  : column;
   justify-content : space-around;
 
-  width  : 400px;
-  height : 644px;
+  width  : 500px;
+  height : 600px;
 
-  padding: 15px 35px 15px 35px
+
+
+  padding: 5px 40px 0px 40px;
 }
 
 .form-btn
@@ -355,7 +362,7 @@ export default {
 .form-btn-container
 {
   margin-top: 0px;
-  padding: 5px 0px 0px 0px;
+  padding: 25px 0px 0px 0px;
   text-align: center;
 
   display: flex;
