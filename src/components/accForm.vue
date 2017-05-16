@@ -311,11 +311,11 @@ export default {
         this.logInGets = response.data
         this.executeLogin()
       })
-      .catch(
+      .catch(e => {
         console.log('error with get request of username'),
+        this.errors.push(e)
         this.loginFailed()
-
-      )
+      })
     },
     executeLogin () {
       if ((this.logInGets.password === this.logInPass) && this.logInGets.username) {
