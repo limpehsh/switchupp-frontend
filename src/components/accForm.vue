@@ -313,7 +313,6 @@ export default {
       })
       .catch(e => {
         console.log('error with get request of username')
-        this.errors.push(e)
         this.loginFailed()
       })
     },
