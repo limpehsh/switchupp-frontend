@@ -5,9 +5,7 @@
       <button v-else class="negative raised" @click='getNewest()'>View Most Recent</button>
       <div class="feedContent">
         <h2 class="feedHeader">Incident Feed</h2>
-        <!-- START -->
         <div class="feedStream">
-          <!-- commented out temporarily -->
           <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
 
           <!-- <div v-for="post of posts">
@@ -26,7 +24,7 @@
                 <div class="text-primary">
                   <i>arrow_upward</i> {{post.votescore}} votes
                 </div>
-                <!--<div class="text-primary">
+                <div class="text-primary">
                   <i>mode_comment</i> 8 comments
                 </div>
 
@@ -38,9 +36,7 @@
             </div>
           </div> -->
 
-
         </div>
-        <!-- END -->
       </div>
 
       <!-- button for back to top -->
@@ -89,28 +85,36 @@ export default {
     getNewest () {
       axios.get('http://localhost:8081/report/newest/')
       .then(response => {
-        // JSON responses are automatically parsed.
         this.posts = response.data
       })
       .catch(e => {
         this.errors.push(e)
       })
       this.newestShown = true
-
-      // async / await version (created() becomes async created())
-      //
-      /* try {
-         const response = await axios.get(`http://localhost:8081/report/newest/`)
-         this.posts = response.data
-       } catch (e) {
-         this.errors.push(e)
-       } */
     },
-    // this will prob be implemented as a button to switch up report look
+    /* async getNewest () {
+      try {
+        const response = await axios.get('http://localhost:8081/report/newest/')
+        this.posts = response.data
+      }
+      catch (e) {
+        this.errors.push(e)
+      }
+      this.newestShown = true
+    },
+    async getMostVoted () {
+      try {
+        const response = await axios.get('http://localhost:8081/report/most-voted/')
+        this.posts = response.data
+      }
+      catch (e) {
+        this.errors.push(e)
+      }
+      this.newestShown = false
+    }, */
     getMostVoted () {
       axios.get('http://localhost:8081/report/most-voted/')
       .then(response => {
-        // JSON responses are automatically parsed.
         this.posts = response.data
       })
       .catch(e => {
@@ -140,11 +144,8 @@ img
   font-weight:400;
 
 }
-
 .feedStream
 {
 
 }
-
-
 </style>

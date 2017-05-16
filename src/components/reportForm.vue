@@ -25,10 +25,22 @@ NOTE:
         <!-- Location -->
         <div class="floating-label form-field">
           <input required
+                 @change = 'getAddress'
                  class = "full-width"
                  name  = "location"
                  v-model.trim="location">
           <label>Location</label>
+          <q-popover ref="popover">
+            <div class="list item-delimiter highlight" v-for="prima in results">
+              <div
+                class="item item-link"
+                @click="changeLoc(prima), $refs.popover.close()"
+              >
+              {{prima.display_name}}
+              </div>
+            </div>
+          </q-popover>
+
         </div>
 
         <!-- Description -->
@@ -42,11 +54,12 @@ NOTE:
 
         <!-- Uploaded Image of Incident-->
         <div v-if="!image">
-          <button class="primary" @click="getFile">Upload Image</button>
+          <input type="file" accept="image/*" @change="onFileChange">
+          <!-- <button class="primary" @click="getFile">Upload Image</button>-->
           <!-- this is your file input tag, so i hide it!-->
-          <div style='height: 0px;width:0px; overflow:hidden;'>
+          <!-- <div style='height: 0px;width:0px; overflow:hidden;'>
             <input id="upfile" type="file" accept="image/*" value="upload" @change="onFileChange"/>
-          </div>
+          </div>-->
         </div>
         <div v-else>
           <img :src="image" />
@@ -56,7 +69,7 @@ NOTE:
         <br /><br /><br />
         <!--Submit Button -->
         <div class="form-btn-container">
-          <button type="submit" class="form-btn primary raised">SUBMIT</button>
+          <button type="submit" class="form-btn primary raised round">SUBMIT</button>
         </div>
 
     </div>
@@ -73,6 +86,8 @@ import VAxios from 'vue-axios'
 // for routing, pushing feed page after successful post
 import router from '../router'
 import { Cookies } from 'quasar'
+// for getting geolocation data
+import * as Nominatim from 'nominatim-browser'
 
 Vue.use(VAxios, axios)
 export default {
@@ -83,7 +98,9 @@ export default {
       title: '',
       location: '',
       desc: '',
-      image: ''
+      image: '',
+      result: {},
+      results: []
     }
   },
 
@@ -114,12 +131,15 @@ export default {
     createPost () {
       axios.post('http://localhost:8081/report/', {
         title: this.title,
-        locname: this.location,
-        // location: [-37.7970795, 144.961302339626],
+        locname: this.result.display_name,
+        lon: this.result.lon,
+        lat: this.result.lat,
         desc: this.desc,
         author: Cookies.get('session_loggedin'),
+        category: 'Others', // Placeholder, will have dropdown/popover to select proper category
         image: this.image,
         votescore: 0,
+        voteuser: [],
         createdAt: Date(),
         visible: true
       })
@@ -129,6 +149,21 @@ export default {
       this.image = ''
       this.$parent.$parent.$parent.$refs.reportForm.close()
       router.push('feed')
+    },
+    async getAddress () {
+      var results = await Nominatim.geocode({
+        q: this.location,
+        countrycodes: 'au',
+        limit: 5,
+        addressdetails: true,
+        timeout: 5000
+      })
+      this.results = results
+    },
+    changeLoc (prima) {
+      this.result = prima
+      this.location = prima.display_name
+      console.log(this.result.display_name)
     }
   }
 }
@@ -210,10 +245,5 @@ img {
   bottom:125px;
   left:20px;
   right:20px;
-}
-
-input[type="file"] {
-  background: blue;
-  color: white;
 }
 </style>

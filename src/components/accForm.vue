@@ -38,7 +38,7 @@ NOTE:
           </div>
 
           <div class="form-btn-container">
-            <button class="form-btn primary raised" @click="submitLI">Log In</button>
+            <button class="form-btn primary raised round" @click="submitLI">Log In</button>
             <span class="formSwitch">Don't have an account? <a @click="toggleType">Sign Up</a></span>
           </div>
 
@@ -110,10 +110,10 @@ NOTE:
           </vue-recaptcha>
           <div class="form-btn-container">
             <div v-if="!signUpBtnEnabler()">
-              <button class="primary raised  form-btn disabled">Sign Up</button>
+              <button class="primary raised round form-btn disabled">Sign Up</button>
             </div>
             <div v-else>
-              <button class="form-btn primary raised" @click="submitSU">Sign Up</button>
+              <button class="form-btn primary raised round" @click="submitSU">Sign Up</button>
             </div>
             <span class="formSwitch">Already have an account? <a @click="toggleType">Log in</a></span>
           </div>

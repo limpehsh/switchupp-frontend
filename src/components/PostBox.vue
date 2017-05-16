@@ -61,7 +61,7 @@ import MapBox from './MapBox'
 
 // for placeholder
 // var title = 'a post title'
-var locn = 'somewhere over the rainbow'
+// var locn = 'somewhere over the rainbow'
 // var usrnm = 'username'
 // var content = `this is a long content, for testing purpose. hopefully the
 // stretcher for the post work quite well so that later it can look real cool.
@@ -90,8 +90,8 @@ export default
       datePosted: this.postData.createdAt,
       // postImg: this.postData.image,
       // static img for testing
-      postImg: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-      locn: locn,
+      postImg: this.postData.image, // 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+      locn: this.postData.locname,
       /* for collapsible */
       labelName: 'More',
       visible: false,
@@ -152,8 +152,8 @@ export default
   max-width: 950px;
   min-width: 300px;
   padding: 10px 10px 10px 10px;
-
   margin: auto;
+  margin-bottom: 15px;
 }
 
 .rowForm
@@ -211,8 +211,6 @@ export default
   height:150px
 }
 
-
-
 .postTitle
 {
   display: block;
@@ -254,9 +252,5 @@ export default
   font-size: 14px;
   line-height: 1.5;
 }
-
-
-
-
 
 </style>
