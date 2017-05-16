@@ -10,6 +10,34 @@
           <!-- commented out temporarily -->
           <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
 
+          <!-- <div v-for="post of posts">
+            <div class="card bg-blue-grey-1">
+              <div class="item one-line">
+                <img class="item-primary" :src="post.image">
+                <div class="item-content">
+                  <div>{{post.author}}</div>
+                </div>
+              </div>
+              <img class="bg-white" :src='post.image'>
+              <div class="card-content">
+                {{post.desc}}
+              </div>
+              <div class="card-actions">
+                <div class="text-primary">
+                  <i>arrow_upward</i> {{post.votescore}} votes
+                </div>
+                <!--<div class="text-primary">
+                  <i>mode_comment</i> 8 comments
+                </div>
+
+                <div class="auto"></div>
+                <div class="text-grey-6">
+                  {{post.createdAt}}
+                </div>
+              </div>
+            </div>
+          </div> -->
+
 
         </div>
         <!-- END -->

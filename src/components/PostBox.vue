@@ -29,6 +29,7 @@
 
           <q-transition name="slide">
             <div class="content-wrapper" v-show="visible">
+              <img class="postImage" :src="postImg">
               <div class="text-content">
                 {{content}}
               </div>
@@ -87,6 +88,9 @@ export default
       content: this.postData.desc,
       title: this.postData.title,
       datePosted: this.postData.createdAt,
+      // postImg: this.postData.image,
+      // static img for testing
+      postImg: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
       locn: locn,
       /* for collapsible */
       labelName: 'More',
@@ -147,7 +151,7 @@ export default
   /* cards need a max-width specified */
   max-width: 950px;
   min-width: 300px;
-
+  padding: 10px 10px 10px 10px;
 
   margin: auto;
 }
@@ -233,6 +237,16 @@ export default
 .content-wrapper
 {
   padding-top: 20px;
+}
+
+.postImage
+{
+  display: block;
+  max-width: 100%;
+  max-height: 500px;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .text-content
