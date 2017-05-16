@@ -3,7 +3,7 @@
   used for containing information about a post
 -->
 <template>
-  <div class="card bg-blue-grey-1">
+  <div class="card bg-light">
     <transition name="fade" mode="out-in" >
       <div class="rowForm" v-if="!showMap" key="noMap">
         <!-- side button section -->
@@ -18,8 +18,8 @@
           <div class="contentHeader">
             <div>
               <div class="postTitle">{{title}}</div>
+              <div class="postLinkDetail">Submitted by <a>{{usrnm}}</a> on <a>{{datePosted}}</a></div>
               <div class="postLinkDetail"><a @click="toggleMap">{{locn}}</a></div>
-              <div class="postLinkDetail"><a>{{usrnm}}</a></div>
             </div>
 
             <!-- <div class="mapContainer">
@@ -29,6 +29,7 @@
 
           <q-transition name="slide">
             <div class="content-wrapper" v-show="visible">
+              <img class="postImage" :src="postImg">
               <div class="text-content">
                 {{content}}
               </div>
@@ -59,19 +60,18 @@
 import MapBox from './MapBox'
 
 // for placeholder
-var title = 'a post title'
+// var title = 'a post title'
 var locn = 'somewhere over the rainbow'
-var usrnm = 'username'
-var content = `this is a long content, for testing purpose. hopefully the
-stretcher for the post work quite well so that later it can look real cool.
-won't it be cool if we have a show more/less function for our post
-this is a long content, for testing purpose. hopefully the
-stretcher for the post work quite well so that later it can look real cool.
-won't it be cool if we have a show more/less function for our post
-this is a long content, for testing purpose. hopefully the
-stretcher for the post work quite well so that later it can look real cool.
-won't it be cool if we have a show more/less function for our post`
-
+// var usrnm = 'username'
+// var content = `this is a long content, for testing purpose. hopefully the
+// stretcher for the post work quite well so that later it can look real cool.
+// won't it be cool if we have a show more/less function for our post
+// this is a long content, for testing purpose. hopefully the
+// stretcher for the post work quite well so that later it can look real cool.
+// won't it be cool if we have a show more/less function for our post
+// this is a long content, for testing purpose. hopefully the
+// stretcher for the post work quite well so that later it can look real cool.
+// won't it be cool if we have a show more/less function for our post`
 export default
 {
   name: 'PostBox',
@@ -83,11 +83,15 @@ export default
 
   data: function () {
     return {
-      count: this.postData.voteCount,
-      title: this.postData.postTitle,
-      locn: this.postData.incidentLocn,
-      usrnm: this.postData.postedBy,
-      content: this.postData.content,
+      count: this.postData.votescore,
+      usrnm: this.postData.author,
+      content: this.postData.desc,
+      title: this.postData.title,
+      datePosted: this.postData.createdAt,
+      // postImg: this.postData.image,
+      // static img for testing
+      postImg: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+      locn: locn,
       /* for collapsible */
       labelName: 'More',
       visible: false,
@@ -110,23 +114,24 @@ export default
   {
     postData: {
       type: Object,
-      default: function () {
-        return {
-          voteCount: 0,
-          postTitle: title,
-          incidentLocn: locn,
-          postedBy: usrnm,
-          content: content
-        }
-      },
+      // default: function () {
+      //   return {
+      //     voteCount: 0,
+      //     // postTitle: title,
+      //     // incidentLocn: locn,
+      //     postedBy: usrnm,
+      //     content: content
+      //   }
+      // }
       validator: function (postData) {
-        var cVoteCount = typeof postData.voteCount === 'number'
-        var cPostTitle = typeof postData.postTitle === 'string'
-        var cIncidentLocn = typeof postData.incidentLocn === 'string'
-        var cPostedBy = typeof postData.postedBy === 'string'
-        var cContent = typeof postData.content === 'string'
+        var cVoteCount = typeof postData.votescore === 'number'
+        // var cPostTitle = typeof postData.postTitle === 'string'
+        // var cIncidentLocn = typeof postData.incidentLocn === 'string'
+        var cPostedBy = typeof postData.author === 'string'
+        var cContent = typeof postData.desc === 'string'
 
-        return cVoteCount && cPostTitle && cIncidentLocn && cPostedBy && cContent
+        var check = cVoteCount && cPostedBy && cContent
+        return check
       }
     }
   }
@@ -146,9 +151,9 @@ export default
   /* cards need a max-width specified */
   max-width: 950px;
   min-width: 300px;
-  margin: auto;
-  margin-bottom: 15px;
+  padding: 10px 10px 10px 10px;
 
+  margin: auto;
 }
 
 .rowForm
@@ -220,6 +225,7 @@ export default
 {
   display: block;
   font-size: 12px;
+  line-height: 1.5;
 }
 
 /* content detail */
@@ -231,6 +237,16 @@ export default
 .content-wrapper
 {
   padding-top: 20px;
+}
+
+.postImage
+{
+  display: block;
+  max-width: 100%;
+  max-height: 500px;
+  align-self: center;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .text-content

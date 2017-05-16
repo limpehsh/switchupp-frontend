@@ -1,12 +1,46 @@
 <template>
   <div>
     <div class="layout-padding">
+      <button v-if="this.newestShown" class="primary raised" @click='getMostVoted()'>View Most Voted</button>
+      <button v-else class="negative raised" @click='getNewest()'>View Most Recent</button>
       <div class="feedContent">
         <h2 class="feedHeader">Incident Feed</h2>
-
+        <!-- START -->
         <div class="feedStream">
-          <PostBox v-for="post in postPool" :key="post.id"/>
+          <!-- commented out temporarily -->
+          <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
+
+          <!-- <div v-for="post of posts">
+            <div class="card bg-blue-grey-1">
+              <div class="item one-line">
+                <img class="item-primary" :src="post.image">
+                <div class="item-content">
+                  <div>{{post.author}}</div>
+                </div>
+              </div>
+              <img class="bg-white" :src='post.image'>
+              <div class="card-content">
+                {{post.desc}}
+              </div>
+              <div class="card-actions">
+                <div class="text-primary">
+                  <i>arrow_upward</i> {{post.votescore}} votes
+                </div>
+                <!--<div class="text-primary">
+                  <i>mode_comment</i> 8 comments
+                </div>
+
+                <div class="auto"></div>
+                <div class="text-grey-6">
+                  {{post.createdAt}}
+                </div>
+              </div>
+            </div>
+          </div> -->
+
+
         </div>
+        <!-- END -->
       </div>
 
       <!-- button for back to top -->
@@ -25,32 +59,14 @@
 </template>
 
 <script>
+// necessary import for post/get
+import Vue from 'vue'
+import axios from 'axios'
+import VAxios from 'vue-axios'
+// posts
 import PostBox from './PostBox'
 
-// placeholder, replace later with continuous post extraction from the db
-var postPool = {
-  a: {
-    id: '123'
-  },
-  b: {
-    id: '124'
-  },
-  c: {
-    id: '125'
-  },
-  d: {
-    id: '126'
-  },
-  e: {
-    id: '127'
-  },
-  f: {
-    id: '128'
-  },
-  g: {
-    id: '129'
-  }
-}
+Vue.use(VAxios, axios)
 
 export default {
   components:
@@ -60,13 +76,57 @@ export default {
 
   data () {
     return {
-      postPool
+      posts: [],
+      errors: [],
+      newestShown: false
+    }
+  },
+  // Start with fetching newest reports when loading feed
+  created () {
+    this.getNewest()
+  },
+  methods: {
+    getNewest () {
+      axios.get('http://localhost:8081/report/newest/')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.posts = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+      this.newestShown = true
+
+      // async / await version (created() becomes async created())
+      //
+      /* try {
+         const response = await axios.get(`http://localhost:8081/report/newest/`)
+         this.posts = response.data
+       } catch (e) {
+         this.errors.push(e)
+       } */
+    },
+    // this will prob be implemented as a button to switch up report look
+    getMostVoted () {
+      axios.get('http://localhost:8081/report/most-voted/')
+      .then(response => {
+        // JSON responses are automatically parsed.
+        this.posts = response.data
+      })
+      .catch(e => {
+        this.errors.push(e)
+      })
+      this.newestShown = false
     }
   }
 }
 </script>
 
-<style>
+<style scoped>
+img
+{
+  width: 300px;
+}
 .feedContent
 {
   display:flex;
@@ -85,5 +145,6 @@ export default {
 {
 
 }
+
 
 </style>
