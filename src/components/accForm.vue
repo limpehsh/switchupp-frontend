@@ -132,11 +132,13 @@ import VueRecaptcha from 'vue-recaptcha'
 // Routing
 import router from '../router'
 Vue.use(VAxios, axios)
+
 export default {
   name: 'accForm',
   components: {
     VueRecaptcha
   },
+
   data () {
     return {
       sitekey: '6LdxOCEUAAAAAKwxJsyogMFmDzDWzjkB1yo71x1C',
@@ -153,6 +155,7 @@ export default {
       typeLogIn: this.login
     }
   },
+
   methods:
   {
     // toggling between the log in and sign up form
