@@ -53,6 +53,7 @@ NOTE:
           <!-- Username -->
           <div class="floating-label">
             <input required
+                   @change = "findUser"
                    class = "full-width"
                    name  = "username"
                    maxlength = "30"
@@ -60,17 +61,20 @@ NOTE:
             <label>Username</label>
             <div v-if="this.user === ''"></div>
             <p class="text-red" v-else-if="!minLength4User(this.user)">Username needs 4 characters</p>
+            <p class="text-red" v-else-if="this.existUser === true">Username exists, use something else</p>
           </div>
 
           <!-- E-mail -->
           <div class="floating-label">
             <input required
+                   @change = "findEmail"
                    class = "full-width"
                    name  = "email"
                    v-model.trim="email">
             <label>Email</label>
             <div v-if="this.email === ''"></div>
             <p class="text-red" v-else-if="!emailRegex(this.email)">The input must be a proper email!</p>
+            <p class="text-red" v-else-if="this.existEmail === true">Email exists, use something else</p>
           </div>
 
           <!-- Password -->
@@ -99,7 +103,9 @@ NOTE:
           </div>
           <br />
           <vue-recaptcha class="form-btn-container"
+            ref="recaptcha"
             @verify="onVerify"
+            @expired="onExpired"
             :sitekey="sitekey">
           </vue-recaptcha>
           <div class="form-btn-container">
@@ -125,7 +131,7 @@ import Vue from 'vue'
 import axios from 'axios'
 import VAxios from 'vue-axios'
 // for cookies
-import { Cookies } from 'quasar'
+import { Cookies, Dialog } from 'quasar'
 // for recaptcha
 import VueRecaptcha from 'vue-recaptcha'
 
@@ -145,7 +151,9 @@ export default {
       pass: '',
       repeatPass: '',
       checkUser: [],
+      existUser: false,
       checkEmail: [],
+      existEmail: false,
       verifyRecaptcha: '',
       logInUser: '',
       logInPass: '',
@@ -178,7 +186,7 @@ export default {
     trueType: function () {
       this.typeLogIn = true
     },
-    createUser () {
+    findUser () {
       // check if username on db
       axios({
         method: 'get',
@@ -190,12 +198,19 @@ export default {
         this.checkUser = response.data
         if (this.checkUser.username) {
           console.log('username has been taken, please specify another one')
+          this.existUser = true
+        }
+        else {
+          this.existUser = false
         }
       })
       .catch(e => {
+        this.existUser = false
         this.errors.push(e)
+       // console.log('')
       })
-
+    },
+    findEmail () {
       // check if email on db
       axios({
         method: 'get',
@@ -207,30 +222,33 @@ export default {
         this.checkEmail = response.data
         if (this.checkEmail.email) {
           console.log('email is used, please specify another one')
+          this.existEmail = true
+        }
+        else {
+          this.existEmail = false
         }
       })
       .catch(e => {
+        this.existEmail = false
         this.errors.push(e)
       })
-
-      // create user only if both email and username do not exist yet
-      if (!this.checkUser.username && !this.checkEmail.email) {
-        axios.post('http://localhost:8081/user/', {
-          username: this.user,
-          email: this.email,
-          password: this.pass,
-          admin: false,
-          reputation: 1,
-          type: 1,
-          logged: true
-        })
-        this.user = ''
-        this.email = ''
-        this.pass = ''
-        this.$parent.$parent.$parent.$refs.accountForm.close()
-        console.log('new user created')
-        router.push('/')
-      }
+    },
+    createUser () {
+      axios.post('http://localhost:8081/user/', {
+        username: this.user,
+        email: this.email,
+        password: this.pass,
+        admin: false,
+        reputation: 1,
+        type: 1,
+        logged: true
+      })
+      this.user = ''
+      this.email = ''
+      this.repeatPass = ''
+      this.pass = ''
+      this.$parent.$parent.$parent.$refs.accountForm.close()
+      console.log('new user created')
     },
     minLength4User (str) {
       var minNum = 4
@@ -262,11 +280,19 @@ export default {
     onVerify (response) {
       this.verifyRecaptcha = response
     },
+    onExpired: function () {
+      console.log('Expired')
+      this.verifyRecaptcha = ''
+    },
+    resetRecaptcha () {
+      this.$refs.recaptcha.reset() // Direct call reset method
+      this.verifyRecaptcha = ''
+    },
     signUpBtnEnabler () {
       var temp = false
       if (this.verifyRecaptcha === '' || !this.passwrdRegex(this.pass) ||
           !this.minLength4User(this.user) || !this.emailRegex(this.email) ||
-          !this.repeatPasswrdFunc()) {
+          !this.repeatPasswrdFunc() || this.existUser || this.existEmail) {
         temp = false
       }
       else {
@@ -285,10 +311,11 @@ export default {
         this.logInGets = response.data
         this.executeLogin()
       })
-      .catch(e => {
-        this.errors.push(e)
-        // console.log('error with login')
-      })
+      .catch(
+        console.log('error with get request of username'),
+        this.loginFailed()
+
+      )
     },
     executeLogin () {
       if ((this.logInGets.password === this.logInPass) && this.logInGets.username) {
@@ -300,7 +327,19 @@ export default {
         })
         this.logInUser = ''
         this.logInPass = ''
+        router.push('/')
       }
+      else {
+        this.loginFailed()
+      }
+    },
+    loginFailed () {
+      Dialog.create({
+        title: 'Alert',
+        message: 'You cannot log in! Please check your username and password if they are entered correctly.'
+      })
+      this.logInUser = ''
+      this.logInPass = ''
     }
   },
 

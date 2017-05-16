@@ -42,7 +42,11 @@ NOTE:
 
         <!-- Uploaded Image of Incident-->
         <div v-if="!image">
-          <input type="file" accept="image/*" @change="onFileChange">
+          <button class="primary" @click="getFile">Upload Image</button>
+          <!-- this is your file input tag, so i hide it!-->
+          <div style='height: 0px;width:0px; overflow:hidden;'>
+            <input id="upfile" type="file" accept="image/*" value="upload" @change="onFileChange"/>
+          </div>
         </div>
         <div v-else>
           <img :src="image" />
@@ -90,6 +94,9 @@ export default {
         return
       }
       this.createImage(files[0])
+    },
+    getFile () {
+      document.getElementById('upfile').click()
     },
     createImage (file) {
       // var image = new Image()
@@ -203,5 +210,10 @@ img {
   bottom:125px;
   left:20px;
   right:20px;
+}
+
+input[type="file"] {
+  background: blue;
+  color: white;
 }
 </style>
