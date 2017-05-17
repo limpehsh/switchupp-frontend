@@ -149,15 +149,17 @@ export default
 
 .card {
   /* cards need a max-width specified */
-  max-width: 950px;
+  /*max-width: 950px;*/
   min-width: 300px;
   padding: 10px 10px 10px 10px;
-  margin: auto;
-  margin-bottom: 15px;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  /*margin-bottom: 15px;*/
 }
 
 .rowForm
 {
+  max-width:100%;
   padding: 25px 25px 15px 25px;
 
   display: flex;
@@ -187,9 +189,11 @@ export default
 /* post content */
 .postContent
 {
-  width: 100%;
-  padding: 5px 10px 5px 10px;
-  margin-left: 10px;
+  max-width: 100%;
+  min-width: 100%;
+
+  padding: 5px 40px 5px 20px;
+
 }
 
 /* post header */
@@ -235,6 +239,7 @@ export default
 .content-wrapper
 {
   padding-top: 20px;
+  max-width: 100%;
 }
 
 .postImage
@@ -245,12 +250,18 @@ export default
   align-self: center;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 25px;
 }
 
 .text-content
 {
+  max-width: 100%;
+
   font-size: 14px;
   line-height: 1.5;
+
+  /* text wrapping */
+  word-wrap: break-word;
 }
 
 </style>
