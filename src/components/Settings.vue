@@ -8,7 +8,7 @@ NOTE:
 -->
 
 <template>
-  <form method="post" @submit.prevent="updateUser()">
+  <form method="post" @submit.prevent="submitNewUserSettings()">
     <div class="formContent">
         <h4 class="formHeader"> Update User Details </h4>
 
@@ -68,22 +68,30 @@ export default {
     return {
       user: '',
       email: '',
-      password: ''
+      password: '',
+      userID: '',
+      temp: [],
+      errors: []
     }
   },
 
   methods: {
+    submitNewUserSettings () {
+      this.getUserID()
+    },
     updateUser () {
       axios({
         method: 'put',
-        url: 'http://localhost:8081/user/username/' + Cookies.get('session_loggedin'),
-        username: this.user,
-        email: this.email,
-        password: this.pass,
-        admin: false,
-        reputation: 1,
-        type: 1,
-        logged: true
+        url: 'http://localhost:8081/' + this.userID,
+        data: {
+          username: this.user,
+          email: this.email,
+          password: this.pass,
+          admin: false,
+          reputation: 1,
+          type: 1,
+          logged: true
+        }
       })
       this.user = ''
       this.email = ''
@@ -93,6 +101,17 @@ export default {
       console.log('user updated')
       Cookies.set('session_loggedin', this.user, {
         path: '/'
+      })
+    },
+    getUserID () {
+      axios.get('http://localhost:8081/user/username/' + Cookies.get('session_loggedin'))
+      .then(response => {
+        this.temp = response.data
+        console.log(response.data)
+        this.userID = this.temp._id
+      })
+      .catch(e => {
+        this.errors.push(e)
       })
     }
   }

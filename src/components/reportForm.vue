@@ -25,7 +25,7 @@ NOTE:
         <!-- Location -->
         <div class="floating-label form-field">
           <input required
-                 @change = 'getAddress'
+                 @keydown = 'getAddress()'
                  class = "full-width"
                  name  = "location"
                  v-model.trim="location">
@@ -34,7 +34,7 @@ NOTE:
             <div class="list item-delimiter highlight" v-for="prima in results">
               <div
                 class="item item-link"
-                @click="changeLoc(prima), $refs.popover.close()"
+                @keydown="changeLoc(prima), $refs.popover.close()"
               >
               {{prima.display_name}}
               </div>
