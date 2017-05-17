@@ -85,7 +85,7 @@ export default {
     'v-tilelayer': Vue2Leaflet.TileLayer,
     'v-marker': Vue2Leaflet.Marker,
     'v-tooltip': Vue2Leaflet.Tooltip,
-    'v-popup' : Vue2Leaflet.Popup
+    'v-popup': Vue2Leaflet.Popup
   },
   data () {
     return {
