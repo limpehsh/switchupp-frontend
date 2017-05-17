@@ -132,8 +132,9 @@ export default {
       axios.post('http://localhost:8081/report/', {
         title: this.title,
         locname: this.result.display_name,
-        lon: this.result.lon,
         lat: this.result.lat,
+        lon: this.result.lon,
+        coords: [this.result.lat, this.result.lon],
         desc: this.desc,
         author: Cookies.get('session_loggedin'),
         category: 'others', // Placeholder, will have dropdown/popover to select proper category

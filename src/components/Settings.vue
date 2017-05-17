@@ -8,18 +8,37 @@ NOTE:
 -->
 
 <template>
-  <form method="post" @submit.prevent="createPost">
+  <form method="post" @submit.prevent="updateUser()">
     <div class="formContent">
-        <h4 class="formHeader"> Settings </h4>
-        <!-- CHANGE USERNAME AND EMAIL -->
-        <!-- Title -->
-        <div class="floating-label form-field">
+        <h4 class="formHeader"> Update User Details </h4>
+
+        <!-- Username -->
+        <div class="floating-label form-field" >
           <input required
                  class = "full-width"
                  name  = "title"
                  maxlength = "100"
-                 v-model.trim="title">
-          <label>Title</label>
+                 v-model.trim="user">
+          <label>Username</label>
+        </div>
+
+        <!-- Email -->
+        <div class="floating-label" >
+          <input required
+                 class = "full-width"
+                 maxlength = "30"
+                 v-model.trim="email">
+          <label>Email</label>
+        </div>
+
+        <!-- Password -->
+        <div class="floating-label">
+          <input required
+                 class = "full-width"
+                 type  = "password"
+                 maxlength = "30"
+                 v-model.trim="password">
+          <label>Password</label>
         </div>
         <br /><br /><br />
 
@@ -39,7 +58,7 @@ NOTE:
 import Vue from 'vue'
 import axios from 'axios'
 import VAxios from 'vue-axios'
-// import { Cookies } from 'quasar'
+import { Cookies } from 'quasar'
 
 Vue.use(VAxios, axios)
 export default {
@@ -47,11 +66,35 @@ export default {
 
   data () {
     return {
-      title: ''
+      user: '',
+      email: '',
+      password: ''
     }
   },
 
   methods: {
+    updateUser () {
+      axios({
+        method: 'put',
+        url: 'http://localhost:8081/user/username/' + Cookies.get('session_loggedin'),
+        username: this.user,
+        email: this.email,
+        password: this.pass,
+        admin: false,
+        reputation: 1,
+        type: 1,
+        logged: true
+      })
+      this.user = ''
+      this.email = ''
+      this.repeatPass = ''
+      this.pass = ''
+      this.$parent.$parent.$parent.$refs.settingsForm.close()
+      console.log('user updated')
+      Cookies.set('session_loggedin', this.user, {
+        path: '/'
+      })
+    }
   }
 }
 </script>

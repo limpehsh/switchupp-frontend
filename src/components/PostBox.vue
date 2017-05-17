@@ -98,8 +98,9 @@ export default
       datePosted: this.postData.createdAt,
       postImg: this.postData.image,
       locn: this.postData.locname,
-      lon: this.postData.lon,
       lat: this.postData.lat,
+      lon: this.postData.lon,
+      coords: this.postData.coords,
       /* for collapsible */
       labelName: 'More',
       visible: false,

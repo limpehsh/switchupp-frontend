@@ -5,7 +5,9 @@
       <div id="app" class="bigMap">
         <v-map class="mapasdf" :zoom="zoom" :center="center">
           <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
-          <v-marker :lat-lng="marker"></v-marker>
+          <div v-for="post of posts">
+            <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)"></v-marker>
+          </div>
         </v-map>
       </div>
     </div>
@@ -36,25 +38,32 @@ export default {
   },
   data () {
     return {
+      posts: [],
+      errors: [],
       zoom: 13,
       center: [-37.7970795, 144.961302339626],
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
       marker: L.latLng(-37.7970795, 144.961302339626)
     }
-  }
-  /*
+  },
+  created () {
+    this.getAllReports()
+  },
   methods: {
-    fixURL () {
-      delete L.Icon.Default.prototype._getIconUrl
-      L.Icon.Default.mergeOptions({
-        iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
-        iconUrl: require('leaflet/dist/images/marker-icon.png'),
-        shadowUrl: require('leaflet/dist/images/marker-shadow.png')
+    getAllReports () {
+      axios.get('http://localhost:8081/report/newest/')
+      .then(response => {
+        this.posts = response.data
       })
+      .catch(e => {
+        this.errors.push(e)
+      })
+    },
+    displayLeaflet (latitude, longtitude) {
+      return L.latLng(latitude, longtitude)
     }
   }
-  */
 }
 </script>
 
