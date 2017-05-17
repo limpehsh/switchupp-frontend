@@ -18,7 +18,7 @@ const routes = [
       { path: '/about-us', component: load('AboutUs') },
       { path: '/feed', component: load('Feed') },
       { path: '/map', component: load('Map') },
-      { path: '/profile', component: load('Profile') }, // might remove
+      { path: '/my-posts', component: load('UserPosts') }, // might remove
       { path: '/report', component: load('Report') },
       { path: '/settings', component: load('Settings') },
       { path: '/sign-in', component: load('SignIn') },

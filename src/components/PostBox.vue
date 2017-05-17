@@ -92,6 +92,8 @@ export default
       // static img for testing
       postImg: this.postData.image, // 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
       locn: this.postData.locname,
+      lon: this.postData.lon,
+      lat: this.postData.lat,
       /* for collapsible */
       labelName: 'More',
       visible: false,

@@ -22,11 +22,14 @@
         </div>
       </router-link>
 
-      <!-- <router-link to="/profile">
-        <div class="tabcolors">
-          <q-drawer-link icon="account_circle" to="/profile">Profile</q-drawer-link>
-        </div>
-      </router-link> -->
+      <div v-if="isLoggedIn()">
+        <router-link to="/my-posts">
+          <div class="tabcolors">
+            <q-drawer-link icon="account_circle" to="/my-posts">My Posts</q-drawer-link>
+          </div>
+        </router-link>
+      </div>
+
 
       <!-- <router-link to="/report">
         <div class="tabcolors">
@@ -39,6 +42,10 @@
           <q-drawer-link icon="settings" to="/settings">Settings</q-drawer-link>
         </div>
       </router-link> -->
+      <div class="item item-link" @click="openSettings">
+        <i class="item-primary">settings</i>
+        <div class="item-content">Settings</div>
+      </div>
 
       <!-- USELESS NOW <router-link to="/sign-up">
         <div class="tabcolors">
@@ -82,7 +89,9 @@ import { Cookies, Dialog } from 'quasar'
 export default {
   name: 'maindrawer',
   data () {
-    return {}
+    return {
+      logged_in: false
+    }
   },
   methods: {
     // show the form for logging in/sign up
@@ -94,15 +103,42 @@ export default {
     openReport: function () {
       if (Cookies.has('session_loggedin')) {
         this.$parent.$parent.$refs.reportForm.open()
+        this.logged_in = true
       }
       else {
         this.reportAlert()
+        this.logged_in = false
       }
+    },
+    openSettings: function () {
+      if (Cookies.has('session_loggedin')) {
+        this.$parent.$parent.$refs.settingsForm.open()
+        this.logged_in = true
+      }
+      else {
+        this.settingsAlert()
+        this.logged_in = false
+      }
+    },
+    isLoggedIn () {
+      if (Cookies.has('session_loggedin')) {
+        this.logged_in = true
+      }
+      else {
+        this.logged_in = false
+      }
+      return this.logged_in
     },
     reportAlert () {
       Dialog.create({
         title: 'Alert',
         message: 'You cannot file a report if you are not signed in, brah.'
+      })
+    },
+    settingsAlert () {
+      Dialog.create({
+        title: 'Alert',
+        message: 'You cannot view your own settings if you are not signed in, brah.'
       })
     }
   }

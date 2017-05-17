@@ -1,147 +1,136 @@
+<!--
+reportForm
+component for reporting form
+
+NOTE:
+- v-once here can be removed later if it cause problems
+- implement the post and get function for the form
+-->
+
 <template>
-  <div>
-    <div class="layout-padding">
-        <div
-          class="item item-link"
-          v-for="dialog in form"
-          @click="dialog.handler()"
-        >
-          <i class="item-primary">{{dialog.icon}}</i>
-          <div class="item-content has-secondary">
-            <div>{{dialog.label}}</div>
-          </div>
-          <i class="item-secondary">keyboard_arrow_right</i>
+  <form method="post" @submit.prevent="createPost">
+    <div class="formContent">
+        <h4 class="formHeader"> Settings </h4>
+        <!-- CHANGE USERNAME AND EMAIL -->
+        <!-- Title -->
+        <div class="floating-label form-field">
+          <input required
+                 class = "full-width"
+                 name  = "title"
+                 maxlength = "100"
+                 v-model.trim="title">
+          <label>Title</label>
         </div>
+        <br /><br /><br />
+
+        <!--Submit Button -->
+        <div class="form-btn-container">
+          <button type="submit" class="form-btn primary raised round">SUBMIT</button>
+        </div>
+
     </div>
-  </div>
+
+  </form>
 </template>
 
+
 <script>
-import { Dialog, Toast } from 'quasar'
+// necessary import for post/get
+import Vue from 'vue'
+import axios from 'axios'
+import VAxios from 'vue-axios'
+import { Cookies } from 'quasar'
+
+Vue.use(VAxios, axios)
 export default {
+  name: 'settingsForm',
+
   data () {
     return {
-      form: [
-        {
-          label: 'Textfields',
-          icon: 'help',
-          handler () {
-            Dialog.create({
-              title: 'Sign Up',
-              message: 'Sign Up Page!',
-              form: {
-                name: {
-                  type: 'textbox',
-                  label: 'Textbox',
-                  model: ''
-                },
-                age: {
-                  type: 'numeric',
-                  label: 'Numeric',
-                  model: 13,
-                  min: 13,
-                  max: 90
-                },
-                tags: {
-                  type: 'chips',
-                  label: 'Chips',
-                  model: ['Joe', 'John']
-                },
-                comments: {
-                  type: 'textarea',
-                  label: 'Textarea',
-                  model: ''
-                }
-              },
-              buttons: [
-                'Cancel',
-                {
-                  label: 'Ok',
-                  handler (data) {
-                    Toast.create('Returned ' + JSON.stringify(data))
-                  }
-                }
-              ]
-            })
-          }
-        },
-        {
-          label: 'Single Selection',
-          icon: 'radio_button_checked',
-          handler () {
-            Dialog.create({
-              title: 'Radios',
-              message: 'Message can be used for all types of Dialogs.',
-              form: {
-                option: {
-                  type: 'radio',
-                  model: 'opt1',
-                  items: [
-                    {label: 'Option 1', value: 'opt1'},
-                    {label: 'Option 2', value: 'opt2'},
-                    {label: 'Option 3', value: 'opt3'}
-                  ]
-                }
-              },
-              buttons: [
-                'Cancel',
-                {
-                  label: 'Ok',
-                  handler (data) {
-                    Toast.create('Returned ' + JSON.stringify(data))
-                  }
-                }
-              ]
-            })
-          }
-        },
-        {
-          label: 'Multiple Selection',
-          icon: 'check_box',
-          handler () {
-            Dialog.create({
-              title: 'Checkbox & Toggle',
-              message: 'Message can be used for all types of Dialogs.',
-              form: {
-                header1: {
-                  type: 'heading',
-                  label: 'Checkboxes'
-                },
-                group1: {
-                  type: 'checkbox',
-                  items: [
-                    {label: 'Option 1', value: 'opt1', model: true},
-                    {label: 'Option 2', value: 'opt2', model: false},
-                    {label: 'Option 3', value: 'opt3', model: false}
-                  ]
-                },
-                header2: {
-                  type: 'heading',
-                  label: 'Toggles'
-                },
-                group2: {
-                  type: 'toggle',
-                  items: [
-                    {label: 'Option 1', value: 'opt1', model: true},
-                    {label: 'Option 2', value: 'opt2', model: false},
-                    {label: 'Option 3', value: 'opt3', model: false}
-                  ]
-                }
-              },
-              buttons: [
-                'Cancel',
-                {
-                  label: 'Ok',
-                  handler (data) {
-                    Toast.create('Returned ' + JSON.stringify(data))
-                  }
-                }
-              ]
-            })
-          }
-        }
-      ]
+      title: '',
     }
+  },
+
+  methods: {
   }
 }
 </script>
+
+
+<style scoped>
+.formContent
+{
+  /*display         : flex;
+  flex-direction  : column;
+
+  align-content   : center;*/
+
+  padding: 15px 35px 15px 35px;
+  position: relative;
+
+}
+.formContentAcc
+{
+  display         : flex;
+  flex-direction  : column;
+  justify-content : space-around;
+
+  width  : 400px;
+  height : 420px;
+
+  padding: 15px 35px 15px 35px
+}
+.formHeader
+{
+  text-align: center;
+}
+
+.form-field
+{
+  margin: 5px 0px 5px 0px
+}
+
+.textField
+{
+  max-height: 200px;
+}
+
+.form-btn-container
+{
+
+  margin-top: 50px;
+  padding: 20px 5px 7px 5px;
+
+}
+
+.form-btn
+{
+  display:block;
+  width: 250px;
+  margin-left: auto;
+  margin-right: auto;
+  position:absolute;
+  bottom:60px;
+  left:20px;
+  right:20px;
+}
+
+img {
+  width: 30%;
+  margin: auto;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.remove-img-btn
+{
+  display:block;
+  width: 150px;
+  margin-left: auto;
+  margin-right: auto;
+  position:absolute;
+  bottom:125px;
+  left:20px;
+  right:20px;
+}
+</style>

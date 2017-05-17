@@ -44,6 +44,9 @@
     <q-modal ref="reportForm">
         <reportForm />
     </q-modal>
+    <q-modal ref="settingsForm">
+        <settingsForm />
+    </q-modal>
 
     <router-view class="layout-view"></router-view>
 
@@ -55,6 +58,7 @@
 
 <script>
 // other components imports
+import settingsForm from './Settings'
 import accForm from './accForm'
 import Maindrawer from './MainDrawer'
 import Mobiledrawer from './MobileDrawer'
@@ -69,7 +73,8 @@ export default {
     Maindrawer,
     Mobiledrawer,
     accForm,
-    reportForm
+    reportForm,
+    settingsForm
   },
 
   data () {

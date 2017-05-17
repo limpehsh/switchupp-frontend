@@ -136,10 +136,12 @@ export default {
         lat: this.result.lat,
         desc: this.desc,
         author: Cookies.get('session_loggedin'),
-        category: 'Others', // Placeholder, will have dropdown/popover to select proper category
+        category: 'others', // Placeholder, will have dropdown/popover to select proper category
         image: this.image,
         votescore: 0,
-        voteuser: [],
+        voteuserAll: [],
+        voteuserUp: [],
+        voteuserDown: [],
         createdAt: Date(),
         visible: true
       })
