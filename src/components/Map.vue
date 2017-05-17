@@ -35,7 +35,10 @@
                   <v-map class="mapasdf" :zoom="zoom" :center="center">
                     <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
                     <div v-for="post of posts">
-                      <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)"></v-marker>
+                      <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)">
+                        <v-popup :content="post.locname"></v-popup>
+                        <v-tooltip :content="post.title"></v-tooltip>
+                      </v-marker>
                     </div>
                   </v-map>
                 </div>
@@ -45,7 +48,10 @@
           <v-map v-else class="mapasdf" :zoom="zoom" :center="center">
             <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
             <div v-for="post of posts">
-              <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)"></v-marker>
+              <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)">
+                <v-popup :content="post.locname"></v-popup>
+                <v-tooltip :content="post.title"></v-tooltip>
+              </v-marker>
             </div>
           </v-map>
         </div>
@@ -77,7 +83,9 @@ export default {
   components: {
     'v-map': Vue2Leaflet.Map,
     'v-tilelayer': Vue2Leaflet.TileLayer,
-    'v-marker': Vue2Leaflet.Marker
+    'v-marker': Vue2Leaflet.Marker,
+    'v-tooltip': Vue2Leaflet.Tooltip,
+    'v-popup' : Vue2Leaflet.Popup
   },
   data () {
     return {
