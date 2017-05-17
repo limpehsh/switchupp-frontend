@@ -3,12 +3,54 @@
     <div class="layout-padding">
       <h1 class="title">Map Display</h1>
       <div id="app" class="bigMap">
-        <v-map class="mapasdf" :zoom="zoom" :center="center">
-          <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
-          <div v-for="post of posts">
-            <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)"></v-marker>
+        <div v-if="this.showSwitchBoarder" class="box">
+          <div class="switch-container">
+            <div class="joy-con-left">
+              <div class="ellipse-button"></div>
+              <div class="analog-left"></div>
+              <div class="d-pad-container-left">
+                <div class="d-pad-top"></div>
+                <div class="d-pad-left"></div>
+                <div class="d-pad-right"></div>
+                <div class="d-pad-bottom"></div>
+              </div>
+              <div class="square-button"></div>
+            </div>
+            <div class="joy-con-right">
+              <div class="analog-right"></div>
+              <div class="circle-button-right"></div>
+              <div class="d-pad-container-right">
+                <div class="d-pad-top"></div>
+                <div class="d-pad-left"></div>
+                <div class="d-pad-right"></div>
+                <div class="d-pad-bottom"></div>
+              </div>
+              <div class="d-pad-2-container">
+                <div class="d-pad-2-vertical"></div>
+                <div class="d-pad-2-horizontal"></div>
+              </div>
+            </div>
+            <div class="screen-outer">
+                <div class="screen-inner">
+                  <v-map class="mapasdf" :zoom="zoom" :center="center">
+                    <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
+                    <div v-for="post of posts">
+                      <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)"></v-marker>
+                    </div>
+                  </v-map>
+                </div>
+              </div>
+            </div>
           </div>
-        </v-map>
+          <v-map v-else class="mapasdf" :zoom="zoom" :center="center">
+            <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
+            <div v-for="post of posts">
+              <v-marker :lat-lng="displayLeaflet(post.lat,post.lon)"></v-marker>
+            </div>
+          </v-map>
+        </div>
+        <br />
+        <button class="bigMap positive raised round" @click="toggleSwitchBoarder">SWITCH</button>
       </div>
     </div>
   </div>
@@ -38,6 +80,7 @@ export default {
   },
   data () {
     return {
+      showSwitchBoarder: false,
       posts: [],
       errors: [],
       zoom: 13,
@@ -51,6 +94,9 @@ export default {
     this.getAllReports()
   },
   methods: {
+    toggleSwitchBoarder () {
+      this.showSwitchBoarder = !this.showSwitchBoarder
+    },
     getAllReports () {
       axios.get('http://localhost:8081/report/newest/')
       .then(response => {
@@ -96,5 +142,201 @@ export default {
 @media screen and (max-width: 700px)
 {
 
+}
+
+/* Nintendo Switch in Pure CSS */
+.box{
+  position: relative;
+  display: block;
+  margin: auto;
+  background: none;
+  border: none;
+  bottom: 100px;
+  /*height: 400px;*/
+  /*width: 600px;*/
+  height: 800px;
+  width: 1200px;
+}
+
+.switch-container{
+  position: absolute;
+  width: 80%;
+  height: 60%;
+  background: none;
+  top: 20%;
+  left: 10%;
+}
+
+.joy-con-left{
+  position: absolute;
+  height: 100%;
+  width: 15%;
+  background: #00AAFF;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.joy-con-right{
+  position: absolute;
+  height: 100%;
+  width: 15%;
+  right: 0%;
+  background: #E21628;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+.screen-outer{
+  position: absolute;
+  background: none;
+  width: 70%;
+  left: 15%;
+  background: black;
+  height: 100%;
+}
+
+.screen-inner{
+  position: absolute;
+  background: none;
+  width: 90%;
+  left: 5%;
+  top: 5%;
+  background: #0D47A1;
+  height: 90%;
+}
+
+.analog-left{
+  position: absolute;
+  border-radius: 50%;
+  background: black;
+  height: 13%;
+  width: 40%;
+  top: 20%;
+  left: 25%;
+  border: solid 5px #202226;
+}
+
+.analog-right{
+  position: absolute;
+  border-radius: 50%;
+  background: black;
+  height: 13%;
+  width: 40%;
+  top: 50%;
+  left: 25%;
+  border: solid 5px #202226;
+}
+
+.d-pad-container-left{
+  position: absolute;
+  height: 23%;
+  width: 70%;
+  left: 15%;
+  background: none;
+  top: 45%;
+}
+
+.d-pad-container-right{
+  position: absolute;
+  height: 23%;
+  width: 70%;
+  left: 15%;
+  background: none;
+  top: 20%;
+}
+
+.d-pad-top{
+  position: absolute;
+  height: 30%;
+  width: 30%;
+  left: 35%;
+  top: 0%;
+  background: black;
+  border-radius: 50%;
+}
+
+.d-pad-bottom{
+  position: absolute;
+  height: 30%;
+  width: 30%;
+  left: 35%;
+  bottom: 0%;
+  background: black;
+  border-radius: 50%;
+}
+
+.d-pad-left{
+  position: absolute;
+  height: 30%;
+  width: 30%;
+  left: 0%;
+  top: 35%;
+  background: black;
+  border-radius: 50%;
+}
+
+.d-pad-right{
+  position: absolute;
+  height: 30%;
+  width: 30%;
+  right: 0%;
+  top: 35%;
+  background: black;
+  border-radius: 50%;
+}
+
+.square-button{
+  position: absolute;
+  bottom: 15%;
+  right: 13%;
+  height: 7%;
+  width: 23%;
+  background: black;
+}
+
+.ellipse-button{
+  position: absolute;
+  height: 3%;
+  width: 30%;
+  top: 8%;
+  right: 5%;
+  background: black;
+  border-radius: 50px;
+}
+
+.d-pad-2-container{
+  position: absolute;
+  background: none;
+  height: 8%;
+  width: 25%;
+  top: 3%;
+  left: 8%;
+}
+
+.d-pad-2-vertical{
+  position: absolute;
+  height: 100%;
+  background: black;
+  width: 35%;
+  left: 32.5%;
+}
+
+.d-pad-2-horizontal{
+  position: absolute;
+  width: 100%;
+  background: black;
+  height: 35%;
+  top: 32.5%;
+}
+
+.circle-button-right{
+  position: absolute;
+  border-radius: 50%;
+  background: black;
+  height: 3%;
+  width: 10%;
+  bottom: 18%;
+  left: 10%;
+  border: solid 5px #202226;
 }
 </style>
