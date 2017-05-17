@@ -96,9 +96,7 @@ export default
       content: this.postData.desc,
       title: this.postData.title,
       datePosted: this.postData.createdAt,
-      // postImg: this.postData.image,
-      // static img for testing
-      postImg: this.postData.image, // 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+      postImg: this.postData.image,
       locn: this.postData.locname,
       /* for collapsible */
       labelName: 'More',
@@ -125,23 +123,15 @@ export default
   {
     postData: {
       type: Object,
-      // default: function () {
-      //   return {
-      //     voteCount: 0,
-      //     // postTitle: title,
-      //     // incidentLocn: locn,
-      //     postedBy: usrnm,
-      //     content: content
-      //   }
-      // }
+
       validator: function (postData) {
         var cVoteCount = typeof postData.votescore === 'number'
-        // var cPostTitle = typeof postData.postTitle === 'string'
-        // var cIncidentLocn = typeof postData.incidentLocn === 'string'
+        var cPostTitle = typeof postData.title === 'string'
         var cPostedBy = typeof postData.author === 'string'
         var cContent = typeof postData.desc === 'string'
+        var cAuthor = typeof postData.author === 'string'
 
-        var check = cVoteCount && cPostedBy && cContent
+        var check = cVoteCount && cPostedBy && cContent && cPostTitle && cAuthor
         return check
       }
     }
