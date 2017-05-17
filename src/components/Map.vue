@@ -50,7 +50,8 @@
           </v-map>
         </div>
         <br />
-        <button class="bigMap positive raised round" @click="toggleSwitchBoarder">SWITCH</button>
+        <button v-if="this.showSwitchBoarder" class="bigMap dark raised round" @click="toggleSwitchBoarder">SWITCH</button>
+        <button v-else class="bigMap primary raised round" @click="toggleSwitchBoarder">SWITCH</button>
       </div>
     </div>
   </div>
