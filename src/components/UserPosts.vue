@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     getUserPosts (username) {
-      axios.get('http://localhost:8081/report/username/testing')
+      axios.get('http://localhost:8081/report/username/' + username)
       .then(response => {
         this.posts = response.data
       })

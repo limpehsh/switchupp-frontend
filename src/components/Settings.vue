@@ -39,7 +39,7 @@ NOTE:
 import Vue from 'vue'
 import axios from 'axios'
 import VAxios from 'vue-axios'
-import { Cookies } from 'quasar'
+// import { Cookies } from 'quasar'
 
 Vue.use(VAxios, axios)
 export default {
