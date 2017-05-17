@@ -86,18 +86,6 @@ export default {
 
 @media screen and (max-width: 700px)
 {
-  .memberCard
-  {
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-  }
 
-  .dudeAvatar
-  {
-    width: 100px;
-    height: 100px;
-
-  }
 }
 </style>
