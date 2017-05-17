@@ -54,7 +54,7 @@
         <div class="postContent">
           <div class="postTitle">{{title}}</div>
           <div class="mapContainer full-width">
-            <MapBox />
+            <MapBox :mapData="postData"/>
           </div>
         </div>
       </div>
@@ -95,21 +95,23 @@ export default
   },
 
   data: function () {
+    var postTitle = this.postData.title
+    var voteScore = this.postData.votescore
+    var author = this.postData.author
+    var desc = this.postData.desc
+    var createdAt = this.postData.createdAt
+    var img = this.postData.image
+    var locName = this.postData.locname
+
     return {
-      voted: true,
-      count: this.postData.votescore,
-      usrnm: this.postData.author,
-      content: this.postData.desc,
-      title: this.postData.title,
-      datePosted: this.postData.createdAt,
-      postImg: this.postData.image,
-      locn: this.postData.locname,
-      lat: this.postData.lat,
-      lon: this.postData.lon,
-      voteuserAll: this.postData.voteuserAll,
-      voteuserUp: this.postData.voteuserUp,
-      voteuserDown: this.postData.voteuserDown,
-      reportID: this.postData._id,
+      count: voteScore,
+      content: desc,
+      usrnm: author,
+      title: postTitle,
+      datePosted: createdAt,
+      postImg: img,
+      locn: locName,
+
       /* for collapsible */
       labelName: 'More',
       visible: false,

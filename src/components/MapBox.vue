@@ -38,12 +38,16 @@ export default
   },
 
   data: function () {
+    var lat = this.mapData.lat
+    var lon = this.mapData.lon
+
     return {
-      zoom: this.mapData.zoom,
-      center: this.mapData.center,
+
+      zoom: 16,
+      center: [lat, lon],
       url: 'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
-      marker: this.mapData.mrklatlng
+      marker: L.latLng(lat, lon)
       // L.latLng(-37.7970795, 144.961302339626)
     }
   },
@@ -54,23 +58,15 @@ export default
 
   props:
   {
+    // NOTE: validator on work
     mapData: {
       type: Object,
-      default: function () {
-        return {
-          // zoom: defaultZoom,
-          // center: centerLoc,
-          // mrklatlng: markerLatLng
-          zoom: 16,
-          center: [-37.7970795, 144.961302339626],
-          mrklatlng: L.latLng(-37.7970795, 144.961302339626)
-        }
-      },
       validator: function (mapData) {
-        var cZoom = typeof mapData.zoom === 'number'
-        var cCenter = Array.isArray(mapData.center)
+        // var cZoom = typeof mapData.zoom === 'number'
+        // /var cCenter = Array.isArray(mapData.center)
         // typeof mrklatlng is defined by Leaflet
-        return cZoom && cCenter
+
+        return true
       }
     }
   }
