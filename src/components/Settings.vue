@@ -37,7 +37,7 @@ NOTE:
                  class = "full-width"
                  type  = "password"
                  maxlength = "30"
-                 v-model.trim="password">
+                 v-model.trim="pass">
           <label>Password</label>
         </div>
         <br /><br /><br />
@@ -68,7 +68,7 @@ export default {
     return {
       user: '',
       email: '',
-      password: '',
+      pass: '',
       userID: '',
       temp: [],
       errors: []
@@ -78,30 +78,26 @@ export default {
   methods: {
     submitNewUserSettings () {
       this.getUserID()
+      this.updateUser()
     },
     updateUser () {
-      axios({
-        method: 'put',
-        url: 'http://localhost:8081/' + this.userID,
-        data: {
-          username: this.user,
-          email: this.email,
-          password: this.pass,
-          admin: false,
-          reputation: 1,
-          type: 1,
-          logged: true
-        }
+      axios.put('http://localhost:8081/user/' + this.userID, {
+        username: this.user,
+        email: this.email,
+        password: this.pass,
+        admin: false,
+        reputation: 1,
+        type: 1,
+        logged: true
       })
       this.user = ''
       this.email = ''
-      this.repeatPass = ''
       this.pass = ''
       this.$parent.$parent.$parent.$refs.settingsForm.close()
       console.log('user updated')
-      Cookies.set('session_loggedin', this.user, {
+      /* Cookies.set('session_loggedin', this.user, {
         path: '/'
-      })
+      }) */
     },
     getUserID () {
       axios.get('http://localhost:8081/user/username/' + Cookies.get('session_loggedin'))
@@ -109,6 +105,7 @@ export default {
         this.temp = response.data
         console.log(response.data)
         this.userID = this.temp._id
+        console.log(this.userID)
       })
       .catch(e => {
         this.errors.push(e)

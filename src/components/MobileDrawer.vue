@@ -104,7 +104,7 @@ export default {
     // shw the form for reporting
     openReport: function () {
       if (Cookies.has('session_loggedin')) {
-        this.$parent.$parent.$refs.reportForm.open()
+        this.$parent.$parent.$parent.$refs.reportForm.open()
         this.logged_in = true
       }
       else {
@@ -114,7 +114,7 @@ export default {
     },
     openSettings: function () {
       if (Cookies.has('session_loggedin')) {
-        this.$parent.$parent.$refs.settingsForm.open()
+        this.$parent.$parent.$parent.$refs.settingsForm.open()
         this.logged_in = true
       }
       else {

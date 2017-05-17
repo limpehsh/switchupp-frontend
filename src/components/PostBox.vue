@@ -8,9 +8,9 @@
       <div class="rowForm" v-if="!showMap" key="noMap">
         <!-- side button section -->
         <div class="side-btn-section">
-          <button class="small circular light clear"><i>arrow_upward</i></button>
+          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteUp()"><i>arrow_upward</i></button>
           <span class="voteCount">{{count}}</span>
-          <button class="small circular light clear"><i>arrow_downward</i></button>
+          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteDown()"><i>arrow_downward</i></button>
         </div>
         <!-- post content section -->
         <div class="postContent">
@@ -65,6 +65,11 @@
 
 <script>
 import MapBox from './MapBox'
+import { Cookies } from 'quasar'
+import Vue from 'vue'
+import axios from 'axios'
+import VueAxios from 'vue-axios'
+Vue.use(VueAxios, axios)
 
 // for placeholder
 // var title = 'a post title'
@@ -91,6 +96,7 @@ export default
 
   data: function () {
     return {
+      voted: true,
       count: this.postData.votescore,
       usrnm: this.postData.author,
       content: this.postData.desc,
@@ -100,14 +106,26 @@ export default
       locn: this.postData.locname,
       lat: this.postData.lat,
       lon: this.postData.lon,
-      coords: this.postData.coords,
+      voteuserAll: this.postData.voteuserAll,
+      voteuserUp: this.postData.voteuserUp,
+      voteuserDown: this.postData.voteuserDown,
+      reportID: this.postData._id,
       /* for collapsible */
       labelName: 'More',
       visible: false,
       showMap: false
     }
   },
-
+  created () {
+    if (!Cookies.has('session_loggedin')) {
+      this.voted = true
+    }
+    else {
+      if (!this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
+        this.votedUp = false
+      }
+    }
+  },
   methods:
   {
     enlargeImage: function () {
@@ -119,7 +137,61 @@ export default
     toggleVisible: function () {
       this.visible = !this.visible
       this.labelName = this.visible ? 'Less' : 'More'
-    }
+    },
+    voteAxios () {
+      axios.put('http://localhost:8081/report/' + this.reportID, {
+        title: this.title,
+        locname: this.postData.locname,
+        lat: this.lat,
+        lon: this.lon,
+        desc: this.content,
+        author: this.postData.author,
+        category: this.postData.category,
+        image: this.postData.image,
+        votescore: this.count,
+        voteuserAll: this.voteuserAll.push(Cookies.get('session_loggedin')),
+        voteuserUp: this.postDatavoteuserUp,
+        voteuserDown: this.postData.voteuserDown,
+        createdAt: this.datePosted,
+        visible: this.postData.visible
+      })
+    },
+    voteUp () {
+      if (!this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
+        this.count+=1
+        this.voteAxios()
+        this.voted = true
+      }
+    },
+    voteDown () {
+      if (!this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
+        this.count-=1
+        this.voteAxios()
+        this.voted = true
+      }
+    },
+    containsObject(obj, list) {
+      var i
+      if (list.length > 0) {
+        for (i = 0; i < list.length; i++) {
+          if (list[i] === obj) {
+              return true
+          }
+        }
+      }
+      return false
+    },
+    removeObject(obj, list) {
+      var i
+      if (list.length > 0) {
+        for (i = 0; i < list.length; i++) {
+          if (list[i] === obj) {
+              list.splice(i,1);
+              break;
+          }
+        }
+      }
+    },
   },
 
   props:
