@@ -80,74 +80,74 @@ import PostBox from './PostBox'
 
 Vue.use(VAxios, axios)
 
-var postPool = [
-  {
-    author: 'jim',
-    createdat: 'now',
-    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
-    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-    locname: 'here',
-    title: 'test title',
-    visible: true,
-    votescore: 11,
-    _id: 1234
-  },
-  {
-    author: 'jim',
-    createdat: 'now',
-    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
-    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-    locname: 'here',
-    title: 'test title',
-    visible: true,
-    votescore: 11,
-    _id: 1235
-  },
-  {
-    author: 'jim',
-    createdat: 'now',
-    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
-    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-    locname: 'here',
-    title: 'test title',
-    visible: true,
-    votescore: 11,
-    _id: 1236
-  },
-  {
-    author: 'jim',
-    createdat: 'now',
-    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
-    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-    locname: 'here',
-    title: 'test title',
-    visible: true,
-    votescore: 11,
-    _id: 1237
-  },
-  {
-    author: 'jim',
-    createdat: 'now',
-    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
-    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-    locname: 'here',
-    title: 'test title',
-    visible: true,
-    votescore: 11,
-    _id: 1238
-  },
-  {
-    author: 'jim',
-    createdat: 'now',
-    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
-    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-    locname: 'here',
-    title: 'test title',
-    visible: true,
-    votescore: 11,
-    _id: 1239
-  }
-]
+// var postPool = [
+//   {
+//     author: 'jim',
+//     createdat: 'now',
+//     desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+//     image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+//     locname: 'here',
+//     title: 'test title',
+//     visible: true,
+//     votescore: 11,
+//     _id: 1234
+//   },
+//   {
+//     author: 'jim',
+//     createdat: 'now',
+//     desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+//     image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+//     locname: 'here',
+//     title: 'test title',
+//     visible: true,
+//     votescore: 11,
+//     _id: 1235
+//   },
+//   {
+//     author: 'jim',
+//     createdat: 'now',
+//     desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+//     image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+//     locname: 'here',
+//     title: 'test title',
+//     visible: true,
+//     votescore: 11,
+//     _id: 1236
+//   },
+//   {
+//     author: 'jim',
+//     createdat: 'now',
+//     desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+//     image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+//     locname: 'here',
+//     title: 'test title',
+//     visible: true,
+//     votescore: 11,
+//     _id: 1237
+//   },
+//   {
+//     author: 'jim',
+//     createdat: 'now',
+//     desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+//     image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+//     locname: 'here',
+//     title: 'test title',
+//     visible: true,
+//     votescore: 11,
+//     _id: 1238
+//   },
+//   {
+//     author: 'jim',
+//     createdat: 'now',
+//     desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+//     image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+//     locname: 'here',
+//     title: 'test title',
+//     visible: true,
+//     votescore: 11,
+//     _id: 1239
+//   }
+// ]
 
 export default {
   components:
@@ -157,9 +157,9 @@ export default {
 
   data () {
     return {
-      posts: postPool,
+      posts: [],
       errors: [],
-      newestShown: false
+      newestShown: true
     }
   },
   // Start with fetching newest reports when loading feed
