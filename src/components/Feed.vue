@@ -146,7 +146,7 @@ export default {
 
   methods: {
     checkLength () {
-      if (this.posts.length == this.loaded.length) {
+      if (this.posts.length === this.loaded.length) {
         this.refs.feedLoader.stop()
         return true
       }
@@ -160,7 +160,6 @@ export default {
       //         Need to be called, to end the loading message
 
       setTimeout(() => {
-        console.log(index)
         var oIndex = index - 1
         if (oIndex < this.posts.length) {
           this.loaded.push(this.posts[oIndex])
@@ -191,7 +190,6 @@ export default {
         this.errors.push(e)
       })
       this.newestShown = true
-
     },
     /* async getNewest () {
       try {

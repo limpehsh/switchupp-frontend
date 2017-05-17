@@ -8,9 +8,9 @@
       <div class="rowForm" v-if="!showMap" key="noMap">
         <!-- side button section -->
         <div class="side-btn-section">
-          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteUp()"><i>arrow_upward</i></button>
+          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteUp"><i>arrow_upward</i></button>
           <span class="voteCount">{{count}}</span>
-          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteDown()"><i>arrow_downward</i></button>
+          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteDown"><i>arrow_downward</i></button>
         </div>
         <!-- post content section -->
         <div class="postContent">
@@ -102,8 +102,11 @@ export default
     var createdAt = this.postData.createdAt
     var img = this.postData.image
     var locName = this.postData.locname
+    var voteUsersTemp = this.postData.voteuserAll
+    var reportidd = this.postData._id
 
     return {
+      voted: false,
       count: voteScore,
       content: desc,
       usrnm: author,
@@ -111,7 +114,8 @@ export default
       datePosted: createdAt,
       postImg: img,
       locn: locName,
-
+      voteuserAll: voteUsersTemp,
+      reportID: reportidd,
       /* for collapsible */
       labelName: 'More',
       visible: false,
@@ -142,60 +146,63 @@ export default
     },
     voteAxios () {
       axios.put('http://localhost:8081/report/' + this.reportID, {
-        title: this.title,
+        title: this.postData.title,
         locname: this.postData.locname,
-        lat: this.lat,
-        lon: this.lon,
-        desc: this.content,
+        lat: this.postData.lat,
+        lon: this.postData.lon,
+        desc: this.postData.desc,
         author: this.postData.author,
         category: this.postData.category,
         image: this.postData.image,
         votescore: this.count,
         voteuserAll: this.voteuserAll.push(Cookies.get('session_loggedin')),
-        voteuserUp: this.postDatavoteuserUp,
+        voteuserUp: this.postData.voteuserUp,
         voteuserDown: this.postData.voteuserDown,
-        createdAt: this.datePosted,
+        createdAt: this.postData.createdAt,
         visible: this.postData.visible
       })
     },
     voteUp () {
       if (!this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
-        this.count+=1
+        this.count += 1
         this.voteAxios()
         this.voted = true
+      }
+      else {
+        console.log('101')
       }
     },
     voteDown () {
-      if (!this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
-        this.count-=1
+      if (this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
+        this.count -= 1
         this.voteAxios()
         this.voted = true
       }
     },
-    containsObject(obj, list) {
+    containsObject (obj, list) {
+      var i
+      this.voted = false
+      if (list.length > 0) {
+        for (i = 0; i < list.length; i++) {
+          if (list[i] === obj) {
+            this.voted = true
+          }
+        }
+      }
+      return this.voted
+    },
+    removeObject (obj, list) {
       var i
       if (list.length > 0) {
         for (i = 0; i < list.length; i++) {
           if (list[i] === obj) {
-              return true
+            list.splice(i, 1)
+            break
           }
         }
       }
-      return false
-    },
-    removeObject(obj, list) {
-      var i
-      if (list.length > 0) {
-        for (i = 0; i < list.length; i++) {
-          if (list[i] === obj) {
-              list.splice(i,1);
-              break;
-          }
-        }
-      }
-    },
+    }
   },
-
   props:
   {
     postData: {
@@ -290,7 +297,7 @@ export default
 {
 
   /*width:450px;*/
-  height:150px
+  height:300px
 }
 
 .postTitle
