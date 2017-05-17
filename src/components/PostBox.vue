@@ -179,7 +179,7 @@ export default
         }
       }
       return this.voted
-    },
+    }
     /* removeObject (obj, list) {
       var i
       if (list.length > 0) {
