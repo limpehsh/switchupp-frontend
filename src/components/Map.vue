@@ -1,8 +1,8 @@
 <template>
   <div>
     <div class="layout-padding">
-      <h1 class="Title">Map Display</h1>
-      <div id="app">
+      <h1 class="title">Map Display</h1>
+      <div id="app" class="bigMap">
         <v-map class="mapasdf" :zoom="zoom" :center="center">
           <v-tilelayer :url="url" :attribution="attribution"></v-tilelayer>
           <v-marker :lat-lng="marker"></v-marker>
@@ -62,8 +62,13 @@ export default {
 @import "../../node_modules/leaflet/dist/leaflet.css";
 
 #app {
-  height: 300px;
-  width: 800px;
+  height: 60vh;
+  min-width: 300px;
+  width: 85%;
+}
+
+.title {
+  text-align: center;
 }
 
 .mapasdf
@@ -71,4 +76,28 @@ export default {
   z-index: 0;
 }
 
+.bigMap
+{
+  display: block;
+
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (max-width: 700px)
+{
+  .memberCard
+  {
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dudeAvatar
+  {
+    width: 100px;
+    height: 100px;
+
+  }
+}
 </style>

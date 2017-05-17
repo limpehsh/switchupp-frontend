@@ -10,60 +10,57 @@
       <!-- Team Members -->
       <div class="team-section">
         <h2 class="team-title">Team Members</h2>
+        <div class="sliderContainer">
+          <q-slider infinite :autoplay="5000" arrows dots>
+            <div slot="slide" class="memberCard bg-light-blue-3">
+              <img class="dudeAvatar shadow-1" :src="avtM">
 
-        <div class="section">
-
-          <div class="card bg-light-blue-3">
-            <img class="avatar" :src="avtM">
-            <div class="dudeName">Michael</div>
-            <div class="dudeDo">
-              <ul>
-                <li>Flat-Obsessed Boi</li>
-                <li>{{textM}}</li>
-              </ul>
+              <div class="dudeDo">
+                <div class="dudeName">Michael</div>
+                <ul>
+                  <li>Flat-Obsessed Boi</li>
+                  <li>{{textM}}</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-          <div class="card bg-light-green-3">
-            <img class="avatar" :src="avtG">
-            <div class="dudeName">Glory</div>
-            <div class="dudeDo">
-              <ul>
-                <li>Deadline Warrior</li>
-                <li>{{textG}}</li>
-              </ul>
+            <div slot="slide" class="memberCard bg-light-green-3">
+              <img class="dudeAvatar shadow-1" :src="avtG">
+
+              <div class="dudeDo">
+                <div class="dudeName">Glory</div>
+                <ul>
+                  <li>Deadline Warrior</li>
+                  <li>{{textG}}</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
-        </div>
+            <div slot="slide" class="memberCard bg-pink-3">
+              <img class="dudeAvatar shadow-1" :src="avtR">
 
-        <div class="section">
-
-          <div class="card bg-pink-3">
-            <img class="avatar" :src="avtR">
-            <div class="dudeName">Ryan</div>
-            <div class="dudeDo">
-              <ul>
-                <li>Sensei / Shifu / Master</li>
-                <li>{{textR}}</li>
-              </ul>
+              <div class="dudeDo">
+                <div class="dudeName">Ryan</div>
+                <ul>
+                  <li>Sensei / Shifu / Master</li>
+                  <li>{{textR}}</li>
+                </ul>
+              </div>
             </div>
-          </div>
 
+            <div slot="slide" class="memberCard bg-red-3">
+              <img class="dudeAvatar shadow-1" :src="avtP">
 
-          <div class="card bg-red-3">
-            <img class="avatar" :src="avtP">
-            <div class="dudeName">Prima</div>
-            <div class="dudeDo">
-              <ul>
-                <li>Sleepy Head</li>
-                <li>{{textP}}</li>
-              </ul>
+              <div class="dudeDo">
+                <div class="dudeName">Prima</div>
+                <ul>
+                  <li>Sleepy Head</li>
+                  <li>{{textP}}</li>
+                </ul>
+              </div>
             </div>
-          </div>
-
-        </div>
-
+          </q-slider>
+      </div>
       </div>
     </div>
   </div>
@@ -120,25 +117,66 @@ export default {
 .about-header-title
 {
   text-align: center;
+  font-size: 3rem
 }
 
 .about-header-desc
 {
-  padding : 0px 40px 0px 40px;
+  padding : 0px 5px 0px 5px;
 
   white-space : pre-line;
   text-align  : justify;
+  width: 85%;
+
+  margin-left: auto;
+  margin-right: auto;
 
 }
 
 .team-section
 {
-  margin-top: 150px;
+
+}
+
+.sliderContainer
+{
+  display:block;
+  padding-bottom: 50px;
+  width: 85%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .team-title
 {
   text-align: center;
+  font-size: 2.5rem
+}
+
+.memberCard
+{
+  display:flex;
+  flex-direction: row;
+
+  height: 350px;
+
+  justify-content: center;
+  align-items: center;
+}
+
+.dudeAvatar
+{
+  object-fit:contain;
+  object-position: center;
+
+  border-radius: 100%;
+
+  border: 3px solid #fff;
+  box-sizing: padding-box;
+
+  width: 200px;
+  height: 200px;
+
 }
 
 .dudeName
@@ -150,23 +188,26 @@ export default {
 
 .dudeDo
 {
-  padding: 0px 5px 0px 5px;
+  padding: 0px 5px 0px 25px;
+  flex-grow: 2;
 }
 
-.section
-{
-  display:flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-around;
-}
+
 
 @media screen and (max-width: 700px)
 {
-  .section
+  .memberCard
   {
-    display: flex;
     flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .dudeAvatar
+  {
+    width: 100px;
+    height: 100px;
+
   }
 }
 

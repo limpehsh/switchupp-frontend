@@ -1,13 +1,33 @@
 <template>
   <div>
     <div class="layout-padding">
-      <button v-if="this.newestShown" class="primary raised" @click='getMostVoted()'>View Most Voted</button>
-      <button v-else class="negative raised" @click='getNewest()'>View Most Recent</button>
+      <!-- currently commented out, will remove later -->
+      <!-- <button v-if="this.newestShown" class="primary raised" @click='getMostVoted()'>View Most Voted</button>
+      <button v-else class="negative raised" @click='getNewest()'>View Most Recent</button> -->
+
       <div class="feedContent">
         <h2 class="feedHeader">Incident Feed</h2>
         <div class="feedStream">
-          <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
-
+          <div class="card bg-light streamHead">
+            <div v-bind:class="{tabActive : newestShown}"
+                 class="streamTab"
+                 @click="getNewest()"
+                 >
+                 Recent
+            </div>
+            <div v-bind:class="{tabActive : !newestShown}"
+                 class="streamTab"
+                 @click="getMostVoted()"
+                 >
+                 Popular
+            </div>
+          </div>
+          <q-infinite-scroll :handler="loadMore">
+            <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
+            <div class="card bg-light cardLoader" style="margin-bottom: 50px;">
+              <spinner name="hourglass" slot="message" color="#A9AAAB" :size="63"></spinner>
+            </div>
+          </q-infinite-scroll>
           <!-- <div v-for="post of posts">
             <div class="card bg-blue-grey-1">
               <div class="item one-line">
@@ -46,10 +66,6 @@
          <i>keyboard_arrow_up</i>
       </button>
 
-      <!-- <a v-back-to-top.animate="1000"
-         class="animate-pop play-backtotop non-selectable">
-         Back to top
-      </a> -->
     </div>
   </div>
 </template>
@@ -64,6 +80,75 @@ import PostBox from './PostBox'
 
 Vue.use(VAxios, axios)
 
+var postPool = [
+  {
+    author: 'jim',
+    createdat: 'now',
+    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+    locname: 'here',
+    title: 'test title',
+    visible: true,
+    votescore: 11,
+    _id: 1234
+  },
+  {
+    author: 'jim',
+    createdat: 'now',
+    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+    locname: 'here',
+    title: 'test title',
+    visible: true,
+    votescore: 11,
+    _id: 1235
+  },
+  {
+    author: 'jim',
+    createdat: 'now',
+    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+    locname: 'here',
+    title: 'test title',
+    visible: true,
+    votescore: 11,
+    _id: 1236
+  },
+  {
+    author: 'jim',
+    createdat: 'now',
+    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+    locname: 'here',
+    title: 'test title',
+    visible: true,
+    votescore: 11,
+    _id: 1237
+  },
+  {
+    author: 'jim',
+    createdat: 'now',
+    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+    locname: 'here',
+    title: 'test title',
+    visible: true,
+    votescore: 11,
+    _id: 1238
+  },
+  {
+    author: 'jim',
+    createdat: 'now',
+    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+    locname: 'here',
+    title: 'test title',
+    visible: true,
+    votescore: 11,
+    _id: 1239
+  }
+]
+
 export default {
   components:
   {
@@ -72,16 +157,48 @@ export default {
 
   data () {
     return {
-      posts: [],
+      posts: postPool,
       errors: [],
       newestShown: false
     }
   },
   // Start with fetching newest reports when loading feed
   created () {
-    this.getNewest()
+    // this.getNewest()
   },
   methods: {
+    // handler needed for the infinite scrolling
+    loadMore (index, done) {
+      // index > indicates the pagination
+      // done  > function to call when all necessary updates are done
+      //         Need to be called, to end the loading message
+
+      setTimeout(() => {
+        let newItems = []
+
+        let oIndex = index + 5
+        for (let i = 0; i < 5; i++) {
+          newItems.push(
+            {
+              author: 'jim',
+              createdat: 'now',
+              desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+              image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+              locname: 'here',
+              title: 'test title',
+              visible: true,
+              votescore: 11,
+              _id: 1243 + i + oIndex
+            }
+          )
+        }
+        console.log(index)
+        this.posts = this.posts.concat(newItems)
+
+        done()
+      }, 2500)
+    },
+
     getNewest () {
       axios.get('http://localhost:8081/report/newest/')
       .then(response => {
@@ -133,19 +250,78 @@ img
 }
 .feedContent
 {
-  display:flex;
-  flex-direction: column;
-  align-content: center;
+
+
+
 }
 
 .feedHeader
 {
   text-align: center;
   font-weight:400;
-
+  margin-bottom: 70px;
 }
-.feedStream
+
+.streamHead
+{
+  min-width: 100%;
+  max-width: 100%;
+
+  margin-top: 0px;
+  margin-bottom: 0px;
+
+  border-bottom: 1px solid #D6D6D6;
+  display:flex;
+}
+
+.streamTab
+{
+  padding-top:15px;
+  padding-bottom: 15px;
+  text-align: center;
+  width:50%;
+
+  box-sizing: border-box;
+  border-bottom: 5px solid;
+  border-bottom-color: transparent;
+  background-color: #D4D4D4;
+
+  cursor: pointer;
+  color: #A1A1A1;
+  text-transform: uppercase;
+  font-weight: 500;
+
+
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently
+                                  supported by Chrome and Opera */
+}
+
+.tabActive
+{
+  color: #111;
+  border-bottom-color: #5DADF4;
+  background-color: #f4f4f4;
+}
+
+.cardLoader
 {
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 5px 40px 5px
+}
+
+.feedStream
+{
+  max-width: 80%;
+  min-width: 320px;
+  margin-left : auto;
+  margin-right: auto;
 }
 </style>
