@@ -107,7 +107,7 @@ export default {
       this.showSwitchBoarder = !this.showSwitchBoarder
     },
     getAllReports () {
-      axios.get('http://localhost:8081/report/newest/')
+      axios.get('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/newest/')
       .then(response => {
         this.posts = response.data
       })

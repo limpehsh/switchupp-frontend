@@ -84,7 +84,7 @@ export default {
   },
   created () {
     // http://jsonplaceholder.typicode.com/posts
-    axios.get('http://localhost:8081/report/5912b1739f222808f0b7b114')
+    axios.get('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/5912b1739f222808f0b7b114')
     .then(response => {
       // JSON responses are automatically parsed.
       this.posts = response.data

@@ -34,7 +34,7 @@ NOTE:
             <div class="list item-delimiter highlight" v-for="prima in results">
               <div
                 class="item item-link"
-                @keydown="changeLoc(prima), $refs.popover.close()"
+                @click="changeLoc(prima), $refs.popover.close()"
               >
               {{prima.display_name}}
               </div>
@@ -129,7 +129,7 @@ export default {
       this.image = ''
     },
     createPost () {
-      axios.post('http://localhost:8081/report/', {
+      axios.post('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/', {
         title: this.title,
         locname: this.result.display_name,
         lat: this.result.lat,

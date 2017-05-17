@@ -8,9 +8,9 @@
       <div class="rowForm" v-if="!showMap" key="noMap">
         <!-- side button section -->
         <div class="side-btn-section">
-          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteUp"><i>arrow_upward</i></button>
+          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteUp()"><i>arrow_upward</i></button>
           <span class="voteCount">{{count}}</span>
-          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteDown"><i>arrow_downward</i></button>
+          <button v-bind:class="{disabled : voted}" class="small circular light clear" @click="voteDown()"><i>arrow_downward</i></button>
         </div>
         <!-- post content section -->
         <div class="postContent">
@@ -95,6 +95,7 @@ export default
   },
 
   data: function () {
+    var voting = false
     var postTitle = this.postData.title
     var voteScore = this.postData.votescore
     var author = this.postData.author
@@ -106,7 +107,7 @@ export default
     var reportidd = this.postData._id
 
     return {
-      voted: false,
+      voted: voting,
       count: voteScore,
       content: desc,
       usrnm: author,
@@ -122,16 +123,6 @@ export default
       showMap: false
     }
   },
-  created () {
-    if (!Cookies.has('session_loggedin')) {
-      this.voted = true
-    }
-    else {
-      if (!this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
-        this.votedUp = false
-      }
-    }
-  },
   methods:
   {
     enlargeImage: function () {
@@ -145,7 +136,7 @@ export default
       this.labelName = this.visible ? 'Less' : 'More'
     },
     voteAxios () {
-      axios.put('http://localhost:8081/report/' + this.reportID, {
+      axios.put('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/' + this.reportID, {
         title: this.postData.title,
         locname: this.postData.locname,
         lat: this.postData.lat,
@@ -163,17 +154,14 @@ export default
       })
     },
     voteUp () {
-      if (!this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
+      if (this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll) === false) {
         this.count += 1
         this.voteAxios()
         this.voted = true
       }
-      else {
-        console.log('101')
-      }
     },
     voteDown () {
-      if (this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll)) {
+      if (this.containsObject(Cookies.get('session_loggedin'), this.voteuserAll) === false) {
         this.count -= 1
         this.voteAxios()
         this.voted = true
@@ -186,12 +174,13 @@ export default
         for (i = 0; i < list.length; i++) {
           if (list[i] === obj) {
             this.voted = true
+            return this.voted
           }
         }
       }
       return this.voted
     },
-    removeObject (obj, list) {
+    /* removeObject (obj, list) {
       var i
       if (list.length > 0) {
         for (i = 0; i < list.length; i++) {
@@ -201,7 +190,7 @@ export default
           }
         }
       }
-    }
+    } */
   },
   props:
   {
@@ -333,9 +322,9 @@ export default
   display: block;
   max-width: 100%;
   max-height: 200px;
-  align-self: center;
+  /* align-self: center;
   margin-left: auto;
-  margin-right: auto;
+  margin-right: auto; */
   margin-bottom: 25px;
 }
 
