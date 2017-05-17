@@ -29,7 +29,14 @@
 
           <q-transition name="slide">
             <div class="content-wrapper" v-show="visible">
-              <img class="postImage" :src="postImg">
+              <img @click="enlargeImage" class="postImage" :src="postImg">
+              <q-modal :content-css="{
+                  maxHeight: '85vh',
+                  maxWidth: '85vw'
+                }"
+                       ref="postImageLarge">
+                <img class="largeImg" :src="postImg">
+              </q-modal>
               <div class="text-content">
                 {{content}}
               </div>
@@ -72,6 +79,7 @@ import MapBox from './MapBox'
 // this is a long content, for testing purpose. hopefully the
 // stretcher for the post work quite well so that later it can look real cool.
 // won't it be cool if we have a show more/less function for our post`
+
 export default
 {
   name: 'PostBox',
@@ -101,6 +109,9 @@ export default
 
   methods:
   {
+    enlargeImage: function () {
+      this.$refs.postImageLarge.open()
+    },
     toggleMap: function () {
       this.showMap = !this.showMap
     },
@@ -244,13 +255,25 @@ export default
 
 .postImage
 {
+  position: relative;
   display: block;
   max-width: 100%;
-  max-height: 500px;
+  max-height: 200px;
   align-self: center;
   margin-left: auto;
   margin-right: auto;
   margin-bottom: 25px;
+}
+
+.postImage:hover
+{
+  cursor: pointer
+}
+
+.largeImg
+{
+  max-width: 80vw;
+  max-height: 80vh;
 }
 
 .text-content

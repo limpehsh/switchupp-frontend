@@ -14,24 +14,20 @@
                  @click="getNewest()"
                  >
                  Recent
-              <!-- <button class="full-width"
-                      @click='getNewest()'>
-                Recent
-              </button> -->
             </div>
             <div v-bind:class="{tabActive : !newestShown}"
                  class="streamTab"
                  @click="getMostVoted()"
                  >
                  Popular
-              <!-- <button class="full-width"
-                      @click="getMostVoted()">
-                      Popular
-              </button> -->
             </div>
           </div>
-          <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
-
+          <q-infinite-scroll :handler="loadMore">
+            <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
+            <div class="card bg-light cardLoader" style="margin-bottom: 50px;">
+              <spinner name="hourglass" slot="message" color="#A9AAAB" :size="63"></spinner>
+            </div>
+          </q-infinite-scroll>
           <!-- <div v-for="post of posts">
             <div class="card bg-blue-grey-1">
               <div class="item one-line">
@@ -94,7 +90,7 @@ var postPool = [
     title: 'test title',
     visible: true,
     votescore: 11,
-    _id: '1234'
+    _id: 1234
   },
   {
     author: 'jim',
@@ -105,7 +101,7 @@ var postPool = [
     title: 'test title',
     visible: true,
     votescore: 11,
-    _id: '1235'
+    _id: 1235
   },
   {
     author: 'jim',
@@ -116,7 +112,7 @@ var postPool = [
     title: 'test title',
     visible: true,
     votescore: 11,
-    _id: '1236'
+    _id: 1236
   },
   {
     author: 'jim',
@@ -127,7 +123,7 @@ var postPool = [
     title: 'test title',
     visible: true,
     votescore: 11,
-    _id: '1237'
+    _id: 1237
   },
   {
     author: 'jim',
@@ -138,7 +134,18 @@ var postPool = [
     title: 'test title',
     visible: true,
     votescore: 11,
-    _id: '1238'
+    _id: 1238
+  },
+  {
+    author: 'jim',
+    createdat: 'now',
+    desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+    image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+    locname: 'here',
+    title: 'test title',
+    visible: true,
+    votescore: 11,
+    _id: 1239
   }
 ]
 
@@ -160,6 +167,38 @@ export default {
     // this.getNewest()
   },
   methods: {
+    // handler needed for the infinite scrolling
+    loadMore (index, done) {
+      // index > indicates the pagination
+      // done  > function to call when all necessary updates are done
+      //         Need to be called, to end the loading message
+
+      setTimeout(() => {
+        let newItems = []
+
+        let oIndex = index + 5
+        for (let i = 0; i < 5; i++) {
+          newItems.push(
+            {
+              author: 'jim',
+              createdat: 'now',
+              desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
+              image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
+              locname: 'here',
+              title: 'test title',
+              visible: true,
+              votescore: 11,
+              _id: 1243 + i + oIndex
+            }
+          )
+        }
+        console.log(index)
+        this.posts = this.posts.concat(newItems)
+
+        done()
+      }, 2500)
+    },
+
     getNewest () {
       axios.get('http://localhost:8081/report/newest/')
       .then(response => {
@@ -269,7 +308,14 @@ img
   background-color: #f4f4f4;
 }
 
+.cardLoader
+{
 
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 5px 40px 5px
+}
 
 .feedStream
 {
