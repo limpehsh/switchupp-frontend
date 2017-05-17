@@ -58,13 +58,14 @@ export default
 
   props:
   {
+    // NOTE: validator on work
     mapData: {
       type: Object,
       validator: function (mapData) {
         // var cZoom = typeof mapData.zoom === 'number'
         // /var cCenter = Array.isArray(mapData.center)
         // typeof mrklatlng is defined by Leaflet
-        console.log(mapData)
+
         return true
       }
     }

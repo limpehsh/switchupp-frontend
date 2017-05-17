@@ -22,40 +22,16 @@
                  Popular
             </div>
           </div>
-          <q-infinite-scroll :handler="loadMore">
-            <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
+          <PostBox v-for="post of posts" :postData="post" :key="post._id"/>
+          <!-- <q-infinite-scroll ref="feedLoader" :handler="loadMore">
+            <PostBox v-for="post of loaded" :postData="post" :key="post._id"/>
+            <div v-if="checkLength" class="card bg-light cardLoader" style="margin-bottom: 50px;">
+              all post here
+            </div>
             <div class="card bg-light cardLoader" style="margin-bottom: 50px;">
               <spinner name="hourglass" slot="message" color="#A9AAAB" :size="63"></spinner>
             </div>
-          </q-infinite-scroll>
-          <!-- <div v-for="post of posts">
-            <div class="card bg-blue-grey-1">
-              <div class="item one-line">
-                <img class="item-primary" :src="post.image">
-                <div class="item-content">
-                  <div>{{post.author}}</div>
-                </div>
-              </div>
-              <img class="bg-white" :src='post.image'>
-              <div class="card-content">
-                {{post.desc}}
-              </div>
-              <div class="card-actions">
-                <div class="text-primary">
-                  <i>arrow_upward</i> {{post.votescore}} votes
-                </div>
-                <div class="text-primary">
-                  <i>mode_comment</i> 8 comments
-                </div>
-
-                <div class="auto"></div>
-                <div class="text-grey-6">
-                  {{post.createdAt}}
-                </div>
-              </div>
-            </div>
-          </div> -->
-
+          </q-infinite-scroll> -->
         </div>
       </div>
 
@@ -157,6 +133,7 @@ export default {
 
   data () {
     return {
+      loaded: [],
       posts: [],
       errors: [],
       newestShown: true
@@ -164,43 +141,49 @@ export default {
   },
   // Start with fetching newest reports when loading feed
   created () {
-    // this.getNewest()
+    this.getNewest()
   },
+
   methods: {
+    checkLength () {
+      if (this.posts.length == this.loaded.length) {
+        this.refs.feedLoader.stop()
+        return true
+      }
+      return false
+    },
     // handler needed for the infinite scrolling
+    // NEED FIX
     loadMore (index, done) {
       // index > indicates the pagination
       // done  > function to call when all necessary updates are done
       //         Need to be called, to end the loading message
 
       setTimeout(() => {
-        let newItems = []
-
-        let oIndex = index + 5
-        for (let i = 0; i < 5; i++) {
-          newItems.push(
-            {
-              author: 'jim',
-              createdat: 'now',
-              desc: 'asdfasdfasdfasdfasdfjjwerlkuuasd;flkjaw eiwrjasdfjlaksdfu eqwrnmasdfhqwwer',
-              image: 'http://static1.1.sqspcdn.com/static/f/1542080/27517679/1491563820320/comicencourage.png?token=9put1R5etoFmo259xCeaWqgQI%2B8%3D',
-              locname: 'here',
-              title: 'test title',
-              visible: true,
-              votescore: 11,
-              _id: 1243 + i + oIndex
-            }
-          )
-        }
         console.log(index)
-        this.posts = this.posts.concat(newItems)
-
+        var oIndex = index - 1
+        if (oIndex < this.posts.length) {
+          this.loaded.push(this.posts[oIndex])
+        }
+        else {
+          // console.log("here")
+          this.$refs.feedLoader.stop()
+        }
         done()
-      }, 2500)
+      }, 1500)
+      // done()
     },
 
     getNewest () {
+      // this.$refs.feedLoader.reset()
+      // this.loaded = []
+
       axios.get('http://localhost:8081/report/newest/')
+      // axios({
+      //   method: 'get',
+      //   url: 'http://localhost:8081/report/newest',
+      //   timeout: 1500
+      // })
       .then(response => {
         this.posts = response.data
       })
@@ -208,6 +191,7 @@ export default {
         this.errors.push(e)
       })
       this.newestShown = true
+
     },
     /* async getNewest () {
       try {
@@ -230,6 +214,9 @@ export default {
       this.newestShown = false
     }, */
     getMostVoted () {
+      // this.$refs.feedLoader.reset()
+      // this.loaded = []
+
       axios.get('http://localhost:8081/report/most-voted/')
       .then(response => {
         this.posts = response.data
@@ -244,10 +231,6 @@ export default {
 </script>
 
 <style scoped>
-img
-{
-  width: 300px;
-}
 .feedContent
 {
 
