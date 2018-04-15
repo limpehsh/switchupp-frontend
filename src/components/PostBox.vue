@@ -136,7 +136,7 @@ export default
       this.labelName = this.visible ? 'Less' : 'More'
     },
     voteAxios () {
-      axios.put('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/' + this.reportID, {
+      axios.put('http://localhost:8081/report/' + this.reportID, {
         title: this.postData.title,
         locname: this.postData.locname,
         lat: this.postData.lat,

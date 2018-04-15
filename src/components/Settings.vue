@@ -81,7 +81,7 @@ export default {
       this.updateUser()
     },
     updateUser () {
-      axios.put('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/' + this.userID, {
+      axios.put('http://localhost:8081/user/' + this.userID, {
         username: this.user,
         email: this.email,
         password: this.pass,
@@ -100,7 +100,7 @@ export default {
       }) */
     },
     getUserID () {
-      axios.get('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/username/' + Cookies.get('session_loggedin'))
+      axios.get('http://localhost:8081/user/username/' + Cookies.get('session_loggedin'))
       .then(response => {
         this.temp = response.data
         console.log(response.data)

@@ -16,7 +16,7 @@ NOTE:
       <!-- log in form -->
       <div v-if="this.typeLogIn === true" key="login" class="formContent">
         <h4 class="formHeader">Log In</h4>
-        <form method="get" action="http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/username" @submit.prevent="userLogin">
+        <form method="get" action="http://localhost:8081/user/username" @submit.prevent="userLogin">
 
           <!-- Username -->
           <div class="floating-label" >
@@ -48,7 +48,7 @@ NOTE:
       <!-- sign up form -->
       <div v-else key="signup" class="formContSignUp" >
         <h4 class="formHeader">Sign Up</h4>
-        <form method="post" action="http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/" @submit.prevent="createUser">
+        <form method="post" action="http://localhost:8081/user/" @submit.prevent="createUser">
 
           <!-- Username -->
           <div class="floating-label">
@@ -193,7 +193,7 @@ export default {
       // check if username on db
       axios({
         method: 'get',
-        url: 'http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/username/' + this.user,
+        url: 'http://localhost:8081/user/username/' + this.user,
         timeout: 1000
       })
       .then(response => {
@@ -217,7 +217,7 @@ export default {
       // check if email on db
       axios({
         method: 'get',
-        url: 'http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/email/' + this.email,
+        url: 'http://localhost:8081/user/email/' + this.email,
         timeout: 1000
       })
       .then(response => {
@@ -237,7 +237,7 @@ export default {
       })
     },
     createUser () {
-      axios.post('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/', {
+      axios.post('http://localhost:8081/user/', {
         username: this.user,
         email: this.email,
         password: this.pass,
@@ -306,7 +306,7 @@ export default {
     userLogin () {
       axios({
         method: 'get',
-        url: 'http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/user/username/' + this.logInUser,
+        url: 'http://localhost:8081/user/username/' + this.logInUser,
         timeout: 1000
       })
       .then(response => {

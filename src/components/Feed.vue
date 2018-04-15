@@ -177,10 +177,10 @@ export default {
       // this.$refs.feedLoader.reset()
       // this.loaded = []
 
-      axios.get('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/newest/')
+      axios.get('http://localhost:8081/report/newest/')
       // axios({
       //   method: 'get',
-      //   url: 'http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/newest',
+      //   url: 'http://localhost:8081/report/newest',
       //   timeout: 1500
       // })
       .then(response => {
@@ -193,7 +193,7 @@ export default {
     },
     /* async getNewest () {
       try {
-        const response = await axios.get('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/newest/')
+        const response = await axios.get('http://localhost:8081/report/newest/')
         this.posts = response.data
       }
       catch (e) {
@@ -203,7 +203,7 @@ export default {
     },
     async getMostVoted () {
       try {
-        const response = await axios.get('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/most-voted/')
+        const response = await axios.get('http://localhost:8081/report/most-voted/')
         this.posts = response.data
       }
       catch (e) {
@@ -215,7 +215,7 @@ export default {
       // this.$refs.feedLoader.reset()
       // this.loaded = []
 
-      axios.get('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/most-voted/')
+      axios.get('http://localhost:8081/report/most-voted/')
       .then(response => {
         this.posts = response.data
       })

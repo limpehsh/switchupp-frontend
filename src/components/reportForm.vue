@@ -129,7 +129,7 @@ export default {
       this.image = ''
     },
     createPost () {
-      axios.post('http://sample-env.2fnpngmx26.us-west-2.elasticbeanstalk.com/report/', {
+      axios.post('http://localhost:8081/report/', {
         title: this.title,
         locname: this.result.display_name,
         lat: this.result.lat,
