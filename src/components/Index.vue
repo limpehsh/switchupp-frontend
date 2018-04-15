@@ -12,7 +12,7 @@
       <q-toolbar-title :padding="0">
         <router-link to ="/">
           <div class="text-white">
-            <img class="avatar" src="../assets/switchup-logo-new.png"> SwitchUp
+            <img class="avatar" src="../assets/switchup-logo-new.png"> SwitchUpp
           </div>
         </router-link>
       </q-toolbar-title>
