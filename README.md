@@ -1,6 +1,8 @@
 # SwitchUpp Front End - PWA made with Quasar Framework and Vue.js
 
-> This is a fork of a University project. I think the goal was to make something social yet niche so most of us in the group were uninterested in the topic, settling on the idea of reporting incidents of infrastructure flaws around the city since that was 'approved'. This is the front end of this debacle made with the excellent [Quasar Framework](https://github.com/quasarframework/quasar) and [Vue.js](https://github.com/vuejs/vue).
+> This was for a university project back in 2017. The goal was to make something social yet niche so all of us in the group were uninterested in the topic. Thus, we settled on the idea of reporting incidents of infrastructure flaws around the city since that was 'approved'.
+
+> Here is the front end of this debacle made with the [Quasar Framework](https://github.com/quasarframework/quasar) and [Vue.js](https://github.com/vuejs/vue).
 
 > Since this was made pre-0.15, ```quasar-cli@0.6.5``` is added as one of the node modules. Use [npx](https://www.npmjs.com/package/npx) to run ```quasar``` from your local modules.
 
